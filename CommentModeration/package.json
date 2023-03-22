@@ -1,0 +1,17 @@
+{
+  "name": "commentmoderation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --poll src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cohere-ai": "^6.0.0",
+    "nats": "^2.13.1",
+    "ts-node-dev": "^2.0.0"
+  }
+}

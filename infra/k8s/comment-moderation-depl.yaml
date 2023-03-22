@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment-moderation
+  template:
+    metadata:
+      labels:
+        app: comment-moderation
+    spec:
+      containers:
+      - name: comment-moderation
+        image: htekeste/comment-moderation
+        env:
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: comment-moderation-srv
+# spec:
+#   selector:
+#     app: comment-moderation
+#   ports:
+#   - port: 4007
+#     targetPort: 4007
+#     name: comment-moderation-port
+#     protocol: TCP

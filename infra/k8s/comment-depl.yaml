@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment
+  template:
+    metadata:
+      labels:
+        app: comment
+    spec:
+      containers:
+      - name: comment
+        image: htekeste/comment
+        env:
+          - name: MONGO_URI
+            value: "mongodb://comment-mongo-srv:27017/comment"
+          - name: JWT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: jwt-secret-key
+                key: JWT_KEY
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-srv
+spec:
+  selector:
+    app: comment
+  ports:
+  - port: 4007
+    targetPort: 4007
+    name: comment-port
+    protocol: TCP

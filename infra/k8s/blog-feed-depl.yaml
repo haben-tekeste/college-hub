@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-feed-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-feed
+  template:
+    metadata:
+      labels:
+        app: blog-feed
+    spec:
+      containers:
+      - name: blog-feed
+        image: htekeste/blog-feed
+        env:
+          - name: MONGO_URI
+            value: "mongodb://blog-feed-mongo-srv:27017/blog-feed"
+          - name: JWT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: jwt-secret-key
+                key: JWT_KEY
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-feed-srv
+spec:
+  selector:
+    app: blog-feed
+  ports:
+  - port: 4008
+    targetPort: 4008
+    name: blog-feed-port
+    protocol: TCP

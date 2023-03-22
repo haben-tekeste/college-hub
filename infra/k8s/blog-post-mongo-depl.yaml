@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog-post-mongodb-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-post-mongo
+  template:
+    metadata:
+      labels:
+        app: blog-post-mongo
+    spec:
+      containers:
+      - name: blog-post-mongo
+        image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-post-mongo-srv
+spec:
+  selector:
+    app: blog-post-mongo
+  ports:
+  - name: db
+    protocol: TCP
+    port: 27017
+    targetPort: 27017

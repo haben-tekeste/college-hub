@@ -1,0 +1,19 @@
+{
+  "name": "notification",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --poll src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "@types/nodemailer": "^6.4.7",
+    "nats": "^2.12.1",
+    "nodemailer": "^6.9.1",
+    "ts-node-dev": "^2.0.0"
+  }
+}

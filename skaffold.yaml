@@ -1,0 +1,90 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+deploy:
+  kubectl: {}
+build:
+  artifacts:
+    - image: htekeste/auth
+      context: Auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/client
+    #   context: client
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "**/*.js"
+    - image: htekeste/application
+      context: Application
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/blog-feed
+      context: BlogFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/blog-post
+      context: BlogPost
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/comment
+      context: Comment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/comment-moderation
+      context: CommentModeration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/profile
+      context: Profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/project
+      context: Project
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: htekeste/project-feed
+      context: ProjectFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+manifests:
+  rawYaml:
+    - "./infra/k8s/*"
+ 

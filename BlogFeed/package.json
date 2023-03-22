@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "@types/cookie-session": "^2.0.44",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "cloudinary": "^1.35.0",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-validator": "^6.15.0",
+    "helmet": "^6.0.1",
+    "mongoose": "^7.0.2",
+    "nats": "^2.13.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "name": "blogfeed",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "ts-node-dev --poll src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
