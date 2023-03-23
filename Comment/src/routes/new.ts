@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import mongoose from "mongoose";
-import { validateRequest, NotFoundError } from "../../../Common/src";
+import { validateRequest, NotFoundError } from "@hthub/common";
 import { Comment } from "../model/comment";
 
 const router = express.Router();

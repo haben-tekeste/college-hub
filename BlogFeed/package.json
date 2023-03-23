@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@hthub/common": "^1.0.2",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
@@ -16,7 +17,6 @@
   "name": "blogfeed",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts"
   },

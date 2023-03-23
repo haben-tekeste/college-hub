@@ -7,8 +7,10 @@ const start = async () => {
     //     inputs: inputs,
     //     examples: examples,
     //   });
+    console.log("Expiration ------> Running")
   } catch (error) {
     console.log(error);
   }
 };
 
+start()

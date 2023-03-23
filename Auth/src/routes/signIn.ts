@@ -7,7 +7,7 @@ import {
   BadRequestError,
   isVerified,
   validateRequest,
-} from "../../../Common/src";
+} from "@hthub/common";
 
 const router = express.Router();
 

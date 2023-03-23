@@ -6,7 +6,7 @@ import {
   isVerified,
   errorHandler,
   NotFoundError,
-} from "../../Common/src";
+} from "@hthub/common";
 import cookieSession from "cookie-session";
 import { newApplicationRouter } from "./routes/new";
 import { updateApplicationRouter } from "./routes/update";

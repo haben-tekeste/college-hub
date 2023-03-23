@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-import { NotFoundError } from "../../../Common/src";
+import { NotFoundError } from "@hthub/common";
 import { Profile } from "../model/profile";
 
 const router = express.Router();

@@ -4,7 +4,7 @@ import {
   isVerified,
   NotFoundError,
   validateRequest,
-} from "../../../Common/src";
+} from "@hthub/common";
 import { Token } from "../model/token";
 import { User } from "../model/user";
 

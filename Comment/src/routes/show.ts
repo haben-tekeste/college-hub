@@ -1,5 +1,5 @@
 import express from "express";
-import { NotFoundError } from "../../../Common/src";
+import { NotFoundError } from "@hthub/common";
 import { Comment } from "../model/comment";
 
 const router = express.Router();

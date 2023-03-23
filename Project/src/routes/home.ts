@@ -1,12 +1,11 @@
 import { Project } from "../model/project";
 import express from "express";
-import { NotFoundError } from "../../../Common/src";
+import { NotFoundError } from "@hthub/common";
 
 const router = express.Router();
 
 router.get("/api/projects/", async (req, res, next) => {
   try {
-    
     const projects = await Project.find({});
 
     if (!projects) throw new NotFoundError();

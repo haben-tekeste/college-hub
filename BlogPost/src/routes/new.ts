@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
-import { validateRequest } from "../../../Common/src";
+import { validateRequest } from "@hthub/common";
 import { Blog } from "../model/blog";
 import summaryTool from "node-summary";
 

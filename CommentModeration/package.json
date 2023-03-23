@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hthub/common": "^1.0.2",
     "cohere-ai": "^6.0.0",
     "nats": "^2.13.1",
     "ts-node-dev": "^2.0.0"

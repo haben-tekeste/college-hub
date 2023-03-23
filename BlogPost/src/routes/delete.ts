@@ -1,5 +1,5 @@
 import express from "express";
-import { NotAuthorizedError, NotFoundError } from "../../../Common/src";
+import { NotAuthorizedError, NotFoundError } from "@hthub/common";
 import { Blog } from "../model/blog";
 
 const router = express.Router();

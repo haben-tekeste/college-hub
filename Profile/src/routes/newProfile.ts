@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { BadRequestError, validateRequest } from "../../../Common/src";
+import { BadRequestError, validateRequest } from "@hthub/common";
 import { Profile } from "../model/profile";
 
 const router = express.Router();

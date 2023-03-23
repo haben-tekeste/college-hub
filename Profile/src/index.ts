@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import express from "express"
 import cors from 'cors'
 import cookieSession from 'cookie-session'
-import {currentUserMiddleware, isVerified, NotFoundError, errorHandler} from "../../Common/src/"
+import {currentUserMiddleware, isVerified, NotFoundError, errorHandler} from "@hthub/common"
 import { createProfileRouter, getProfileRouter } from "./routes";
 
 const app = express()

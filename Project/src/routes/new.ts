@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { validateRequest } from "../../../Common/src";
+import { validateRequest } from "@hthub/common";
 import { body } from "express-validator";
 import { Project } from "../model/project";
 
@@ -15,7 +15,7 @@ router.post(
   "/api/projects/new",
   [
     body("tags").not().isEmpty(),
-    body('topic'),
+    body("topic"),
     body("description")
       .trim()
       .escape()
@@ -31,7 +31,7 @@ router.post(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {tags, topic, description, deadline, skillSet } = req.body;
+      const { tags, topic, description, deadline, skillSet } = req.body;
       const project = await Project.findOne({ description });
 
       if (project) {

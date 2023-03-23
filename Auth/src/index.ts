@@ -8,7 +8,7 @@ import {
   signupRouter,
   verifyEmailRouter,
 } from "./routes";
-import { NotFoundError, errorHandler } from "../../Common/src";
+import { NotFoundError, errorHandler } from "@hthub/common";
 import cookieSession from "cookie-session";
 import mongoose from "mongoose";
 

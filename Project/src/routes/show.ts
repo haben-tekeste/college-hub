@@ -1,6 +1,6 @@
 import { Project } from "../model/project";
 import express from "express";
-import { NotFoundError } from "../../../Common/src";
+import { NotFoundError } from "@hthub/common";
 
 const router = express.Router();
 

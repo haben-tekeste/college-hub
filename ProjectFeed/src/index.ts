@@ -6,7 +6,7 @@ import {
   currentUserMiddleware,
   isVerified,
   NotFoundError,
-} from "../../Common/src";
+} from "@hthub/common";
 import cookieSession from "cookie-session";
 import { getFeedRouter } from "./routes/home";
 import { searchTermRouter } from "./routes/search";

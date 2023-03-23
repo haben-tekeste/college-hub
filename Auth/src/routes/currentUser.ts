@@ -1,5 +1,5 @@
 import express from "express";
-import { currentUserMiddleware } from "../../../Common/src";
+import { currentUserMiddleware } from "@hthub/common";
 
 const router = express.Router();
 

@@ -5,7 +5,7 @@ import {
   NotAuthorizedError,
   NotFoundError,
   validateRequest,
-} from "../../../Common/src";
+} from "@hthub/common";
 import { Comment } from "../model/comment";
 
 const router = express.Router();

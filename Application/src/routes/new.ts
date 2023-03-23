@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { NotFoundError, validateRequest } from "../../../Common/src";
+import { NotFoundError, validateRequest } from "@hthub/common";
 import mongoose from "mongoose";
 import { Project } from "../models/project";
 import { Application } from "../models/application";

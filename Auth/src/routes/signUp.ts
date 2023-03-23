@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import jsonwebtoken from "jsonwebtoken";
-import { validateRequest, BadRequestError } from "../../../Common/src";
+import { validateRequest, BadRequestError } from "@hthub/common";
 import { User } from "../model/user";
 import { randomInt } from "node:crypto";
 

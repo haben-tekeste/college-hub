@@ -3,7 +3,7 @@ import {
   NotAuthorizedError,
   NotFoundError,
   validateRequest,
-} from "../../../Common/src";
+} from "@hthub/common";
 import { Blog } from "../model/blog";
 import { body } from "express-validator";
 

@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { validateRequest } from "../../../Common/src";
+import { validateRequest } from "@hthub/common";
 import { body } from "express-validator";
 import { Project } from "../model/project";
 

@@ -7,7 +7,7 @@ import {
   errorHandler,
   isVerified,
   NotFoundError,
-} from "../../Common/src";
+} from "@hthub/common";
 import helmet from "helmet";
 import {
   getAllBlogsRouter,
