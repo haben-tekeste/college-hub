@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: project
-          image: htekeste/project
+          image: us.gcr.io/student-hub-381513/project
           env:
           - name: MONGO_URI
             value: "mongodb://project-mongo-srv:27017/project"
