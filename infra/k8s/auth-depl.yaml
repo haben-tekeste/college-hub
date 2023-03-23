@@ -15,6 +15,10 @@ spec:
       containers:
       - name: auth
         image: us.gcr.io/student-hub-381513/auth
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         env:
           - name: MONGO_URI
             value: "mongodb://mongodb-auth-srv:27017/auth"
@@ -38,3 +42,4 @@ spec:
     targetPort: 4000
     name: auth-port
     protocol: TCP
+
