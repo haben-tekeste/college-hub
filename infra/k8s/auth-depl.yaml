@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: auth
-        image: us.gcr.io/student-hub-381513/auth
+        # image: us.gcr.io/student-hub-381513/auth
+        image: htekeste/auth
         resources:
           limits:
             memory: "128Mi"

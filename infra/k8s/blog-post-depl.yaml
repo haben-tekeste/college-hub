@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: blog-post
-        image: us.gcr.io/student-hub-381513/blog-post
+        # image: us.gcr.io/student-hub-381513/blog-post
+        image: htekeste/blog-post
         env:
           - name: MONGO_URI
             value: "mongodb://blog-post-mongo-srv:27017/blog-post"

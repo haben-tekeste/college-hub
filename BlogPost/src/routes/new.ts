@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import { validateRequest } from "@hthub/common";
 import { Blog } from "../model/blog";
-import summaryTool from "node-summary";
+// import summaryTool from "node-summary";
 
 const router = express.Router();
 
@@ -29,13 +29,13 @@ router.post(
       });
 
       // add summary
-      let txtsummary;
-      summaryTool.summarize(title, content, (err, summary) => {
-        if (err) throw new Error("Something went wrong");
-        txtsummary = summary;
-      });
+      // let txtsummary;
+      // summaryTool.summarize(title, content, (err, summary) => {
+      //   if (err) throw new Error("Something went wrong");
+      //   txtsummary = summary;
+      // });
 
-      if (txtsummary) newBlog.set({summary: txtsummary})
+      // if (txtsummary) newBlog.set({summary: txtsummary})
 
       // add tags
 

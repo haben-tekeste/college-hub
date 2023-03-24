@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: comment
-        image: us.gcr.io/student-hub-381513/comment
+        # image: us.gcr.io/student-hub-381513/comment
+        image: htekeste/comment
         env:
           - name: MONGO_URI
             value: "mongodb://comment-mongo-srv:27017/comment"
