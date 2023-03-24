@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: blog-feed
-        # image: us.gcr.io/student-hub-381513/blog-feed
-        image: htekeste/blog-feed
+        image: us.gcr.io/student-hub-381513/blog-feed
+        # image: htekeste/blog-feed
         env:
           - name: MONGO_URI
             value: "mongodb://blog-feed-mongo-srv:27017/blog-feed"

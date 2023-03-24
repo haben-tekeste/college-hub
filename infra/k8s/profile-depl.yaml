@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: profile
-        # image: us.gcr.io/student-hub-381513/profile
-        image: htekeste/profile
+        image: us.gcr.io/student-hub-381513/profile
+        # image: htekeste/profile
         env:
           - name: MONGO_URI
             value: "mongodb://profile-mongo-srv:27017/profile"
