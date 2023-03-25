@@ -5,6 +5,7 @@ import { User } from "../model/user";
 import { PasswordManager } from "../utils/passwordManager";
 import {
   BadRequestError,
+  EmailVerificationError,
   isVerified,
   validateRequest,
 } from "@hthub/common";
@@ -21,7 +22,6 @@ router.post(
     body("password").trim().notEmpty().withMessage("Please provide password"),
   ],
   validateRequest,
-  isVerified,
   async (
     req: express.Request,
     res: express.Response,
@@ -36,6 +36,8 @@ router.post(
         password
       );
       if (!passwordMatched) throw new BadRequestError("Invalid Credentials");
+
+      if (!existingUser.isVerfified) throw new EmailVerificationError();
 
       // Generate jwt token
       const jwtToken = jsonwebtoken.sign(

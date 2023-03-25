@@ -14,11 +14,12 @@ import mongoose from "mongoose";
 
 const app = express();
 
+app.set("proxy", true);
 app.use(cors());
 app.use(express.json());
 app.use(
   cookieSession({
-    // secure: true,
+    secure: true,
     signed: false,
   })
 );
@@ -39,10 +40,9 @@ app.use("*", (req, res) => {
 // error handling
 app.use(errorHandler);
 
-
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
-  if (!process.env.MONGO_URI) throw new Error('Mongodb URI must be defined')
+  if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
   try {
     await mongoose.connect(process.env.MONGO_URI);
   } catch (error) {
@@ -53,3 +53,4 @@ const start = async () => {
   });
 };
 
+start();

@@ -100,5 +100,6 @@ build:
             src: "src/**/*.ts"
 manifests:
   rawYaml:
-    - "./infra/k8s/*"
+    - "./infra/k8s/auth-depl.yaml"
+    - "./infra/k8s/auth-mongo-depl.yaml"
  

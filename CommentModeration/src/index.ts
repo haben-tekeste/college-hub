@@ -1,6 +1,6 @@
 // import cohere from "cohere-ai";
 
-const start = async () => {
+const start = () => {
   try {
     //   cohere.init("<<apiKey>>");
     //   const response = await cohere.classify({
