@@ -9,7 +9,7 @@ import {
 } from "@hthub/common";
 import cookieSession from "cookie-session";
 import { newApplicationRouter } from "./routes/new";
-import { updateApplicationRouter } from "./routes/update";
+import { updateApplicationRouter } from "./routes/approve";
 import { getApplicationRouter } from "./routes/show";
 import { allApplicationsRouter } from "./routes/home";
 

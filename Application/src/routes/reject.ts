@@ -4,6 +4,6 @@ import { validateRequest } from "@hthub/common";
 
 const router = express.Router();
 
-router.put("/api/applications");
+router.put("/api/applications/reject/:applicationId");
 
 export { router as updateApplicationRouter };

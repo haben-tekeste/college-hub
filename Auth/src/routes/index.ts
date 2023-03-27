@@ -4,3 +4,4 @@ export { signoutRouter } from "./signOut";
 export { currentuserRouter } from "./currentUser";
 export { forgetPasswordRouter } from "./forgotPassword";
 export { verifyEmailRouter } from "./verify";
+export {updatePasswordRouter} from "./updatePassword"

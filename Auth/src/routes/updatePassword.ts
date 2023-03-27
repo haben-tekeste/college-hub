@@ -10,14 +10,31 @@ import { User } from "../model/user";
 
 const router = express.Router();
 
-router.post(
+router.put(
   "/api/users/update/credential/:userId/:token",
   body("password")
-    .trim()
-    .isLength({ min: 8, max: 20 })
-    .withMessage("New password must be between 8 and 20"),
+      .trim()
+      .isLength({ min: 8, max: 20 })
+      .withMessage("Password must be between 5 and 20")
+      .isStrongPassword({
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+        returnScore: false,
+        pointsPerUnique: 1,
+        pointsPerRepeat: 0.5,
+        pointsForContainingLower: 10,
+        pointsForContainingUpper: 10,
+        pointsForContainingNumber: 10,
+        pointsForContainingSymbol: 10,
+      })
+      .withMessage(
+        "Passoword must include: 1 Upper case letter 1 lower case letter 1 Number 1 Sybmol"
+      ),
   validateRequest,
-  isVerified,
+  // isVerified,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { password } = req.body;
@@ -37,16 +54,18 @@ router.post(
 
       // verify token
       const user = await User.findById(userId);
-      if (!user) throw new NotFoundError();
+      if (!user) throw new Error("User not found");
 
       user.set({ password });
       await user.save();
       await existingToken.deleteOne();
       // send email to notify about password update
 
-      res.status(200).json({});
+      res.status(200).json({success:true});
     } catch (error) {
       next(error);
     }
   }
 );
+
+export {router as updatePasswordRouter}

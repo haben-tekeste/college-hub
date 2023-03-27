@@ -1,9 +1,16 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { IDocument as ProjectDoc } from "./project";
+
+export interface ApplicationStatus {
+  Pending: "pending";
+  Approve: "approved";
+  Reject: "rejected";
+}
 
 // An interface that describes
 // properties required to create a application idea
 interface IApplication {
-  projectId: string;
+  projectId: ProjectDoc;
   userId: string;
   status: string;
   createdAt: Date;
@@ -18,7 +25,7 @@ interface IModel extends mongoose.Model<IDocument> {
 // an interface that describes the properties
 // a application document has
 interface IDocument extends mongoose.Document {
-  projectId: string;
+  projectId: ProjectDoc;
   userId: string;
   status: string;
   createdAt: Date;

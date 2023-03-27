@@ -6,7 +6,7 @@ import { PasswordManager } from "../utils/passwordManager";
 interface IUser {
   email: string;
   password: string;
-  verficationNumber: number;
+  verificationNumber: string;
   expiresAt: Date;
 }
 
@@ -22,9 +22,9 @@ interface IModel extends mongoose.Model<IDocument> {
 interface IDocument extends mongoose.Document {
   email: string;
   password: string;
-  verficationNumber: number;
+  verificationNumber: string;
   expiresAt: Date;
-  isVerfified: boolean;
+  isVerified: boolean;
 }
 
 const userSchema = new mongoose.Schema(
@@ -38,7 +38,8 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     verificationNumber: {
-      type: Number,
+      type: String,
+      required:true
     },
     isVerified: {
       type: Boolean,
@@ -48,7 +49,7 @@ const userSchema = new mongoose.Schema(
     expiresAt: {
       type: mongoose.Schema.Types.Date,
       required: true,
-    }
+    },
   },
   {
     toJSON: {

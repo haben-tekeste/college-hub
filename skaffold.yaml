@@ -17,87 +17,87 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/client
-    # # - image: us.gcr.io/student-hub-381513/client
-    #   context: client
+    # # - image: htekeste/client
+    # # # - image: us.gcr.io/student-hub-381513/client
+    # #   context: client
+    # #   docker:
+    # #     dockerfile: Dockerfile
+    # #   sync:
+    # #     manual:
+    # #       - dest: .
+    # #         src: "**/*.js"
+    # # - image: htekeste/application
+    # - image: us.gcr.io/student-hub-381513/application
+    #   context: Application
     #   docker:
     #     dockerfile: Dockerfile
     #   sync:
     #     manual:
     #       - dest: .
-    #         src: "**/*.js"
-    # - image: htekeste/application
-    - image: us.gcr.io/student-hub-381513/application
-      context: Application
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/blog-feed
-    - image: us.gcr.io/student-hub-381513/blog-feed
-      context: BlogFeed
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/blog-post
-    - image: us.gcr.io/student-hub-381513/blog-post
-      context: BlogPost
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/comment
-    - image: us.gcr.io/student-hub-381513/comment
-      context: Comment
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/comment-moderation
-    - image: us.gcr.io/student-hub-381513/comment-moderation
-      context: CommentModeration
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/profile
-    - image: us.gcr.io/student-hub-381513/profile
-      context: Profile
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/project
-    - image: us.gcr.io/student-hub-381513/project
-      context: Project
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
-    # - image: htekeste/project-feed
-    - image: us.gcr.io/student-hub-381513/project-feed
-      context: ProjectFeed
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/blog-feed
+    # - image: us.gcr.io/student-hub-381513/blog-feed
+    #   context: BlogFeed
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/blog-post
+    # - image: us.gcr.io/student-hub-381513/blog-post
+    #   context: BlogPost
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/comment
+    # - image: us.gcr.io/student-hub-381513/comment
+    #   context: Comment
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/comment-moderation
+    # - image: us.gcr.io/student-hub-381513/comment-moderation
+    #   context: CommentModeration
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/profile
+    # - image: us.gcr.io/student-hub-381513/profile
+    #   context: Profile
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/project
+    # - image: us.gcr.io/student-hub-381513/project
+    #   context: Project
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
+    # # - image: htekeste/project-feed
+    # - image: us.gcr.io/student-hub-381513/project-feed
+    #   context: ProjectFeed
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
 manifests:
   rawYaml:
     - "./infra/k8s/auth-depl.yaml"

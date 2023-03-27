@@ -28,7 +28,7 @@ router.post(
         throw new Error("Project not found or expired");
       }
       if (project.postedBy === req.currentUser?.id)
-        throw new Error("You can apply to your own project");
+        throw new Error("You can't apply to your own project");
       const id = req.currentUser?.id || "";
       const application = Application.build({
         projectId,

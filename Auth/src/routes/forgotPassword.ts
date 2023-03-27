@@ -28,7 +28,7 @@ router.post(
 
       // send email (token)
 
-      res.status(201).json({});
+      res.status(201).json(token);
     } catch (error) {
       next(error);
     }

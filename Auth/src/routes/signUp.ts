@@ -15,6 +15,7 @@ router.post(
     body("password")
       .trim()
       .isLength({ min: 8, max: 20 })
+      .withMessage("Password must be between 5 and 20")
       .isStrongPassword({
         minLength: 8,
         minLowercase: 1,
@@ -29,7 +30,9 @@ router.post(
         pointsForContainingNumber: 10,
         pointsForContainingSymbol: 10,
       })
-      .withMessage("Password must be between 5 and 20"),
+      .withMessage(
+        "Passoword must include: 1 Upper case letter 1 lower case letter 1 Number 1 Sybmol"
+      ),
   ],
   validateRequest,
   async (
@@ -45,10 +48,7 @@ router.post(
       }
 
       // generate verification number
-      const verficationNumber = parseInt(
-        randomInt(1000_000).toString().padStart(6, "0")
-      );
-
+      const verificationNumber = randomInt(1000_000).toString().padStart(6, "0");
       // calculate expiration date for verification
       const expiration = new Date();
       expiration.setSeconds(expiration.getSeconds() + WINDOW_MINUTES_INTERVAL);
@@ -56,7 +56,7 @@ router.post(
       const newUser = User.build({
         email,
         password,
-        verficationNumber,
+        verificationNumber,
         expiresAt: expiration,
       });
 
@@ -73,7 +73,7 @@ router.post(
         process.env.JWT_KEY!
       );
       req.session = { jwt: jwtToken };
-      res.status(201).json(jwtToken);
+      res.status(201).json(verificationNumber);
     } catch (error) {
       return next(error);
     }

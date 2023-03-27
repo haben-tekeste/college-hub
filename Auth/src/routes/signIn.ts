@@ -37,7 +37,7 @@ router.post(
       );
       if (!passwordMatched) throw new BadRequestError("Invalid Credentials");
 
-      if (!existingUser.isVerfified) throw new EmailVerificationError();
+      if (!existingUser.isVerified) throw new EmailVerificationError();
 
       // Generate jwt token
       const jwtToken = jsonwebtoken.sign(
@@ -48,7 +48,7 @@ router.post(
         process.env.JWT_KEY!
       );
       req.session = { jwt: jwtToken };
-      res.status(200).json();
+      res.status(200).json(jwtToken);
     } catch (error) {
       return next(error);
     }

@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler } from "express";
+import express from "express";
 import cors from "cors";
 import {
   currentuserRouter,
@@ -7,10 +7,11 @@ import {
   signoutRouter,
   signupRouter,
   verifyEmailRouter,
+  updatePasswordRouter,
 } from "./routes";
 import { NotFoundError, errorHandler } from "@hthub/common";
 import cookieSession from "cookie-session";
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(
   cookieSession({
-    secure: true,
+    // secure: true,
     signed: false,
   })
 );
@@ -31,6 +32,7 @@ app.use(signoutRouter);
 app.use(currentuserRouter);
 app.use(verifyEmailRouter);
 app.use(forgetPasswordRouter);
+app.use(updatePasswordRouter);
 
 // 404 error
 app.use("*", (req, res) => {

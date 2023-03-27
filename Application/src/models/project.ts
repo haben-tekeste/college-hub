@@ -20,7 +20,7 @@ interface IModel extends mongoose.Model<IDocument> {
 
 // an interface that describes the properties
 // a project document has
-interface IDocument extends mongoose.Document {
+export interface IDocument extends mongoose.Document {
   topic: string;
   description: string;
   postedBy: string;
