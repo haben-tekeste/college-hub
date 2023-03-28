@@ -1,35 +1,39 @@
 import mongoose, { Schema } from "mongoose";
 
 // An interface that describes
-// properties required to create a comment
-interface IComment {
+// properties required to create a answer
+interface IAnswer {
   author: string;
   content: string;
-  parentId: string;
-  blogId: string;
+  questionId: string;
   createdAt: Date;
 }
 
 // an interface that describes
-// the properties of a comment model
+// the properties of a answer model
 interface IModel extends mongoose.Model<IDocument> {
-  build(comment: IComment): IDocument;
+  build(answer: IAnswer): IDocument;
 }
 
 // an interface that describes the properties
-// a comment document has
+// a answer document has
 interface IDocument extends mongoose.Document {
   author: string;
   content: string;
-  parentId: string;
-  blogId: string;
+  questionId: string;
   createdAt: Date;
-  likes: number;
-  updatedAt: Date;
+  upvotes: {
+    quantity: number;
+    voters: string[];
+  };
+  downvotes: {
+    quantity: number;
+    voters: string[];
+  };
   approval: string;
 }
 
-const commentSchema = new mongoose.Schema(
+const answerSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
@@ -39,11 +43,7 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    parentId: {
-      type: mongoose.Schema.Types.ObjectId,
-      requried: true,
-    },
-    blogId: {
+    questionId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
@@ -51,13 +51,24 @@ const commentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Date,
       required: true,
     },
-    updatedAt: {
-      type: mongoose.Schema.Types.Date,
-    },
     approval: {
       type: String,
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
+    },
+    upvotes: {
+      quantity: {
+        type: Number,
+        default: 0
+      },
+      voters: [String],
+    },
+    downvotes: {
+      quantity: {
+        type: Number,
+        default: []
+      },
+      voters: [String],
     },
   },
   {
@@ -71,11 +82,8 @@ const commentSchema = new mongoose.Schema(
   }
 );
 
-commentSchema.statics.build = (comment: IComment) => {
-  return new Comment(comment);
+answerSchema.statics.build = (answer: IAnswer) => {
+  return new Answer(answer);
 };
 
-export const Comment = mongoose.model<IDocument, IModel>(
-  "Comment",
-  commentSchema
-);
+export const Answer = mongoose.model<IDocument, IModel>("Answer", answerSchema);

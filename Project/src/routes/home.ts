@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/api/projects/", async (req, res, next) => {
   try {
-    const projects = await Project.find({});
+    const projects = await Project.find({postedBy:req.currentUser?.id});
 
     if (!projects) throw new NotFoundError();
 

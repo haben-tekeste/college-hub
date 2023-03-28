@@ -5,9 +5,8 @@ const router = express.Router();
 
 router.get("/api/blogs", async (req, res, next) => {
   try {
-    const blogs = await Blog.find();
-
-    res.status(200).json({});
+    const blogs = await Blog.find({ author: req.currentUser?.id });
+    res.status(200).json(blogs);
   } catch (error) {
     next(error);
   }
