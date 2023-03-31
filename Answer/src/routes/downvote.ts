@@ -9,9 +9,9 @@ router.post("/api/answers/downvote/:answerId", async (req, res, next) => {
     const answer = await Answer.findById(answerId);
     if (!answer) throw new Error("Answer not found");
 
-    if (req.currentUser?.id || "" in answer.downvotes.voters)
+    if (req.currentUser?.id! in answer.downvotes.voters)
       throw new Error("You have alread downvoted the answer");
-    if (req.currentUser?.id || "" in answer.upvotes.voters) {
+    if (req.currentUser?.id! in answer.upvotes.voters) {
       const ds = answer.upvotes.voters.filter(
         (ans) => ans === req.currentUser?.id
       );
@@ -26,7 +26,7 @@ router.post("/api/answers/downvote/:answerId", async (req, res, next) => {
     answer.set({
       downvotes: {
         quantity: answer.downvotes.quantity + 1,
-        voters: answer.downvotes.voters.push(req.currentUser?.id || ""),
+        voters: answer.downvotes.voters.push(req.currentUser?.id!),
       },
     });
     await answer.save();

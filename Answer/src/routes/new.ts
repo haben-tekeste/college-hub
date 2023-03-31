@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
-import { NotAuthorizedError } from "@hthub/common";
+import { NotAuthorizedError, validateRequest } from "@hthub/common";
 import mongoose from "mongoose";
 import { Answer } from "../model/answer";
 
@@ -18,11 +18,12 @@ router.post(
           throw new Error("Invalid question");
       }),
   ],
+  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { content, questionId } = req.body;
       const answer = Answer.build({
-        author: req.currentUser?.id || "",
+        author: req.currentUser?.id!,
         content,
         questionId,
         createdAt: new Date(),

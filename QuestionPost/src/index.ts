@@ -9,8 +9,13 @@ import {
   NotFoundError,
 } from "@hthub/common";
 import helmet from "helmet";
-import { newAnswerRouter, getAnswerRouter, updateAnswerRouter, upvoteAnswerRouter,downvoteAnswerRouter, deleteAnswerRouter } from "./routes";
-
+import {
+  createQuestionRouter,
+  getQuestionRouter,
+  updateQuestionRouter,
+  myquestionsRouter,
+  deleteQuestionRouter,
+} from "./routes";
 
 const app = express();
 
@@ -29,12 +34,11 @@ app.use(currentUserMiddleware);
 app.use(isVerified);
 
 // routes
-app.use(newAnswerRouter)
-app.use(getAnswerRouter)
-app.use(updateAnswerRouter)
-app.use(upvoteAnswerRouter)
-app.use(downvoteAnswerRouter)
-app.use(deleteAnswerRouter)
+app.use(createQuestionRouter);
+app.use(updateQuestionRouter);
+app.use(deleteQuestionRouter);
+app.use(myquestionsRouter);
+app.use(getQuestionRouter);
 
 // 404 error
 app.use("*", (req, res) => {
@@ -52,8 +56,8 @@ const start = async () => {
   } catch (error) {
     console.error(error);
   }
-  app.listen(4008, () => {
-    console.log("Answer -----> 4008");
+  app.listen(4009, () => {
+    console.log("QuestionPost -----> 4009");
   });
 };
 
