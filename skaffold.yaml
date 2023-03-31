@@ -72,14 +72,14 @@ build:
     #       - dest: .
     #         src: "src/**/*.ts"
     # # - image: htekeste/profile
-    # - image: us.gcr.io/student-hub-381513/profile
-    #   context: Profile
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/profile
+      context: Profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
     # # - image: htekeste/project
     # - image: us.gcr.io/student-hub-381513/project
     #   context: Project
@@ -100,6 +100,8 @@ build:
     #         src: "src/**/*.ts"
 manifests:
   rawYaml:
-    - "./infra/k8s/elastic-search-depl.yaml"
-    # - "./infra/k8s/auth-mongo-depl.yaml"
+    - "./infra/k8s/auth-depl.yaml"
+    - "./infra/k8s/auth-mongo-depl.yaml"
+    - "./infra/k8s/profile-depl.yaml"
+    - "./infra/k8s/profile-mongo-depl.yaml"
  

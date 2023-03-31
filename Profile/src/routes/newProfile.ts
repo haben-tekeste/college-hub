@@ -5,8 +5,6 @@ import { Profile } from "../model/profile";
 
 const router = express.Router();
 
-// major, concentration, yearOfStudy, resume, cGPA, notification, experience, skills, summary
-
 router.get(
   "/api/profiles/new",
   [
