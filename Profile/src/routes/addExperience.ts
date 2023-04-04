@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
   "/api/profiles/experience/add",
   [
-    body("title").not().isEmpty().isAlpha().escape(),
+    body("title").not().isEmpty().escape(),
     body("company").not().isEmpty().isAlphanumeric().escape(),
     body("period").not().isEmpty().isNumeric(),
     body("isCurrentJob").not().isEmpty().isBoolean(),
@@ -21,7 +21,7 @@ router.post(
       const profile = await Profile.findOne({ userId: req.currentUser?.id });
       if (!profile) throw new Error("Profile not found Error");
       profile.set({
-        experience: {
+        experiences: {
           title,
           company,
           period,
@@ -36,3 +36,5 @@ router.post(
     }
   }
 );
+
+export {router as addExperienceRouter}

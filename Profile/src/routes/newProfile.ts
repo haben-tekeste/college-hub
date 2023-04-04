@@ -5,7 +5,7 @@ import { Profile } from "../model/profile";
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/api/profiles/new",
   [
     body("major").trim().not().isEmpty().escape(),

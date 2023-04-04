@@ -54,7 +54,7 @@ const projectSchema = new mongoose.Schema(
     },
     skillSet: [
       {
-        name: String,
+        type: String,
       },
     ],
     tags: [String],

@@ -8,6 +8,9 @@ import {
   isVerified,
   NotFoundError,
 } from "@hthub/common";
+import { createProjectRouter } from "./routes/new";
+import { getProjectRouter } from "./routes/show";
+import { getAllProjectsRouter } from "./routes/home";
 
 const app = express();
 
@@ -22,7 +25,12 @@ app.use(
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
+// app.use(isVerified);
+
+// routes
+app.use(createProjectRouter)
+app.use(getProjectRouter)
+app.use(getAllProjectsRouter)
 
 // 404 error
 app.use("*", (req, res) => {

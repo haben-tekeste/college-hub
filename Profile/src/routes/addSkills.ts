@@ -43,3 +43,5 @@ router.post(
     }
   }
 );
+
+export {router as addSkillRouter}

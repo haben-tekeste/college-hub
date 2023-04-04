@@ -15,7 +15,7 @@ router.post(
   "/api/projects/new",
   [
     body("tags").not().isEmpty(),
-    body("topic"),
+    body("topic").not().isEmpty(),
     body("description")
       .trim()
       .escape()
