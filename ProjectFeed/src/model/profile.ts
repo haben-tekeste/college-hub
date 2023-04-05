@@ -7,6 +7,7 @@ interface ISkill {
 // An interface that describes
 // properties required to create a profile
 interface IProfile {
+  id: string,
   major: string;
   concentration: string;
   userId: string;
@@ -65,7 +66,12 @@ const profileSchema = new mongoose.Schema(
 );
 
 profileSchema.statics.build = (profile: IProfile) => {
-  return new Profile(profile);
+  return new Profile({
+    _id:profile.id,
+    major: profile.major,
+    concentration: profile.concentration,
+    userId: profile.userId
+  });
 };
 
 export const Profile = mongoose.model<IDocument, IModel>(

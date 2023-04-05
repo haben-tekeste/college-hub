@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a project idea
 interface IProject {
+  id: string,
   topic: string;
   description: string;
   postedBy: string;
@@ -57,6 +58,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tags:{
+      type: [String],
+      requried:true
+    }
   },
   {
     toJSON: {
@@ -70,7 +75,16 @@ const projectSchema = new mongoose.Schema(
 );
 
 projectSchema.statics.build = (project: IProject) => {
-  return new Project(project);
+  return new Project({
+    _id: project.id,
+    topic: project.topic,
+    description: project.description,
+    deadline: project.deadline,
+    tags: project.tags,
+    postedBy: project.postedBy,
+    createdAt: project.createdAt,
+    skillSet: project.skillSet
+  });
 };
 
 projectSchema.index({
