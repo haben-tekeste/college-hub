@@ -2,14 +2,10 @@ import express, { Request, Response, NextFunction } from "express";
 import { validateRequest } from "@hthub/common";
 import { body } from "express-validator";
 import { Project } from "../model/project";
+import { ProjectCreatedPublisher } from "../events/publisher/project-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
-
-// description: string;
-//   postedBy: string;
-//   createdAt: Date;
-//   deadline: Date;
-//   skillSet: string[];
 
 router.post(
   "/api/projects/new",
@@ -51,6 +47,16 @@ router.post(
       });
 
       await newProject.save();
+      new ProjectCreatedPublisher(natswrapper.Client).publish({
+        id: newProject.id,
+        tags: newProject.tags,
+        description: newProject.description,
+        postedBy: newProject.postedBy,
+        deadline: newProject.deadline.toISOString(),
+        skillSet: newProject.skillSet,
+        topic: newProject.topic,
+        createdAt: newProject.createdAt.toISOString(),
+      });
       res.status(201).json(newProject);
     } catch (error) {
       next(error);

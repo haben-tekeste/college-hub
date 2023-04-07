@@ -14,7 +14,8 @@ export class ProfileCreatedListener extends Listener<ProfileCreated> {
     const { concentration, major, userId, id, skills } = data;
     // check if profile already exists
     const profile = await Profile.findById(id);
-    if (!profile) throw new Error("Profile already exists");
+    
+    if (profile) throw new Error("Profile already exists");
     const newProfile = Profile.build({
       id,
       concentration,

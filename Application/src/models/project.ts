@@ -53,11 +53,7 @@ const projectSchema = new mongoose.Schema(
       type: Schema.Types.Date,
       required: true,
     },
-    skillSet: [
-      {
-        name: String,
-      },
-    ],
+    skillSet: [String],
     tags: [String],
   },
   {

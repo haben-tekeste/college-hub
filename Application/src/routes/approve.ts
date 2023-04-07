@@ -12,7 +12,7 @@ router.put(
     try {
       const { applicationId } = req.params;
       const application = await Application.findById(applicationId).populate(
-        "Project"
+        "projectId"
       );
       if (!application) throw new Error("Application not found");
 
@@ -33,4 +33,4 @@ router.put(
   }
 );
 
-export { router as updateApplicationRouter };
+export { router as approveApplicationRouter };

@@ -1,15 +1,19 @@
 import express from "express";
 import { body } from "express-validator";
-import { validateRequest } from "@hthub/common";
+import { NotAuthorizedError, validateRequest } from "@hthub/common";
 import { Application } from "../models/application";
+import { Project } from "../models/project";
 
 const router = express.Router();
 
-router.get("/api/applications/:projectId", async (req, res, next) => {
+router.get("/api/applications/projects/:projectId", async (req, res, next) => {
   try {
     const { projectId } = req.params;
+    const project = await Project.findById(projectId)
+    if (!project) throw new Error("Project not found")
+    if (project.postedBy !== req.currentUser?.id) throw new NotAuthorizedError()
     const applications = await Application.find({ projectId }).populate({
-      path: "Project",
+      path: "projectId",
       match: {
         postedBy: req.currentUser?.id,
       },

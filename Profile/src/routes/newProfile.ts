@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { BadRequestError, validateRequest } from "@hthub/common";
 import { Profile } from "../model/profile";
+import { ProfileCreatedPublisher } from "../events/publishers/profile-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -42,6 +44,15 @@ router.post(
       if (experiences) profile.set({ experiences });
 
       await profile.save();
+
+      // publish event
+      new ProfileCreatedPublisher(natswrapper.Client).publish({
+        id: profile.id,
+        concentration: profile.concentration,
+        major: profile.major,
+        userId: profile.userId,
+        skills: skills,
+      });
 
       res.status(201).json(profile);
     } catch (error) {

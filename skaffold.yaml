@@ -27,14 +27,14 @@ build:
     # #       - dest: .
     # #         src: "**/*.js"
     # # - image: htekeste/application
-    # - image: us.gcr.io/student-hub-381513/application
-    #   context: Application
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/application
+      context: Application
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
     # # - image: htekeste/blog-feed
     # - image: us.gcr.io/student-hub-381513/blog-feed
     #   context: BlogFeed
@@ -72,14 +72,14 @@ build:
     #       - dest: .
     #         src: "src/**/*.ts"
     # # - image: htekeste/profile
-    # - image: us.gcr.io/student-hub-381513/profile
-    #   context: Profile
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/profile
+      context: Profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
     # # - image: htekeste/project
     - image: us.gcr.io/student-hub-381513/project
       context: Project
@@ -89,19 +89,26 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # # - image: htekeste/project-feed
-    # - image: us.gcr.io/student-hub-381513/project-feed
-    #   context: ProjectFeed
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
+    # - image: htekeste/project-feed
+    - image: us.gcr.io/student-hub-381513/project-feed
+      context: ProjectFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
 manifests:
   rawYaml:
     - "./infra/k8s/auth-depl.yaml"
     - "./infra/k8s/auth-mongo-depl.yaml"
     - "./infra/k8s/project-depl.yaml"
     - "./infra/k8s/project-mongo-depl.yaml"
+    - "./infra/k8s/profile-depl.yaml"
+    - "./infra/k8s/profile-mongo-depl.yaml"
+    - "./infra/k8s/application-depl.yaml"
+    - "./infra/k8s/application-mongo-depl.yaml"
+    - "./infra/k8s/project-feed-depl.yaml"
+    - "./infra/k8s/project-feed-mongo-depl.yaml"
+    - "./infra/k8s/nats-depl.yaml"
  

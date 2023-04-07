@@ -49,11 +49,7 @@ const projectSchema = new mongoose.Schema(
       type: Schema.Types.Date,
       required: true,
     },
-    skillSet: [
-      {
-        name: String,
-      },
-    ],
+    skillSet: [String],
     topic: {
       type: String,
       required: true,

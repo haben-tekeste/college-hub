@@ -11,7 +11,7 @@ router.get("/api/applications/:applicationId", async (req, res, next) => {
     const application = await Application.find({
       _id: applicationId,
       userId: req.currentUser?.id,
-    }).populate("Project");
+    }).populate("projectId");
     if (!application) throw new Error("Application not found");
     res.status(200).json(application);
   } catch (error) {

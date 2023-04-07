@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { NotFoundError, validateRequest } from "@hthub/common";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import { Project } from "../models/project";
 import { Application } from "../models/application";
 import { ApplicationStatus } from "../types/applicationStatus";
@@ -14,9 +14,11 @@ router.post(
     body("projectId")
       .not()
       .isEmpty()
-      .escape()
+      .withMessage("Provide project id")
       .custom((value) => {
-        if (mongoose.Types.ObjectId.isValid(value)) throw new NotFoundError();
+        const isValid = mongoose.Types.ObjectId.isValid(value);
+        if (!isValid) throw new Error("Project not found");
+        return true;
       }),
   ],
   validateRequest,
@@ -27,19 +29,27 @@ router.post(
       if (!project || new Date() > project.deadline) {
         throw new Error("Project not found or expired");
       }
-      if (project.postedBy === req.currentUser?.id)
+
+      if (project.postedBy == req.currentUser?.id)
         throw new Error("You can't apply to your own project");
-      const id = req.currentUser?.id || "";
+      const existingApplication = await Application.findOne({
+        projectId,
+        userId: req.currentUser?.id,
+      });
+      console.log(existingApplication);
+      
+      if (existingApplication)
+        throw new Error("You have already applied to this project");
       const application = Application.build({
         projectId,
         status: ApplicationStatus.Pending,
-        userId: id,
+        userId: req.currentUser?.id!,
         createdAt: new Date(),
       });
 
       await application.save();
 
-      res.status(201).json({ success: "true" });
+      res.status(201).json(application);
     } catch (error) {
       next(error);
     }
