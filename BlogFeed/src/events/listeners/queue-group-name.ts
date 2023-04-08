@@ -1,0 +1,1 @@
+export const queueGroupName = 'blog-feed-service'

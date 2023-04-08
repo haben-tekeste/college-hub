@@ -3,6 +3,8 @@ import { body } from "express-validator";
 import { validateRequest } from "@hthub/common";
 import { Blog } from "../model/blog";
 import summaryTool from "node-summary";
+import { BlogCreatedPublisher } from "../events/publishers/blog-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -34,14 +36,26 @@ router.post(
         txtsummary = summary;
       });
 
-      if (txtsummary) newBlog.set({summary: txtsummary})
+      if (txtsummary) newBlog.set({ summary: txtsummary });
 
       // add tags
 
       // save
       await newBlog.save();
 
-      res.status(201).json({ success: true });
+      // publish events
+      new BlogCreatedPublisher(natswrapper.Client).publish({
+        id: newBlog.id,
+        title: newBlog.title,
+        author: newBlog.author,
+        createdAt: newBlog.createdAt.toISOString(),
+        summary: newBlog.summary,
+        likes: 0,
+        tags: [],
+        content: newBlog.content,
+      });
+
+      res.status(201).json(newBlog);
     } catch (error) {
       next(error);
     }

@@ -3,6 +3,8 @@ import { body } from "express-validator";
 import mongoose from "mongoose";
 import { validateRequest, NotFoundError } from "@hthub/common";
 import { Comment } from "../model/comment";
+import { CommentCreatedPublisher } from "../events/publishers/comment-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -44,6 +46,11 @@ router.post(
       await comment.save();
 
       // publish event to be moderated
+      new CommentCreatedPublisher(natswrapper.Client).publish({
+        id: comment.id,
+        content: comment.content,
+        status:"Pending"
+      })
     } catch (error) {
       next(error);
     }

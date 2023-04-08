@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@hthub/common": "^1.0.2",
+    "@hthub/common": "^1.0.7",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",

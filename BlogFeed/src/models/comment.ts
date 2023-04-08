@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a comment
 interface IComment {
+  id: string;
   author: string;
   content: string;
   parentId: string;
@@ -72,7 +73,10 @@ const commentSchema = new mongoose.Schema(
 );
 
 commentSchema.statics.build = (comment: IComment) => {
-  return new Comment(comment);
+  return new Comment({
+    _id: comment.id,
+    ...comment
+  });
 };
 
 export const Comment = mongoose.model<IDocument, IModel>(
