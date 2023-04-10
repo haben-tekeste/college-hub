@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a question
 interface IQuestion {
+  id: string;
   author: string;
   title: string;
   content: string;
@@ -62,7 +63,13 @@ const QuestionSchema = new mongoose.Schema(
 );
 
 QuestionSchema.statics.build = (question: IQuestion) => {
-  return new Question(question);
+  return new Question({
+    _id: question.id,
+    title: question.title,
+    author: question.author,
+    createdAt: question.createdAt,
+    content: question.content,
+  });
 };
 
 export const Question = mongoose.model<IDocument, IModel>(

@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a answer
 interface IAnswer {
+  id: string,
   author: string;
   content: string;
   questionId: string;
@@ -85,7 +86,10 @@ const answerSchema = new mongoose.Schema(
 );
 
 answerSchema.statics.build = (answer: IAnswer) => {
-  return new Answer(answer);
+  return new Answer({
+    _id: answer.id,
+    ...answer
+  });
 };
 
 export const Answer = mongoose.model<IDocument, IModel>("Answer", answerSchema);
