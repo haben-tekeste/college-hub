@@ -8,6 +8,7 @@ import {
   NotFoundError,
 } from "@hthub/common";
 import cookieSession from "cookie-session";
+import { elasticClient } from "./elastic-search";
 import { getFeedRouter } from "./routes/home";
 import { searchTermRouter } from "./routes/search";
 import { natswrapper } from "./nats-wrapper";
@@ -26,9 +27,9 @@ app.use(
   })
 );
 
-// // signed in and verified
+// signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
+// app.use(isVerified);
 
 // routes
 app.use(getFeedRouter);
@@ -46,12 +47,19 @@ const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
   if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
   if (!process.env.NATS_URL) throw new Error("Nats url must be defined");
+  if (!process.env.ELASTIC_CLOUD_ID) throw new Error("Elastic ID must be defined")
+  if (!process.env.ELASTIC_USERNAME) throw new Error("Elastic Cloud username must be defined")
+  if (!process.env.ELASTIC_PASSWORD) throw new Error("Elastic passowrd must be defined")
   try {
     await natswrapper.connect(process.env.NATS_URL);
+    await elasticClient.connect(process.env.ELASTIC_CLOUD_ID,process.env.ELASTIC_USERNAME, process.env.ELASTIC_PASSWORD)
     await mongoose.connect(process.env.MONGO_URI);
 
     const jsm = await natswrapper.Client.jetstreamManager();
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
+
+    // add index
+    await elasticClient.createIndex("Projects")
 
     // event listeners
     new ProjectCreatedListener(natswrapper.Client).listen();

@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose";
 // properties required to create a question
 interface IQuestion {
   author: string;
-  title:string;
+  title: string;
   content: string;
   createdAt: Date;
 }
@@ -22,7 +22,7 @@ interface IDocument extends mongoose.Document {
   content: string;
   title: string;
   createdAt: Date;
-//   approval: string;
+  //   approval: string;
 }
 
 const QuestionSchema = new mongoose.Schema(
@@ -64,4 +64,7 @@ QuestionSchema.statics.build = (question: IQuestion) => {
   return new Question(question);
 };
 
-export const Question = mongoose.model<IDocument, IModel>("Question", QuestionSchema);
+export const Question = mongoose.model<IDocument, IModel>(
+  "Question",
+  QuestionSchema
+);

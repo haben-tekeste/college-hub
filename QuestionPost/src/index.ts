@@ -32,7 +32,7 @@ app.use(helmet());
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
+// app.use(isVerified);
 
 // routes
 app.use(createQuestionRouter);

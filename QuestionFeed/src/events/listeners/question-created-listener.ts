@@ -2,6 +2,7 @@ import { Subjects, Listener, QuestionCreated } from "@hthub/common";
 import { Msg } from "nats";
 import { Question } from "../../model/question";
 import { queueGroupName } from "./queue-group-name";
+import { elasticClient } from "../../elastic-search";
 
 export class QuestionCreatedListener extends Listener<QuestionCreated> {
   subject: Subjects.QuestionCreated = Subjects.QuestionCreated;
@@ -25,6 +26,11 @@ export class QuestionCreatedListener extends Listener<QuestionCreated> {
     });
 
     await newQuestion.save();
+    await elasticClient.createPost("Questions", {
+      id: newQuestion.id,
+      title: newQuestion.title,
+      content: newQuestion.content,
+    });
 
     msg.respond();
   }

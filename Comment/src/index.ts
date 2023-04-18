@@ -9,10 +9,15 @@ import {
   NotFoundError,
 } from "@hthub/common";
 import helmet from "helmet";
-import { getAllCommentsRouter, getCommentRouter, createCommentRouter, updateCommentRouter, deleteCommentRouter } from "./routes";
+import {
+  getAllCommentsRouter,
+  getCommentRouter,
+  createCommentRouter,
+  updateCommentRouter,
+  deleteCommentRouter,
+} from "./routes";
 import { natswrapper } from "./nats-wrapper";
 import { CommentModeratedListener } from "./events/listeners/comment-moderated-listeners";
-
 
 const app = express();
 
@@ -28,14 +33,13 @@ app.use(helmet());
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
 
 // routes
-app.use(createCommentRouter)
-app.use(updateCommentRouter)
-app.use(deleteCommentRouter)
-app.use(getAllCommentsRouter)
-app.use(getCommentRouter)
+app.use(createCommentRouter);
+app.use(updateCommentRouter);
+app.use(deleteCommentRouter);
+app.use(getAllCommentsRouter);
+app.use(getCommentRouter);
 
 // 404 error
 app.use("*", (req, res) => {
@@ -48,16 +52,16 @@ app.use(errorHandler);
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
   if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
-  if (!process.env.NATS_URL) throw new Error("Nats url must be defined")
+  if (!process.env.NATS_URL) throw new Error("Nats url must be defined");
   try {
-    await natswrapper.connect(process.env.NATS_URL)
+    await natswrapper.connect(process.env.NATS_URL);
     await mongoose.connect(process.env.MONGO_URI);
 
     const jsm = await natswrapper.Client.jetstreamManager();
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
 
     // Listeners
-    new CommentModeratedListener(natswrapper.Client).listen()
+    new CommentModeratedListener(natswrapper.Client).listen();
 
     process.on("SIGTERM", () =>
       natswrapper.Client.close().then(() => {

@@ -8,7 +8,6 @@ import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
-
 router.post(
   "/api/comments",
   [
@@ -22,6 +21,7 @@ router.post(
       .custom((value) => {
         if (!mongoose.Types.ObjectId.isValid(value))
           throw new Error("Invalid ID");
+        return true;
       }),
     body("blogId")
       .not()
@@ -29,6 +29,7 @@ router.post(
       .custom((value) => {
         if (!mongoose.Types.ObjectId.isValid(value))
           throw new Error("Invalid ID");
+        return true;
       }),
   ],
   validateRequest,
@@ -40,7 +41,7 @@ router.post(
         content,
         parentId,
         blogId,
-        author: req.currentUser?.id || "",
+        author: req.currentUser?.id!,
         createdAt: new Date(),
       });
       await comment.save();
@@ -49,8 +50,9 @@ router.post(
       new CommentCreatedPublisher(natswrapper.Client).publish({
         id: comment.id,
         content: comment.content,
-        status:"Pending"
-      })
+        status: "Pending",
+      });
+      res.status(201).json(comment);
     } catch (error) {
       next(error);
     }

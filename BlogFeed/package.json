@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@elastic/elasticsearch": "^8.6.0",
     "@hthub/common": "^1.0.7",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.13",

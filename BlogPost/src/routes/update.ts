@@ -25,9 +25,10 @@ router.put(
       if (!blogId) throw new NotFoundError();
       const blog = await Blog.findById(blogId);
       if (!blog) throw new NotFoundError();
-      if (req.currentUser?.id !== blog.author) throw new NotAuthorizedError();
-      blog.set(title);
-      blog.set(content);
+      if (req.currentUser?.id !== blog.author.toString())
+        throw new NotAuthorizedError();
+      blog.set({title});
+      blog.set({content});
 
       await blog.save();
 

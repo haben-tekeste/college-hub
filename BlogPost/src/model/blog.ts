@@ -38,7 +38,7 @@ const blogSchema = new mongoose.Schema(
         required:true
     },
     createdAt:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.Date,
         required: true,
     },
     content:{

@@ -33,7 +33,6 @@ class ElasticSearchClient {
       throw new Error("Can't access elastic client before connection");
     const result = await this._client.indices.create({ index: indexName });
     console.log(`Index ${indexName} created`);
-
     return new Promise((resolve, reject) => {
       try {
         resolve(result);
@@ -45,22 +44,21 @@ class ElasticSearchClient {
 
   async createPost(
     indexName: string,
-    data: { title: string; tags: string[]; summary: string; id: string }
+    data: { topic: string; tags: string[]; description: string; id: string }
   ) {
     if (!this._client)
       throw new Error("Can't access elastic client before connection");
     const result = await this._client.index({
       index: indexName,
       document: {
-        title: data.title,
+        topic: data.topic,
         tags: data.tags,
-        summary: data.summary,
+        description: data.description,
         id: data.id,
       },
     });
-    await this._client.indices.refresh({ index: indexName });
     console.log("Post created");
-
+    await this._client.indices.refresh({ index: indexName });
     return new Promise((resolve, reject) => {
       try {
         resolve(result);
@@ -80,7 +78,7 @@ class ElasticSearchClient {
       query: {
         multi_match: {
           query: term,
-          fields: ["title^3", "tags^2", "summary"],
+          fields: ["topic^3", "tags", "description"],
           fuzziness: "AUTO",
           prefix_length: 2,
         },

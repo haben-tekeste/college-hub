@@ -23,6 +23,7 @@ router.put(
       .custom((value) => {
         if (!mongoose.Types.ObjectId.isValid(value))
           throw new Error("Invalid ID");
+        return true;
       }),
     body("blogId")
       .not()
@@ -30,21 +31,22 @@ router.put(
       .custom((value) => {
         if (!mongoose.Types.ObjectId.isValid(value))
           throw new Error("Invalid ID");
+        return true;
       }),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { content, parentId, blogId } = req.body;
+      const { content } = req.body;
       const { commentId } = req.params;
       const comment = await Comment.findById(commentId);
       if (!comment) throw new NotFoundError();
-      if (comment.author !== req.currentUser?.id)
+      if (comment.author.toString() !== req.currentUser?.id)
         throw new NotAuthorizedError();
       comment.set({
         content,
         updatedAt: new Date(),
-        approval: 'Pending'
+        approval: "Pending",
       });
       await comment.save();
 

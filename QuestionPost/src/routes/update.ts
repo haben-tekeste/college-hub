@@ -18,7 +18,7 @@ router.put(
       const { questionId } = req.params;
       const question = await Question.findById(questionId);
       if (!question) throw new Error("Question not found");
-      if (question.author !== req.currentUser?.id)
+      if (question.author.toString() !== req.currentUser?.id)
         throw new NotAuthorizedError();
       question.set({
         title,
