@@ -17,6 +17,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { title, content } = req.body;
+      console.log(title, content);
       const question = await Question.findOne({ title });
       if (question) throw new Error("Question with same title already exist");
       const newQuestion = Question.build({

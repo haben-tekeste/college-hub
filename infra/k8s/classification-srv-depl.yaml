@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classification-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: classification
+  template:
+    metadata:
+      labels:
+        app: classification
+    spec:
+      containers:
+        - name: classification
+          ports:
+            - containerPort: 5000
+          image: us.gcr.io/student-hub-381513/classification
+          # image: htekeste/classification
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: classification-srv
+spec:
+  selector:
+    app: classification
+  ports:
+    - port: 5000
+      targetPort: 5000
+      name: classification-port
+      protocol: TCP

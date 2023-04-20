@@ -73,6 +73,13 @@ spec:
                 name: question-post-srv
                 port:
                   number: 4009
+          - pathType: Prefix
+            path: "/api/answers/?(.*)"
+            backend:
+              service:
+                name: answer-srv
+                port:
+                  number: 4008
         # - pathType: Prefix
         #   path: "/?(.*)"
         #   backend:

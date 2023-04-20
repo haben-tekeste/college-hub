@@ -5,6 +5,7 @@ import { Blog } from "../model/blog";
 import { BlogCreatedPublisher } from "../events/publishers/blog-created-publisher";
 import { natswrapper } from "../nats-wrapper";
 import cohere from "cohere-ai";
+import axios from "axios";
 
 const router = express.Router();
 
@@ -36,10 +37,16 @@ router.post(
         text: content,
       });
 
-      newBlog.set({summary});
+      newBlog.set({ summary });
 
       // add tags
-
+      const { data } = await axios.post(
+        "http://classification-srv:5000/predict",
+        {
+          text: title,
+        }
+      );
+      console.log(data);
       // save
       await newBlog.save();
 

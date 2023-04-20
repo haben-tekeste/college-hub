@@ -7,6 +7,7 @@ import {
   isVerified,
   NotFoundError,
   errorHandler,
+  isAuth
 } from "@hthub/common";
 import {
   createProfileRouter,
@@ -29,6 +30,7 @@ app.use(
 
 // signed in and verified
 app.use(currentUserMiddleware);
+app.use(isAuth)
 
 //routes
 app.use(createProfileRouter);

@@ -7,6 +7,7 @@ import {
   errorHandler,
   isVerified,
   NotFoundError,
+  isAuth
 } from "@hthub/common";
 import mongoose from "mongoose";
 import { elasticClient } from "./elastic-search";
@@ -29,7 +30,8 @@ app.use(
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
+app.use(isAuth)
+
 
 // routes
 

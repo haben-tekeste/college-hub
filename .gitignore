@@ -1,3 +1,6 @@
 node_modules
 .env
 .next
+multilabel.pkl
+clf.pkl
+tfidf.pkl

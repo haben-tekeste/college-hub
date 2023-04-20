@@ -5,6 +5,7 @@ import cookieSession from "cookie-session";
 import {
   currentUserMiddleware,
   errorHandler,
+  isAuth,
   isVerified,
   NotFoundError,
 } from "@hthub/common";
@@ -32,7 +33,7 @@ app.use(helmet());
 
 // signed in and verified
 app.use(currentUserMiddleware);
-// app.use(isVerified);
+app.use(isAuth)
 
 // routes
 app.use(createQuestionRouter);

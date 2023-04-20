@@ -7,6 +7,7 @@ import {
   isVerified,
   errorHandler,
   NotFoundError,
+  isAuth
 } from "@hthub/common";
 import cookieSession from "cookie-session";
 import {
@@ -35,7 +36,7 @@ app.use(
 
 // middlewares
 app.use(currentUserMiddleware);
-// app.use(isVerified);
+app.use(isAuth);
 
 // routes
 app.use(newApplicationRouter);

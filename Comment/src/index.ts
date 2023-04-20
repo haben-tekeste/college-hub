@@ -7,6 +7,7 @@ import {
   errorHandler,
   isVerified,
   NotFoundError,
+  isAuth,
 } from "@hthub/common";
 import helmet from "helmet";
 import {
@@ -33,6 +34,7 @@ app.use(helmet());
 
 // signed in and verified
 app.use(currentUserMiddleware);
+app.use(isAuth);
 
 // routes
 app.use(createCommentRouter);

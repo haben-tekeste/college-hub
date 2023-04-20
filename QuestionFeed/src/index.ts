@@ -6,6 +6,7 @@ import {
   currentUserMiddleware,
   isVerified,
   NotFoundError,
+  isAuth
 } from "@hthub/common";
 import cookieSession from "cookie-session";
 import { questionFeedRouter } from "./routes/feed";
@@ -30,6 +31,7 @@ app.use(
 
 // signed in and verified
 app.use(currentUserMiddleware);
+app.use(isAuth)
 
 // routes
 app.use(questionFeedRouter);

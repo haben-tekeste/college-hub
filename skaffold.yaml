@@ -62,24 +62,33 @@ build:
     #     manual:
     #       - dest: .
     #         src: "src/**/*.ts"
+    # # - image: htekeste/answer
+    # - image: us.gcr.io/student-hub-381513/answer
+    #   context: Answer
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
     # # - image: htekeste/comment
-    - image: us.gcr.io/student-hub-381513/comment
-      context: Comment
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
+    # - image: us.gcr.io/student-hub-381513/comment
+    #   context: Comment
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
     # # - image: htekeste/comment-moderation
-    - image: us.gcr.io/student-hub-381513/comment-moderation
-      context: CommentModeration
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - dest: .
-            src: "src/**/*.ts"
+    # - image: us.gcr.io/student-hub-381513/comment-moderation
+    #   context: CommentModeration
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - dest: .
+    #         src: "src/**/*.ts"
     # # - image: htekeste/profile
     # - image: us.gcr.io/student-hub-381513/profile
     #   context: Profile
@@ -107,16 +116,26 @@ build:
     #     manual:
     #       - dest: .
     #         src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/classification
+      context: Classification-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.py"
 manifests:
   rawYaml:
     - "./infra/k8s/auth-depl.yaml"
     - "./infra/k8s/auth-mongo-depl.yaml"
     # - "./infra/k8s/question-post-depl.yaml"
     # - "./infra/k8s/question-post-mongo-depl.yaml"
+    # - "./infra/k8s/answer-depl.yaml"
+    # - "./infra/k8s/answer-mongo-depl.yaml"
     - "./infra/k8s/blog-post-depl.yaml"
     - "./infra/k8s/blog-post-mongo-depl.yaml"
-    - "./infra/k8s/comment-depl.yaml"
-    - "./infra/k8s/comment-mongo-depl.yaml"
-    - "./infra/k8s/comment-moderation-depl.yaml"
+    # - "./infra/k8s/comment-depl.yaml"
+    # - "./infra/k8s/comment-mongo-depl.yaml"
+    # - "./infra/k8s/comment-moderation-depl.yaml"
     - "./infra/k8s/nats-depl.yaml"
- 
+    - "./infra/k8s/classification-srv-depl.yaml"
