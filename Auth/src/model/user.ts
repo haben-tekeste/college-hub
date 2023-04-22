@@ -8,6 +8,7 @@ interface IUser {
   password: string;
   verificationNumber: string;
   expiresAt: Date;
+  username:string,
 }
 
 // an interface that describes
@@ -25,10 +26,15 @@ interface IDocument extends mongoose.Document {
   verificationNumber: string;
   expiresAt: Date;
   isVerified: boolean;
+  username:string,
 }
 
 const userSchema = new mongoose.Schema(
   {
+    username:{
+      type:String,
+      required:true
+    },
     email: {
       type: String,
       required: true,

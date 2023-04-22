@@ -6,11 +6,16 @@ import { BlogCreatedPublisher } from "../events/publishers/blog-created-publishe
 import { natswrapper } from "../nats-wrapper";
 import cohere from "cohere-ai";
 import axios from "axios";
+import { multerUploads } from "../config/multerConfig";
+import path from "path";
+import dataUriParser from "datauri/parser";
+import cloudinary from "cloudinary";
 
 const router = express.Router();
 
 router.post(
   "/api/blogs",
+  multerUploads,
   [
     body("title").not().isEmpty().isString().escape(),
     body("content").not().isEmpty().escape(),
@@ -22,13 +27,26 @@ router.post(
 
       const blog = await Blog.findOne({ title });
       if (blog) throw new Error("Blog with the same title already exists");
-
       const newBlog = Blog.build({
         title,
         content,
         createdAt: new Date(),
         author: req.currentUser?.id!,
       });
+      if (req.file) {
+        const dParser = new dataUriParser();
+
+        const content = dParser.format(
+          path.extname(req.file.originalname).toString(),
+          req.file.buffer
+        ).content;
+
+        const result = await cloudinary.v2.uploader.upload(content!, {
+          public_id: "random",
+        });
+        newBlog.set({ imgUrl: result.secure_url });
+      }
+
       // add summary
       cohere.init("d0jGPe4VOWNj3wrNSPwYEtRHxO27F8Q40NlQXHGF");
       const {
@@ -60,12 +78,12 @@ router.post(
         likes: 0,
         tags: [],
         content: newBlog.content,
+        imgUrl: newBlog.imgUrl,
       });
 
       res.status(201).json(newBlog);
     } catch (error) {
       // console.log(error);
-
       next(error);
     }
   }

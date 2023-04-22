@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
 import cookieSession from "cookie-session";
-import cohere from "cohere-ai";
+
 import {
   currentUserMiddleware,
   errorHandler,
-  isVerified,
   NotFoundError,
   isAuth,
 } from "@hthub/common";
@@ -18,8 +17,10 @@ import {
   createBlogRouter,
   updateBlogRouter,
   deleteBlogRouter,
+  blogLikeRouter
 } from "./routes";
 import { natswrapper } from "./nats-wrapper";
+import { cloudinaryConfig } from "./config/cloudinaryConfig";
 
 const app = express();
 
@@ -33,9 +34,13 @@ app.use(
 );
 app.use(helmet());
 
+
 // signed in and verified
 app.use(currentUserMiddleware);
 app.use(isAuth);
+
+//
+app.use(cloudinaryConfig)
 
 // routes
 app.use(createBlogRouter);
@@ -43,6 +48,7 @@ app.use(getAllBlogsRouter);
 app.use(getBlogRouter);
 app.use(updateBlogRouter);
 app.use(deleteBlogRouter);
+app.use(blogLikeRouter)
 
 // 404 error
 app.use("*", (req, res) => {

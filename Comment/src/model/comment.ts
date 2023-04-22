@@ -25,6 +25,7 @@ interface IDocument extends mongoose.Document {
   blogId: string;
   createdAt: Date;
   likes: number;
+  likedBy:string[],
   updatedAt: Date;
   approval: string;
 }
@@ -59,6 +60,7 @@ const commentSchema = new mongoose.Schema(
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
     },
+    likedBy: [mongoose.Schema.Types.ObjectId]
   },
   {
     toJSON: {

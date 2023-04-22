@@ -15,8 +15,13 @@ export class CommentApprovedListener extends Listener<CommentApproved> {
 
     // check if comment already exists
     const comment = await Comment.findById(id);
-    if (comment) throw new Error("Cant duplicate comment");
 
+    if (comment) {
+      // update comment
+      comment.set({ content });
+      comment.set({ approval: "Approved" });
+      return msg.respond();
+    }
     // save to records
     const newComment = Comment.build({
       id,

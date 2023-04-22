@@ -7,6 +7,7 @@ import {
   errorHandler,
   isVerified,
   NotFoundError,
+  isAuth
 } from "@hthub/common";
 import helmet from "helmet";
 import { newAnswerRouter, getAnswerRouter, updateAnswerRouter, upvoteAnswerRouter,downvoteAnswerRouter, deleteAnswerRouter } from "./routes";
@@ -27,7 +28,7 @@ app.use(helmet());
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isVerified);
+app.use(isAuth);
 
 // routes
 app.use(newAnswerRouter)

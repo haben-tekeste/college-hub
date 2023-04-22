@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hthub/common": "^1.0.7",
+    "@hthub/common": "^1.0.10",
     "@tensorflow-models/toxicity": "^1.2.2",
     "@tensorflow/tfjs": "^4.4.0",
     "cohere-ai": "^6.0.0",

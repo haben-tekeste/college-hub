@@ -39,9 +39,10 @@ router.put(
         author: blog.author,
         createdAt: blog.createdAt.toISOString(),
         summary: blog.summary,
-        likes: 0,
-        tags: [],
+        likes: blog.likes,
+        tags: blog.tags,
         content: blog.content,
+        imgUrl: blog.imgUrl
       });
 
       res.status(200).json(blog);

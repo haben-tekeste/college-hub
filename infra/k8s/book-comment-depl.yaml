@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-comment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-comment
+  template:
+    metadata:
+      labels:
+        app: book-comment
+    spec:
+      containers:
+      - name: book-comment
+        image: emirnubi/book-comment
+        env:
+            - name: MONGO_URI
+              value: "mongodb://book-comment-mongo-srv:27017/book-comment"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: booki
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-comment-srv
+spec:
+  selector:
+    app: book-comment
+  ports:
+  - name: book-comment
+    protocol: TCP
+    port: 3002
+    targetPort: 3002

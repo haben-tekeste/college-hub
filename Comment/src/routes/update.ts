@@ -7,6 +7,8 @@ import {
   validateRequest,
 } from "@hthub/common";
 import { Comment } from "../model/comment";
+import { natswrapper } from "../nats-wrapper";
+import { CommentUpdatedPublisher } from "../events/publishers/comment-updated-publisher";
 
 const router = express.Router();
 
@@ -51,6 +53,11 @@ router.put(
       await comment.save();
 
       // publish event
+      new CommentUpdatedPublisher(natswrapper.Client).publish({
+        id: comment.id,
+        content: comment.content,
+        status: "Pending",
+      });
       res.status(201).json(comment);
     } catch (error) {}
   }

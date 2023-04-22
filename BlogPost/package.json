@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hthub/common": "^1.0.7",
+    "@hthub/common": "^1.0.11",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.13",
     "@types/deepai": "^1.0.0",
@@ -23,6 +23,7 @@
     "cohere-ai": "^6.2.0",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
+    "datauri": "^4.1.0",
     "deepai": "^1.0.21",
     "express": "^4.18.2",
     "express-validator": "^6.15.0",

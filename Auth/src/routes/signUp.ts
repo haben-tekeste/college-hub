@@ -4,6 +4,8 @@ import jsonwebtoken from "jsonwebtoken";
 import { validateRequest, BadRequestError } from "@hthub/common";
 import { User } from "../model/user";
 import { randomInt } from "node:crypto";
+import { UserCreatedPublisher } from "../events/publishers/user-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 const WINDOW_MINUTES_INTERVAL = 15 * 60;
@@ -11,6 +13,7 @@ const WINDOW_MINUTES_INTERVAL = 15 * 60;
 router.post(
   "/api/users/signup",
   [
+    body("username").not().isEmpty().withMessage("Username must be provided"),
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")
       .trim()
@@ -31,7 +34,7 @@ router.post(
         pointsForContainingSymbol: 10,
       })
       .withMessage(
-        "Passoword must include: 1 Upper case letter 1 lower case letter 1 Number 1 Sybmol"
+        "Password must include: 1 Upper case letter 1 lower case letter 1 Number 1 Sybmol"
       ),
   ],
   validateRequest,
@@ -41,14 +44,19 @@ router.post(
     next: express.NextFunction
   ) => {
     try {
-      const { email, password } = req.body;
+      const { email, password, username } = req.body;
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         throw new BadRequestError("Email already in use");
       }
 
+      const user = await User.findOne({ username });
+      if (user) throw new BadRequestError("Username already taken");
+
       // generate verification number
-      const verificationNumber = randomInt(1000_000).toString().padStart(6, "0");
+      const verificationNumber = randomInt(1000_000)
+        .toString()
+        .padStart(6, "0");
       // calculate expiration date for verification
       const expiration = new Date();
       expiration.setSeconds(expiration.getSeconds() + WINDOW_MINUTES_INTERVAL);
@@ -58,9 +66,17 @@ router.post(
         password,
         verificationNumber,
         expiresAt: expiration,
+        username,
       });
 
       await newUser.save();
+
+      // publish event
+      new UserCreatedPublisher(natswrapper.Client).publish({
+        email: newUser.email,
+        uname: newUser.username,
+        id: newUser.id,
+      });
 
       // send email
 

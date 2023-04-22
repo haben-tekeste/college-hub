@@ -3,8 +3,8 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a User
 interface IUser {
- name:string;
- userId: string;
+  name: string;
+  userId: string;
 }
 
 // an interface that describes
@@ -18,9 +18,9 @@ interface IModel extends mongoose.Model<IDocument> {
 // a user document has
 
 interface IDocument extends mongoose.Document {
-  name:string;
-  userId:string;
-  interests: string[]
+  name: string;
+  userId: string;
+  interests: string[];
 }
 
 const UserSchema = new mongoose.Schema(
@@ -33,9 +33,9 @@ const UserSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
-    interests:{
-      type: [String]
-    }
+    interests: {
+      type: [String],
+    },
   },
   {
     toJSON: {
@@ -43,6 +43,7 @@ const UserSchema = new mongoose.Schema(
         delete ret.__v;
         ret.id = ret._id;
         delete ret._id;
+        delete ret.interests;
       },
     },
   }

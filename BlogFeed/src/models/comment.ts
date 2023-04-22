@@ -67,6 +67,8 @@ const commentSchema = new mongoose.Schema(
         delete ret.__v;
         ret.id = ret._id;
         delete ret._id;
+        delete ret.approval;
+        delete ret.parentId;
       },
     },
   }

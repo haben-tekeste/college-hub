@@ -3,10 +3,10 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a blog
 interface IBlog {
-  title: string,
-  author:string,
-  createdAt: Date,
-  content: string,
+  title: string;
+  author: string;
+  createdAt: Date;
+  content: string;
 }
 
 // an interface that describes
@@ -18,43 +18,49 @@ interface IModel extends mongoose.Model<IDocument> {
 // an interface that describes the properties
 // a blog document has
 interface IDocument extends mongoose.Document {
-    title: string,
-    author:string,
-    createdAt: Date,
-    content: string,
-    tags: string[],
-    summary: string,
-    likes:number
+  title: string;
+  author: string;
+  createdAt: Date;
+  content: string;
+  tags: string[];
+  summary: string;
+  likes: number;
+  likedBy: string[];
+  imgUrl: string;
 }
 
 const blogSchema = new mongoose.Schema(
   {
-    title:{
-        type: String,
-        required:true
+    title: {
+      type: String,
+      required: true,
     },
-    author:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:true
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
-    createdAt:{
-        type: mongoose.Schema.Types.Date,
-        required: true,
+    createdAt: {
+      type: mongoose.Schema.Types.Date,
+      required: true,
     },
-    content:{
-        type: String,
-        required:true,
+    content: {
+      type: String,
+      required: true,
     },
-    summary:{
-        type: String,
-        required:true,
+    summary: {
+      type: String,
+      required: true,
     },
-    tags:[String],
-    likes:{
+    tags: [String],
+    likes: {
       type: Number,
-      default: 0
-    }
-
+      default: 0,
+    },
+    imgUrl: {
+      type: String,
+      default: "empty",
+    },
+    likedBy: [mongoose.Schema.Types.ObjectId],
   },
   {
     toJSON: {

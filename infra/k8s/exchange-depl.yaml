@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchange-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exchange
+  template:
+    metadata:
+      labels:
+        app: exchange
+    spec:
+      containers:
+      - name: exchange
+        image: emirnubi/exchange
+        env:
+            - name: MONGO_URI
+              value: "mongodb://exchange-mongo-srv:27017/exchange"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: booki
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exchange-srv
+spec:
+  selector:
+    app: exchange
+  ports:
+  - name: exchange
+    protocol: TCP
+    port: 3004
+    targetPort: 3004

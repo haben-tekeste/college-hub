@@ -5,7 +5,6 @@ import cookieSession from "cookie-session";
 import {
   currentUserMiddleware,
   errorHandler,
-  isVerified,
   NotFoundError,
   isAuth,
 } from "@hthub/common";
@@ -16,6 +15,7 @@ import {
   createCommentRouter,
   updateCommentRouter,
   deleteCommentRouter,
+  commentLikeRouter
 } from "./routes";
 import { natswrapper } from "./nats-wrapper";
 import { CommentModeratedListener } from "./events/listeners/comment-moderated-listeners";
@@ -42,6 +42,7 @@ app.use(updateCommentRouter);
 app.use(deleteCommentRouter);
 app.use(getAllCommentsRouter);
 app.use(getCommentRouter);
+app.use(commentLikeRouter)
 
 // 404 error
 app.use("*", (req, res) => {

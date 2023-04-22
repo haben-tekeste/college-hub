@@ -10,6 +10,7 @@ interface IBlog {
   content: string;
   tags?: string[];
   summary: string;
+  imgUrl: string;
 }
 
 // an interface that describes
@@ -28,6 +29,7 @@ interface IDocument extends mongoose.Document {
   tags: string[];
   summary: string;
   likes: number;
+  imgUrl: string;
 }
 
 const blogSchema = new mongoose.Schema(
@@ -57,6 +59,10 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    imgUrl: {
+      type: String,
+      default: "empty",
+    },
   },
   {
     toJSON: {
@@ -79,6 +85,7 @@ blogSchema.statics.build = (blog: IBlog) => {
     likes: 0,
     tags: blog.tags,
     summary: blog.summary,
+    imgUrl: blog.imgUrl,
   });
 };
 

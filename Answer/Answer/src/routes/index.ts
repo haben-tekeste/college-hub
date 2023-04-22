@@ -1,6 +1,0 @@
-export {deleteAnswerRouter} from './delete'
-export {newAnswerRouter} from './new'
-export {getAnswerRouter} from './show'
-export {updateAnswerRouter} from './update'
-export {upvoteAnswerRouter} from './upvote'
-export {downvoteAnswerRouter} from './downvote'

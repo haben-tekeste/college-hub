@@ -6,7 +6,6 @@ import { PasswordManager } from "../utils/passwordManager";
 import {
   BadRequestError,
   EmailVerificationError,
-  isVerified,
   validateRequest,
 } from "@hthub/common";
 

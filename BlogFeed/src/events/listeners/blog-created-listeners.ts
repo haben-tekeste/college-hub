@@ -12,7 +12,8 @@ export class BlogCreatedListener extends Listener<BlogCreated> {
   streamName = "mystream";
   deliverSubject = Subjects.BlogCreated;
   async onMessage(data: BlogCreated["data"], msg: Msg) {
-    const { id, content, title, author, createdAt, summary, tags } = data;
+    const { id, content, title, author, createdAt, summary, tags, imgUrl } =
+      data;
 
     // check if blog already exists
     const blog = await Blog.findById(id);
@@ -27,6 +28,7 @@ export class BlogCreatedListener extends Listener<BlogCreated> {
       createdAt: new Date(createdAt),
       summary,
       tags,
+      imgUrl,
     });
 
     await newBlog.save();

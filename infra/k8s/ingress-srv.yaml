@@ -80,6 +80,34 @@ spec:
                 name: answer-srv
                 port:
                   number: 4008
+          - pathType: Prefix
+            path: "/api/booki/?(.*)"
+            backend:
+              service:
+                name: book-srv
+                port: 
+                  number: 3001
+          - pathType: Prefix
+            path: "/api/book-comment/?(.*)"
+            backend:
+              service:
+                name: book-comment-srv
+                port: 
+                  number: 3002
+          - pathType: Prefix
+            path: "/api/query/?(.*)"
+            backend:
+              service:
+                name: query-srv
+                port: 
+                  number: 3003
+          - pathType: Prefix
+            path: "/api/bid/?(.*)"
+            backend:
+              service:
+                name: exchange-srv
+                port: 
+                  number: 3004
         # - pathType: Prefix
         #   path: "/?(.*)"
         #   backend:
