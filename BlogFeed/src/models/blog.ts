@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { ObjectId, Schema } from "mongoose";
 
 // An interface that describes
 // properties required to create a blog
@@ -11,6 +11,7 @@ interface IBlog {
   tags?: string[];
   summary: string;
   imgUrl: string;
+  comments: ObjectId[];
 }
 
 // an interface that describes
@@ -30,6 +31,7 @@ interface IDocument extends mongoose.Document {
   summary: string;
   likes: number;
   imgUrl: string;
+  comments: ObjectId[];
 }
 
 const blogSchema = new mongoose.Schema(
@@ -63,6 +65,12 @@ const blogSchema = new mongoose.Schema(
       type: String,
       default: "empty",
     },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     toJSON: {

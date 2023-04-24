@@ -29,9 +29,11 @@ export class BlogCreatedListener extends Listener<BlogCreated> {
       summary,
       tags,
       imgUrl,
+      comments: []
     });
 
     await newBlog.save();
+    
     // add to elastic
     await elasticClient.createPost("Blogs", {
       id: newBlog.id,

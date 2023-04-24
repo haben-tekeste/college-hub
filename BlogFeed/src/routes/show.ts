@@ -10,10 +10,16 @@ router.get("/api/blogFeed/:blogId", async (req, res, next) => {
     const { blogId } = req.params;
     if (!blogId) throw new NotFoundError();
 
-    const blog = await Blog.findById(blogId).populate("author");
+    const blog = await Blog.findById(blogId)
+      .populate("author")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+        },
+      });
     if (!blog) throw new NotFoundError();
-    const comments = await Comment.find({ blogId }).populate("author");
-    res.status(200).json({ blog, comments });
+    res.status(200).json({ blog });
   } catch (error) {
     next(error);
   }

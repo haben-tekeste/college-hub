@@ -23,6 +23,7 @@ export class QuestionCreatedListener extends Listener<QuestionCreated> {
       title,
       createdAt: new Date(createdAt),
       author,
+      answers: []
     });
 
     await newQuestion.save();

@@ -18,7 +18,7 @@ interface IModel extends mongoose.Model<IDocument> {
 
 // an interface that describes the properties
 // a answer document has
-interface IDocument extends mongoose.Document {
+export interface IDocument extends mongoose.Document {
   author: string;
   content: string;
   questionId: string;

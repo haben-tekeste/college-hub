@@ -2,6 +2,8 @@ import { Subjects, Listener, CommentApproved } from "@hthub/common";
 import { Msg } from "nats";
 import { queueGroupName } from "./queue-group-name";
 import { Comment } from "../../models/comment";
+import { Blog } from "../../models/blog";
+import { NotFoundError } from "@hthub/common";
 
 export class CommentApprovedListener extends Listener<CommentApproved> {
   subject: Subjects.CommentApproved = Subjects.CommentApproved;
@@ -15,6 +17,9 @@ export class CommentApprovedListener extends Listener<CommentApproved> {
 
     // check if comment already exists
     const comment = await Comment.findById(id);
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) throw new NotFoundError();
 
     if (comment) {
       // update comment
@@ -34,6 +39,8 @@ export class CommentApprovedListener extends Listener<CommentApproved> {
 
     newComment.set({ approval: "Approved" });
     await newComment.save();
+    blog.comments.push(newComment.id);
+    await blog.save();
     msg.respond();
   }
 }

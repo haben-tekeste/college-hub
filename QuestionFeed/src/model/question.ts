@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { ObjectId, Schema } from "mongoose";
 
 // An interface that describes
 // properties required to create a question
@@ -8,6 +8,7 @@ interface IQuestion {
   title: string;
   content: string;
   createdAt: Date;
+  answers: ObjectId[];
 }
 
 // an interface that describes
@@ -23,7 +24,7 @@ interface IDocument extends mongoose.Document {
   content: string;
   title: string;
   createdAt: Date;
-  //   approval: string;
+  answers: ObjectId[];
 }
 
 const QuestionSchema = new mongoose.Schema(
@@ -45,11 +46,12 @@ const QuestionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Date,
       required: true,
     },
-    // approval: {
-    //   type: String,
-    //   enum: ["Pending", "Approved", "Rejected"],
-    //   default: "Pending",
-    // },
+    answers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Answer",
+      },
+    ],
   },
   {
     toJSON: {
@@ -76,5 +78,3 @@ export const Question = mongoose.model<IDocument, IModel>(
   "Question",
   QuestionSchema
 );
-
-

@@ -8,10 +8,17 @@ const router = express.Router();
 router.get("/api/questionfeed/:questionId", async (req, res, next) => {
   try {
     const { questionId } = req.params;
-    const question = await Question.findById(questionId).populate("author");
+    const question = await Question.findById(questionId)
+      .populate("author")
+      .populate({
+        path: "answers",
+        populate: {
+          path: "author",
+        },
+      });
     if (!question) throw new NotFoundError();
-    const answers = await Answer.find({ questionId }).populate("author");
-    res.status(200).json({ question, answers });
+
+    res.status(200).json({ question });
   } catch (error) {
     next(error);
   }

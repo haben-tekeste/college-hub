@@ -3,8 +3,8 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a User
 interface IUser {
-  name: string;
-  userId: string;
+  id: string;
+  uname: string;
 }
 
 // an interface that describes
@@ -18,19 +18,15 @@ interface IModel extends mongoose.Model<IDocument> {
 // a user document has
 
 interface IDocument extends mongoose.Document {
-  name: string;
-  userId: string;
+  uname: string;
+  id: string;
   interests: string[];
 }
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    uname: {
       type: String,
-      required: true,
-    },
-    userId: {
-      type: Schema.Types.ObjectId,
       required: true,
     },
     interests: {
@@ -50,7 +46,10 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.statics.build = (user: IUser) => {
-  return new User(User);
+  return new User({
+    _id: user.id,
+    uname: user.uname,
+  });
 };
 
 export const User = mongoose.model<IDocument, IModel>("User", UserSchema);
