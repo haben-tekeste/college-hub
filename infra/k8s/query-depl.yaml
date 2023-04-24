@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: query
-        image: emirnubi/query
+        image: us.gcr.io/student-hub-381513/query
         env:
             - name: MONGO_URI
               value: "mongodb://query-mongo-srv:27017/query"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: jwt-secret
+                  name: jwt-secret-key
                   key: JWT_KEY
             - name: NATS_URL
               value: "http://nats-srv:4222"

@@ -15,7 +15,7 @@ import {
   createCommentRouter,
   updateCommentRouter,
   deleteCommentRouter,
-  commentLikeRouter
+  commentLikeRouter,
 } from "./routes";
 import { natswrapper } from "./nats-wrapper";
 import { CommentModeratedListener } from "./events/listeners/comment-moderated-listeners";
@@ -42,7 +42,7 @@ app.use(updateCommentRouter);
 app.use(deleteCommentRouter);
 app.use(getAllCommentsRouter);
 app.use(getCommentRouter);
-app.use(commentLikeRouter)
+app.use(commentLikeRouter);
 
 // 404 error
 app.use("*", (req, res) => {

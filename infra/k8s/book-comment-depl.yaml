@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: book-comment
-        image: emirnubi/book-comment
+        image: us.gcr.io/student-hub-381513/book-comment
         env:
             - name: MONGO_URI
               value: "mongodb://book-comment-mongo-srv:27017/book-comment"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: jwt-secret
+                  name: jwt-secret-key
                   key: JWT_KEY
             - name: NATS_URL
               value: "http://nats-srv:4222"
