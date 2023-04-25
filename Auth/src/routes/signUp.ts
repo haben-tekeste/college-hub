@@ -45,6 +45,7 @@ router.post(
   ) => {
     try {
       const { email, password, username } = req.body;
+      
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         throw new BadRequestError("Email already in use");
@@ -84,13 +85,13 @@ router.post(
         {
           id: newUser._id,
           email: newUser.email,
-          verified: false,
         },
         process.env.JWT_KEY!
       );
       req.session = { jwt: jwtToken };
       res.status(201).json(verificationNumber);
     } catch (error) {
+      console.log(error);
       return next(error);
     }
   }

@@ -74,6 +74,13 @@ spec:
                 port:
                   number: 4009
           - pathType: Prefix
+            path: "/api/questionfeed/?(.*)"
+            backend:
+              service:
+                name: question-feed-srv
+                port:
+                  number: 6000
+          - pathType: Prefix
             path: "/api/answers/?(.*)"
             backend:
               service:

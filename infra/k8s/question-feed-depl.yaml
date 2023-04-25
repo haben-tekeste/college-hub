@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-feed-depl
+  name: question-feed-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: project-feed
+      app: question-feed
   template:
     metadata:
       labels:
-        app: project-feed
+        app: question-feed
     spec:
       containers:
-        - name: project-feed
-          image: us.gcr.io/student-hub-381513/project-feed
-          # image: htekeste/project-feed
+        - name: question-feed
+          image: us.gcr.io/student-hub-381513/question-feed
+          # image: htekeste/question-feed
           env:
           - name: MONGO_URI
-            value: "mongodb://project-feed-mongo-srv:27017/project-feed"
+            value: "mongodb://question-feed-mongo-srv:27017/question-feed"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:
@@ -26,9 +26,9 @@ spec:
                 key: JWT_KEY
           - name: ELASTIC_CLOUD_ID
             valueFrom:
-               secretKeyRef:
-                 name: elastic-key
-                 key: ELASTIC_CLOUD_ID
+                secretKeyRef:
+                  name: elastic-key
+                  key: ELASTIC_CLOUD_ID
           - name: ELASTIC_USERNAME
             valueFrom:
                secretKeyRef:
@@ -45,12 +45,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: project-feed-srv
+  name: question-feed-srv
 spec:
   selector:
-    app: project-feed
+    app: question-feed
   ports:
-    - port: 4004
-      targetPort: 4004
-      name: project-feed-port
+    - port: 6000
+      targetPort: 6000
+      name: question-feed-port
       protocol: TCP
