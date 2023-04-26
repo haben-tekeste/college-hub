@@ -10,7 +10,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.post(
-  "/api/book-comment/new",
+  "/api/comment/new",
   [
     body("text").not().isEmpty().withMessage("Comment must have a valid text"),
     body("bookId").not().isEmpty().withMessage("Invalid request"),
@@ -29,7 +29,7 @@ router.post(
         userId: req.currentUser!.id,
         text: text,
         reply: [],
-        likes: 0,
+        likes: [],
       });
 
       await comment.save();

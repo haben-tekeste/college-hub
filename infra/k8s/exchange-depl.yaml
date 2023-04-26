@@ -17,7 +17,7 @@ spec:
         image: us.gcr.io/student-hub-381513/exchange
         env:
             - name: MONGO_URI
-              value: "mongodb://exchange-mongo-srv:27017/exchange"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.yhxikae.mongodb.net/?retryWrites=true&w=majority/exchange"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

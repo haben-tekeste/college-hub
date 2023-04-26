@@ -26,169 +26,144 @@ build:
         manual:
           - dest: .
             src: "**/*.jsx"
-    # # - image: htekeste/application
-    # - image: us.gcr.io/student-hub-381513/application
-    #   context: Application
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/blog-feed
-    # - image: us.gcr.io/student-hub-381513/blog-feed
-    #   context: BlogFeed
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/blog-post
-    # - image: us.gcr.io/student-hub-381513/blog-post
-    #   context: BlogPost
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/question-post
-    # - image: us.gcr.io/student-hub-381513/question-post
-    #   context: QuestionPost
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/answer
-    # - image: us.gcr.io/student-hub-381513/answer
-    #   context: Answer
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/comment
-    # - image: us.gcr.io/student-hub-381513/comment
-    #   context: Comment
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/comment-moderation
-    # - image: us.gcr.io/student-hub-381513/comment-moderation
-    #   context: CommentModeration
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/profile
-    # - image: us.gcr.io/student-hub-381513/profile
-    #   context: Profile
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/project
-    # - image: us.gcr.io/student-hub-381513/project
-    #   context: Project
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # # - image: htekeste/project-feed
-    # - image: us.gcr.io/student-hub-381513/project-feed
-    #   context: ProjectFeed
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # - image: us.gcr.io/student-hub-381513/question-feed
-    #   context: QuestionFeed
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # - image: us.gcr.io/student-hub-381513/classification
-    #   context: Classification-SRV
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.py"
-    # - image: us.gcr.io/student-hub-381513/book
-    #   context: Book-SRV
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # - image: us.gcr.io/student-hub-381513/book-comment
-    #   context: Comments-SRV
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # - image: us.gcr.io/student-hub-381513/query
-    #   context: Query-SRV
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
-    # - image: us.gcr.io/student-hub-381513/exchange
-    #   context: Exchange-SRV
-    #   docker:
-    #     dockerfile: Dockerfile
-    #   sync:
-    #     manual:
-    #       - dest: .
-    #         src: "src/**/*.ts"
+    # - image: htekeste/application
+    - image: us.gcr.io/student-hub-381513/application
+      context: Application
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/blog-feed
+    - image: us.gcr.io/student-hub-381513/blog-feed
+      context: BlogFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/blog-post
+    - image: us.gcr.io/student-hub-381513/blog-post
+      context: BlogPost
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/question-post
+    - image: us.gcr.io/student-hub-381513/question-post
+      context: QuestionPost
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/answer
+    - image: us.gcr.io/student-hub-381513/answer
+      context: Answer
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/comment
+    - image: us.gcr.io/student-hub-381513/comment
+      context: Comment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/comment-moderation
+    - image: us.gcr.io/student-hub-381513/comment-moderation
+      context: CommentModeration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/profile
+    - image: us.gcr.io/student-hub-381513/profile
+      context: Profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/project
+    - image: us.gcr.io/student-hub-381513/project
+      context: Project
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    # - image: htekeste/project-feed
+    - image: us.gcr.io/student-hub-381513/project-feed
+      context: ProjectFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/question-feed
+      context: QuestionFeed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/classification
+      context: Classification-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.py"
+    - image: us.gcr.io/student-hub-381513/book
+      context: Book-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/book-comment
+      context: Comments-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/query
+      context: Query-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: us.gcr.io/student-hub-381513/exchange
+      context: Exchange-SRV
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
 manifests:
   rawYaml:
-    - "./infra/k8s/nats-depl.yaml"
-    - "./infra/k8s/auth-depl.yaml"
-    - "./infra/k8s/auth-mongo-depl.yaml"
-    # - "./infra/k8s/answer-depl.yaml"
-    # - "./infra/k8s/answer-mongo-depl.yaml"
-    # - "./infra/k8s/application-depl.yaml"
-    # - "./infra/k8s/application-mongo-depl.yaml"
-    # - "./infra/k8s/profile-depl.yaml"
-    # - "./infra/k8s/profile-mongo-depl.yaml"
-    # - "./infra/k8s/project-depl.yaml"
-    # - "./infra/k8s/project-mongo-depl.yaml"
-    - "./infra/k8s/client-depl.yaml"
-    # - "./infra/k8s/project-feed-depl.yaml"
-    # - "./infra/k8s/project-feed-mongo-depl.yaml"
-    # - "./infra/k8s/blog-post-depl.yaml"
-    # - "./infra/k8s/blog-post-mongo-depl.yaml"
-    # - "./infra/k8s/blog-feed-depl.yaml"
-    # - "./infra/k8s/blog-feed-mongo-depl.yaml"
-    # - "./infra/k8s/comment-depl.yaml"
-    # - "./infra/k8s/comment-mongo-depl.yaml"
-    # - "./infra/k8s/comment-moderation-depl.yaml"
-    # - "./infra/k8s/question-post-depl.yaml"
-    # - "./infra/k8s/question-post-mongo-depl.yaml"
-    # - "./infra/k8s/question-feed-depl.yaml"
-    # - "./infra/k8s/question-feed-mongo-depl.yaml"
-    # - "./infra/k8s/classification-srv-depl.yaml"
+    - "./infra/k8s/*"

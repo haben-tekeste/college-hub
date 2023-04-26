@@ -6,7 +6,7 @@ import {
   currentUserMiddleware,
 } from "@booki/common";
 import cookieSession from "cookie-session";
-import { getBook, ViewBooks, bookiHome } from "./routes/app";
+import { getBook, ViewBooks, bookiHome, userUpdate } from "./routes/app";
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(
 );
 app.use(currentUserMiddleware);
 app.use(bookiHome);
+app.use(userUpdate);
 app.use(ViewBooks);
 app.use(getBook);
 

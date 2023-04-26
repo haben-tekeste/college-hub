@@ -14,6 +14,7 @@ import mongoose from "mongoose";
 interface IReply {
   userId: string;
   text: string;
+  likes: string[];
 }
 
 /**
@@ -24,7 +25,7 @@ interface IReply {
 export interface ReplyDoc extends mongoose.Document {
   userId: string;
   text: string;
-  likes: number;
+  likes: string[];
 }
 
 interface ReplyModel extends mongoose.Model<ReplyDoc> {
@@ -41,10 +42,11 @@ export const ReplySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     toJSON: {

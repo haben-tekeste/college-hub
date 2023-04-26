@@ -21,11 +21,13 @@ interface IBook {
   title: string;
   author: string;
   description: string;
-  genre: string;
+  genre: string[];
   coverImageUrl: string;
   publishedDate: Date;
   ownerId: ObjectId;
   condition: string;
+  likes: string[];
+  cloudinaryPublicId: string | undefined;
 }
 
 /**
@@ -38,11 +40,13 @@ export interface BookDoc extends mongoose.Document {
   title: string;
   author: string;
   description: string;
-  genre: string;
+  genre: string[];
   coverImageUrl: string;
   publishedDate: Date;
   ownerId: ObjectId;
   condition: string;
+  likes: string[];
+  cloudinaryPublicId: string | undefined;
 }
 
 interface BookModel extends mongoose.Model<BookDoc> {
@@ -63,13 +67,15 @@ const BookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    genre: {
-      type: String,
-      required: true,
-    },
+    genre: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     coverImageUrl: {
       type: String,
-      default: "test",
+      required: true,
     },
     publishedDate: {
       type: mongoose.Schema.Types.Date,
@@ -82,6 +88,14 @@ const BookSchema = new mongoose.Schema(
     condition: {
       type: String,
       required: true,
+    },
+    likes: [
+      {
+        type: String,
+      },
+    ],
+    cloudinaryPublicId: {
+      type: String,
     },
   },
   {
@@ -108,6 +122,8 @@ BookSchema.statics.build = (attrs: IBook) => {
     publishedDate: attrs.publishedDate,
     ownerId: attrs.ownerId,
     condition: attrs.condition,
+    likes: attrs.likes,
+    cloudinaryPublicId: attrs.cloudinaryPublicId,
   });
 };
 

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 // redux
-import { useDispatch } from "react-redux";
-import {setProjectDetails} from "../states/projectDetails"
+import { useDispatch, useSelector } from "react-redux";
+import { setProjectDetails } from "../states/projectDetails";
+import { fetchProjectFeed } from "../Actions/projectActions";
 
 // components
 import SearchBar from "../components/SearchBar";
@@ -12,25 +13,42 @@ import Projects from "../components/Projects";
 // import ProjectDetails from "../components/pop-ups/ProjectDetails";
 
 //demo
-import { projectData} from "../data/projectData";
-const ProjectPage = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+import { projectData } from "../data/projectData";
 
-    const showProjectDetails = (project) => {
-        console.log("working")
-        dispatch(setProjectDetails(project))
-        navigate(`/projects/${project.projectId}`)
-    }
-    // const popup = useSelector((state) => state.project.popup)
+const ProjectPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const {loading, error, projects} = useSelector(state => state.project)
+
+  const showProjectDetails = (project) => {
+    console.log("working");
+    dispatch(setProjectDetails(project));
+    navigate(`/projects/${project.projectId}`);
+  };
+  // const popup = useSelector((state) => state.project.popup)
+
+  // useEffect(() => {
+  //     dispatch(fetchProjectFeed())
+  // },[dispatch])
+
   return (
     <StyledProjectPage>
-
       <div className="search">
         <SearchBar className="searchbar" />
         <div className="flex">
-          <button className="light-btn" onClick={()=> navigate("/applications")}>My Applications</button>
-          <button className="purple-btn" onClick={()=> navigate("/create-project")}>+ Create Project</button>
+          <button
+            className="light-btn"
+            onClick={() => navigate("/applications")}
+          >
+            My Applications
+          </button>
+          <button
+            className="purple-btn"
+            onClick={() => navigate("/create-project")}
+          >
+            + Create Project
+          </button>
         </div>
       </div>
       <div className="flex">
@@ -49,7 +67,12 @@ const ProjectPage = () => {
                   <h6>{project.applicants.length}</h6>
                 </td>
                 <td>
-                  <button className="purple-btn" onClick={() => showProjectDetails(project)}>View</button>
+                  <button
+                    className="purple-btn"
+                    onClick={() => showProjectDetails(project)}
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             ))}

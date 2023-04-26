@@ -55,7 +55,7 @@ export const registerUser = createAsyncThunk(
 
 export const signOut = createAsyncThunk(
   "user/logout",
-  async ({ rejectWithValue }) => {
+  async (_,{ rejectWithValue }) => {
     try {
       console.log("herr-->");
       await axios.post(

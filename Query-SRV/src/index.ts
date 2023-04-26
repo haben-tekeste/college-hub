@@ -7,6 +7,7 @@ import { QBookCreatedListener } from "./events/listeners/bookCreatedListener";
 import { ReplyCreatedListener } from "./events/listeners/replyCreatedListener";
 import { ReplyUpdatedListener } from "./events/listeners/replyUpdatedListener";
 import { CommentUpdatedListener } from "./events/listeners/commentUpdatedListener";
+import { QBookUpdatedListener } from "./events/listeners/bookUpdatedListener";
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
   if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
@@ -22,6 +23,7 @@ const start = async () => {
     new ReplyCreatedListener(nats.client).listen();
     new ReplyUpdatedListener(nats.client).listen();
     new CommentUpdatedListener(nats.client).listen();
+    new QBookUpdatedListener(nats.client).listen();
 
     process.on("SIGTERM", () => {
       nats.client.close();

@@ -23,6 +23,8 @@ export class QBookCreatedListener extends Listener<IQBookCreatedListener> {
       ownerId: data.ownerId,
       condition: data.condition,
       comments: data.comments,
+      likes: data.likes,
+      cloudinaryPublicId: data.cloudinaryPublicId,
     });
 
     await book.save();

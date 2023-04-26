@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //icons
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,9 +14,25 @@ import { StyledPopup } from "../../styles/PopupStyles";
 import ProfileComponent from "../ProfileComponent";
 import Uploader from "../Uploader";
 
+//
+import axios from "axios";
+
 const ApplyProject = () => {
   const navigate = useNavigate();
   const { details } = useSelector((state) => state.projectDetails);
+  const [error, setError] = useState("");
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("https://studenthub.dev/api/applications", {
+        projectId: details.porjectId,
+      });
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  };
 
   return (
     <StyledApply>
@@ -35,9 +51,13 @@ const ApplyProject = () => {
             <p>{details.description}</p>
             <h3>Required skill set:</h3>
             <ul className="skills">
-                {details.skillset.map(skill => <li>{skill}</li>)}
+              {details.skillset.map((skill) => (
+                <li>{skill}</li>
+              ))}
             </ul>
-            <h3>Deadline: <span>{details.deadline}</span></h3>
+            <h3>
+              Deadline: <span>{details.deadline}</span>
+            </h3>
           </div>
           <div className="flex-col">
             <h3>
@@ -52,20 +72,22 @@ const ApplyProject = () => {
               ))}
             </div>
             <h3> Upload Resume:</h3>
-            <Uploader/>
+            <Uploader />
           </div>
         </div>
-        <button className="purple-btn">Apply</button>
+        <button className="purple-btn" onClick={submitHandler}>
+          Apply
+        </button>
       </div>
     </StyledApply>
   );
 };
 
 const StyledApply = styled(StyledPopup)`
-    .purple-btn{
-        width: 100%;
-        margin-top: 2rem;
-    }
+  .purple-btn {
+    width: 100%;
+    margin-top: 2rem;
+  }
   .project {
     align-items: flex-start;
     margin-top: 2rem;
@@ -75,8 +97,8 @@ const StyledApply = styled(StyledPopup)`
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
     }
-    .skills{
-        margin-left: 2rem;
+    .skills {
+      margin-left: 2rem;
     }
   }
 `;

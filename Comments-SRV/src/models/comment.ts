@@ -15,7 +15,7 @@ export interface CommentsDoc extends mongoose.Document {
   bookId: string;
   userId: string;
   text: string;
-  likes: number;
+  likes: string[];
   reply: ReplyDoc[];
 }
 
@@ -29,7 +29,7 @@ interface IComments {
   userId: string;
   text: string;
   reply: ReplyDoc[];
-  likes: number;
+  likes: string[];
 }
 
 /**
@@ -57,10 +57,11 @@ const CommentsSchema = new mongoose.Schema(
         ref: "Reply",
       },
     ],
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     toJSON: {

@@ -21,13 +21,15 @@ interface IBook {
   title: string;
   author: string;
   description: string;
-  genre: string;
+  genre: string[];
   coverImageUrl: string;
   publishedDate: Date;
   ownerId: ObjectId;
   condition: string;
   comments: ObjectId[];
   id: ObjectId;
+  likes: string[];
+  cloudinaryPublicId: string | undefined;
 }
 
 /**
@@ -39,13 +41,15 @@ export interface BookDoc extends mongoose.Document {
   title: string;
   author: string;
   description: string;
-  genre: string;
+  genre: string[];
   coverImageUrl: string;
   publishedDate: Date;
   ownerId: ObjectId;
   condition: string;
   comments: ObjectId[];
   id: ObjectId;
+  likes: string[];
+  cloudinaryPublicId: string | undefined;
 }
 
 interface BookModel extends mongoose.Model<BookDoc> {
@@ -66,10 +70,12 @@ const BookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    genre: {
-      type: String,
-      required: true,
-    },
+    genre: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     coverImageUrl: {
       type: String,
       default: "test",
@@ -93,8 +99,20 @@ const BookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    likes: [
+      {
+        type: String,
+      },
+    ],
+    cloudinaryPublicId: {
+      type: String,
+    },
   },
   {
+    timestamps: {
+      updatedAt: false,
+      createdAt: true,
+    },
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
@@ -119,6 +137,8 @@ BookSchema.statics.build = (attrs: IBook) => {
     ownerId: attrs.ownerId,
     comments: attrs.comments,
     condition: attrs.condition,
+    likes: attrs.likes,
+    cloudinaryPublicId: attrs.cloudinaryPublicId,
   });
 };
 

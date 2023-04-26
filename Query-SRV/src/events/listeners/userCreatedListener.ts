@@ -13,10 +13,11 @@ export class UserCreatedListener extends Listener<IUserCreatedListener> {
   queueGroupName = streamConfig.UCreatedQueueName;
   async onMessage(data: User["data"], msg: Msg) {
     const user = UserModel.build({
-      interests: data.interests || [],
+      interests: [],
       name: data.uname,
       email: data.email,
       id: data.id,
+      avatar: undefined,
     });
     await user.save();
 

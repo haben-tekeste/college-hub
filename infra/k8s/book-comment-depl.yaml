@@ -13,11 +13,11 @@ spec:
         app: book-comment
     spec:
       containers:
-      - name: book-comment
-        image: us.gcr.io/student-hub-381513/book-comment
-        env:
+        - name: book-comment
+          image: us.gcr.io/student-hub-381513/book-comment
+          env:
             - name: MONGO_URI
-              value: "mongodb://book-comment-mongo-srv:27017/book-comment"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.qyn0nl0.mongodb.net/?retryWrites=true&w=majority/book-comment"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -36,7 +36,7 @@ spec:
   selector:
     app: book-comment
   ports:
-  - name: book-comment
-    protocol: TCP
-    port: 3002
-    targetPort: 3002
+    - name: book-comment
+      protocol: TCP
+      port: 3002
+      targetPort: 3002

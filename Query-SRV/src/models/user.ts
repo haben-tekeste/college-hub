@@ -18,6 +18,7 @@ interface IUser {
   interests: String[];
   name: string;
   email: string;
+  avatar: string | undefined;
 }
 
 /**
@@ -30,6 +31,7 @@ export interface UserDoc extends mongoose.Document {
   interests: String[];
   name: string;
   email: string;
+  avatar: string | undefined;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
@@ -41,6 +43,7 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
       // required: true,
+      default: "empty",
     },
     email: {
       type: String,

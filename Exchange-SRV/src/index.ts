@@ -1,7 +1,8 @@
 import { app } from "./app";
 import mongoose from "mongoose";
 import { nats } from "./NatsWrapper";
-import { EBookCreatedListener } from "./events/listeners/BookCreatedListener";
+import { BookCreatedListener } from "./events/listeners/BookCreatedListener";
+import { BookUpdatedListener } from "./events/listeners/BookUpdatedListener";
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
   if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
@@ -10,7 +11,8 @@ const start = async () => {
     throw new Error("NATS_CLUSTER_ID must defined");
   try {
     await nats.connect(process.env.NATS_URL, process.env.NATS_CLUSTER_ID);
-    new EBookCreatedListener(nats.client).listen();
+    new BookCreatedListener(nats.client).listen();
+    new BookUpdatedListener(nats.client).listen();
     await mongoose.connect(process.env.MONGO_URI);
   } catch (error) {
     console.error(error);

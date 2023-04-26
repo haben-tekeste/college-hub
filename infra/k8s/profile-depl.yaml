@@ -18,7 +18,7 @@ spec:
         # image: htekeste/profile
         env:
           - name: MONGO_URI
-            value: "mongodb://profile-mongo-srv:27017/profile"
+            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.mvdvt4p.mongodb.net/?retryWrites=true&w=majority/profile"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

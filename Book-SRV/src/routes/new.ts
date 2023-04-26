@@ -3,17 +3,19 @@ import express, { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
 import {
   BookCreatedPublisher,
-  EBookCreatedPublisher,
+  CBookCreatedPublisher,
   QBookCreatedPublisher,
 } from "../events/publisher/bookCreatedPublisher";
 import { Book } from "../models/book";
 import { nats } from "../NatsWrapper";
+import { cloudinaryConfig, multerUploads } from "../utils/config";
 
 const router = express.Router();
 
 router.post(
   "/api/booki/new-book",
   isAuth,
+  multerUploads,
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("author").not().isEmpty().withMessage("Author is required"),
@@ -32,17 +34,37 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.currentUser!.id;
-      const { title, author, description, genre, publishedDate, condition } =
+      let { title, author, description, genre, publishedDate, condition } =
         req.body;
+      const file = req.file;
+      let publicId;
+      let result =
+        "https://res.cloudinary.com/doo1ivw33/image/upload/v1682083010/Booki/books/default_book_cover_2015_rtxonx.jpg";
+
+      if (file) {
+        const v2 = cloudinaryConfig();
+        const encodedData = file.buffer.toString("base64");
+        const finalData = `data:${file.mimetype};base64,${encodedData}`;
+        const data = await v2.uploader.upload(finalData, {
+          folder: "Booki/books",
+        });
+        console.log(data);
+        publicId = data.public_id;
+        result = data.secure_url;
+      }
+      genre = JSON.parse(genre);
+
       const book = new Book({
         title,
-
         author,
         description,
         genre,
         publishedDate,
         ownerId: id,
         condition,
+        coverImageUrl: result,
+        likes: [],
+        cloudinaryPublicId: publicId,
       });
 
       await book.save();
@@ -57,9 +79,11 @@ router.post(
         condition: book.condition,
         coverImage: book.coverImageUrl,
         comments: [],
+        likes: [],
+        cloudinaryPublicId: book.cloudinaryPublicId,
       });
 
-      new EBookCreatedPublisher(nats.client).publish({
+      new BookCreatedPublisher(nats.client).publish({
         id: book.id,
         title: book.title,
         author: book.author,
@@ -69,9 +93,11 @@ router.post(
         ownerId: book.ownerId,
         condition: book.condition,
         coverImage: book.coverImageUrl,
+        cloudinaryPublicId: book.cloudinaryPublicId,
+        likes: [],
       });
 
-      new BookCreatedPublisher(nats.client).publish({
+      new CBookCreatedPublisher(nats.client).publish({
         id: book.id,
       });
 

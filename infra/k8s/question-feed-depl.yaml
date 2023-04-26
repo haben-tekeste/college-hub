@@ -18,7 +18,7 @@ spec:
           # image: htekeste/question-feed
           env:
           - name: MONGO_URI
-            value: "mongodb://question-feed-mongo-srv:27017/question-feed"
+            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.rpv009t.mongodb.net/?retryWrites=true&w=majority/question-feed"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

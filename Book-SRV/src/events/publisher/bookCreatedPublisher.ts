@@ -3,7 +3,7 @@ import {
   IBookCreatedPublisher,
   Subjects,
   IQBookCreatedPublisher,
-  IEBookCreatedPublisher,
+  ICBookCreatedPublisher,
 } from "@booki/common";
 
 export class BookCreatedPublisher extends Publisher<IBookCreatedPublisher> {
@@ -14,6 +14,6 @@ export class QBookCreatedPublisher extends Publisher<IQBookCreatedPublisher> {
   subject: Subjects.PQBOOKCREATED = Subjects.PQBOOKCREATED;
 }
 
-export class EBookCreatedPublisher extends Publisher<IEBookCreatedPublisher> {
-  subject: Subjects.PEBOOKCREATED = Subjects.PEBOOKCREATED;
+export class CBookCreatedPublisher extends Publisher<ICBookCreatedPublisher> {
+  subject: Subjects.PCBOOKCREATED = Subjects.PCBOOKCREATED;
 }

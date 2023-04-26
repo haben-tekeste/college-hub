@@ -7,7 +7,6 @@ router.get(
   "/api/users/currentuser",
   currentUserMiddleware,
   (req, res, next) => {
-    console.log("Run");
     res.send({ currentUser: req.currentUser || null });
   }
 );

@@ -12,4 +12,6 @@ export enum streamConfig {
   CUpdatedDurableName = "commentUpdated",
   RUpdatedQueueName = "reply-updated",
   RUpdatedDurableName = "replyUpdated",
+  BUpdatedQueueName = "qbook-updated",
+  BUpdatedDurableName = "qbookUpdated",
 }

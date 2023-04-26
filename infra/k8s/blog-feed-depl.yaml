@@ -18,7 +18,7 @@ spec:
         # image: htekeste/blog-feed
         env:
           - name: MONGO_URI
-            value: "mongodb://blog-feed-mongo-srv:27017/blog-feed"
+            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.gmcnmpu.mongodb.net/?retryWrites=true&w=majority/BlogFeed"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

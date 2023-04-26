@@ -16,6 +16,7 @@ import { natswrapper } from "./nats-wrapper";
 import { QuestionCreatedListener } from "./events/listeners/question-created-listener";
 import { AnswerCreatedListener } from "./events/listeners/answer-created-listener";
 import { elasticClient } from "./elastic-search";
+import { UserCreatedListener } from "./events/listeners/user-created-listner";
 
 const app = express();
 
@@ -67,6 +68,7 @@ const start = async () => {
     // event listeners
     new QuestionCreatedListener(natswrapper.Client).listen();
     new AnswerCreatedListener(natswrapper.Client).listen();
+    new UserCreatedListener(natswrapper.Client).listen()
 
     process.on("SIGTERM", () =>
       natswrapper.Client.close().then(() => {

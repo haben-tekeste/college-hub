@@ -6,7 +6,7 @@ import { CommentLikedPublisher } from "../events/publishers/comment-liked-publis
 
 const router = express.Router();
 
-router.put("/api/comments/like/:commentId", async (req, res, next) => {
+router.put("/api/book-comment/like/:commentId", async (req, res, next) => {
   try {
     const { commentId } = req.params;
     const comment = await Comment.findById(commentId);

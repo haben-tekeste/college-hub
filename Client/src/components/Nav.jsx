@@ -32,7 +32,7 @@ const Nav = () => {
   const { data, isFetching } = useGetDetailsQuery("userDetails");
 
   useEffect(() => {
-    if (data) dispatch(setCredentials(data));
+    if (data) dispatch(setCredentials(data?.currentUser));
   }, [data, dispatch]);
 
   return (

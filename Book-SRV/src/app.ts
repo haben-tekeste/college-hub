@@ -6,7 +6,7 @@ import {
   currentUserMiddleware,
 } from "@booki/common";
 import cookieSession from "cookie-session";
-import { newBook, deleteBook, UpdateBook } from "./routes/app";
+import { newBook, deleteBook, likeBook, UpdateBook } from "./routes/app";
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use(currentUserMiddleware);
 app.use(newBook);
 app.use(deleteBook);
 app.use(UpdateBook);
+app.use(likeBook);
 
 // 404 error
 app.use("*", (req, res) => {

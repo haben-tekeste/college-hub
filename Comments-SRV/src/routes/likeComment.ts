@@ -8,7 +8,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.put(
-  "/api/book-comment/likeComment",
+  "/api/comments/likeComment",
   [body("commentId").not().isEmpty().withMessage("No comment provided")],
   validateRequest,
   isAuth,
@@ -17,7 +17,19 @@ router.put(
       const { commentId } = req.body;
       const comment = await Comment.findById(commentId);
       if (!comment) throw new BadRequestError("Comment not found");
-      comment.likes++;
+
+      const userExists: string | undefined = comment.likes.find(
+        (id) => id === req.currentUser!.id
+      );
+
+      if (!userExists) {
+        console.log("====> here");
+        comment.likes.push(req.currentUser!.id);
+      } else {
+        comment.likes = comment.likes.filter(
+          (id) => id !== req.currentUser!.id
+        );
+      }
       await comment.save();
       new CommentUpdatedPublisher(nats.client).publish({
         id: comment.id,

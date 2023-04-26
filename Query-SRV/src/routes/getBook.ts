@@ -9,7 +9,16 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { bookId } = req.params;
-      const books = await Book.findById(bookId)
+      const book = await Book.findById(bookId)
+        .populate("ownerId")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "reply",
+          },
+        });
+      if (!book) throw new BadRequestError("Sorry but no books found");
+      const related = await Book.find({ author: book.author }, {}, { limit: 7 })
         .populate("ownerId")
         .populate({
           path: "comments",
@@ -18,8 +27,26 @@ router.get(
           },
         });
 
-      if (!books) throw new BadRequestError("Sorry but no books found");
-      res.send(books);
+      const recommendedBooks = await Book.find({
+        genres: { $in: book.genre },
+        _id: { $ne: bookId },
+      })
+        .sort({ publishedDate: -1 })
+        .limit(7)
+        .populate("ownerId")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "reply",
+          },
+        });
+
+      const result = {
+        book,
+        related,
+        recommendedBooks,
+      };
+      res.send(result);
     } catch (error) {
       return next(error);
     }

@@ -3,7 +3,7 @@ import { Comment } from "../model/comment";
 
 const router = express.Router();
 
-router.get("/api/comments", async (req, res, next) => {
+router.get("/api/book-comment", async (req, res, next) => {
   try {
     // check if user is admin
 

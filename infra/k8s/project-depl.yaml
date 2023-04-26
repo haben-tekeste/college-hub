@@ -18,7 +18,7 @@ spec:
           # image: htekeste/project
           env:
           - name: MONGO_URI
-            value: "mongodb://project-mongo-srv:27017/project"
+            value: "mongodb+srv://meksonbravo903:mi6x5xTab4aOQedE@cluster0.5wstuwp.mongodb.net/?retryWrites=true&w=majority/project"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

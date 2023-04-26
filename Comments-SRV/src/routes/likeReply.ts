@@ -8,7 +8,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.put(
-  "/api/book-comment/likeReply",
+  "/api/comments/likeReply",
   [
     body("replyId").not().isEmpty().withMessage("No reply given"),
     body("commentId").not().isEmpty().withMessage("No Comment given"),
@@ -21,7 +21,16 @@ router.put(
 
       const reply = await Reply.findById(replyId);
       if (!reply) throw new BadRequestError("No reply found");
-      ++reply.likes;
+      const userExists: string | undefined = reply.likes.find(
+        (id) => id === req.currentUser!.id
+      );
+
+      if (!userExists) {
+        console.log("====> here");
+        reply.likes.push(req.currentUser!.id);
+      } else {
+        reply.likes = reply.likes.filter((id) => id !== req.currentUser!.id);
+      }
 
       await reply.save();
 
