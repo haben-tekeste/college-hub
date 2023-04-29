@@ -14,6 +14,7 @@ import { searchTermRouter } from "./routes/search";
 import { natswrapper } from "./nats-wrapper";
 import { ProjectCreatedListener } from "./events/listeners/project-created-listener";
 import { ProfileCreatedListener } from "./events/listeners/profile-created-listener";
+import { UserCreatedListener } from "./events/listeners/user-created-listener";
 
 const app = express();
 
@@ -66,9 +67,10 @@ const start = async () => {
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
 
     // add index
-    await elasticClient.createIndex("Projects");
+    // await elasticClient.createIndex("projects");
 
     // event listeners
+    new UserCreatedListener(natswrapper.Client).listen();
     new ProjectCreatedListener(natswrapper.Client).listen();
     new ProfileCreatedListener(natswrapper.Client).listen();
 

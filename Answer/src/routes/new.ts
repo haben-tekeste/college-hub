@@ -22,6 +22,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { content, questionId } = req.body;
+      console.log(content, questionId);
       const answer = Answer.build({
         author: req.currentUser?.id!,
         content,

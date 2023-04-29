@@ -16,11 +16,28 @@ import Uploader from "../Uploader";
 
 //
 import axios from "axios";
+//
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {formatDate} from "../../utils/date"
 
 const ApplyProject = () => {
   const navigate = useNavigate();
   const { details } = useSelector((state) => state.projectDetails);
   const [error, setError] = useState("");
+
+  const notify = () => {
+    toast.success("Application was succesfull", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -28,6 +45,7 @@ const ApplyProject = () => {
       await axios.post("https://studenthub.dev/api/applications", {
         projectId: details.porjectId,
       });
+      notify();
     } catch (error) {
       console.log(error);
       setError(error);
@@ -46,22 +64,22 @@ const ApplyProject = () => {
         </button>
         <div className="project flex">
           <div className="flex-col">
-            <ProfileComponent name={details.postedBy} />
+            <ProfileComponent name={details.postedBy.uname} />
             <h3>{details.topic.toUpperCase()}</h3>
             <p>{details.description}</p>
             <h3>Required skill set:</h3>
             <ul className="skills">
-              {details.skillset.map((skill) => (
-                <li>{skill}</li>
+              {details.skillSet.map((skill, i) => (
+                <li key={i}>{skill}</li>
               ))}
             </ul>
             <h3>
-              Deadline: <span>{details.deadline}</span>
+              Deadline: <span>{formatDate(new Date(details.deadline))}</span>
             </h3>
           </div>
           <div className="flex-col">
             <h3>
-              Project ID: <br /> <span>{details.projectId}</span>
+              Project ID: <br /> <span>{details.id}</span>
             </h3>
             <h3>Related to:</h3>
             <div className="tags">
@@ -78,6 +96,18 @@ const ApplyProject = () => {
         <button className="purple-btn" onClick={submitHandler}>
           Apply
         </button>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     </StyledApply>
   );

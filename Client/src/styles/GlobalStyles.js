@@ -56,6 +56,12 @@ export default createGlobalStyle`
         flex-direction: column;
         align-items: flex-start;
     }
+    .centered{
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        place-content: center;
+    }
     .container{
           background-color: white;
             color: black;

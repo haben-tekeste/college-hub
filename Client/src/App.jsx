@@ -8,6 +8,10 @@ import ProfilePage from "./pages/ProfilePage";
 import ProjectPage from "./pages/ProjectPage";
 import QuestionsPage from "./pages/QuestionsPage";
 import SignInPage from "./pages/AuthPage";
+import BlogPage from "./pages/BlogPage";
+import BooksPage from "./pages/BooksPage";
+import Profile from "./pages/Profile";
+import BookDetails from "./pages/BookDetails";
 
 //popups
 import ProjectDetails from "./components/pop-ups/ProjectDetails";
@@ -33,9 +37,13 @@ function App() {
           <Route path="/projects/apply/:id" element={<ApplyProject />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/applications" element={<Applications />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/create-project" element={<CreateProject />} />
           <Route path="/questions" element={<QuestionsPage />} />
           <Route path="/questions/:id" element={<Answer />} />
+          <Route path="/blogs" element={<BlogPage />} />
+          <Route path="/books" element={<BooksPage />} />
+          <Route path="/books/:id" element={<BookDetails />} />
         </Route>
         <Route path="/notfound" element={<Error />} />
       </Routes>

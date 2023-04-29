@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useGetDetailsQuery } from "../Services/authService";
 import { setCredentials } from "../states/authentication";
@@ -59,10 +58,10 @@ const Nav = () => {
         </Link>
 
         <Link
-          className={location === "/book-biding" ? "active link" : "link"}
-          to={"/book-biding"}
+          className={location === "/books" ? "active link" : "link"}
+          to={"/books"}
         >
-          <AiOutlineBook /> Book Biding{" "}
+          <AiOutlineBook /> Books{" "}
         </Link>
         <Link
           className={location === "/blogs" ? "active link" : "link"}
@@ -74,10 +73,10 @@ const Nav = () => {
           <>
             <h2>Settings</h2>
             <Link
-              className={location === "/account" ? "link active" : "link"}
-              to={"/account"}
+              className={location === "/profile" ? "link active" : "link"}
+              to={"/profile"}
             >
-              <ProfileComponent name={"Haben"} />
+              <ProfileComponent name={userInfo.username} />
             </Link>
             <button
               className="flex tag-btn"

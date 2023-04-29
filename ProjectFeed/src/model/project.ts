@@ -40,7 +40,7 @@ const projectSchema = new mongoose.Schema(
     postedBy: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "Profile",
+      ref: "User",
     },
     createdAt: {
       type: Schema.Types.Date,

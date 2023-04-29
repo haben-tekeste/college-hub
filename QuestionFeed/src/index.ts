@@ -4,9 +4,8 @@ import cors from "cors";
 import {
   errorHandler,
   currentUserMiddleware,
-  isVerified,
   NotFoundError,
-  isAuth
+  isAuth,
 } from "@hthub/common";
 import cookieSession from "cookie-session";
 import { questionFeedRouter } from "./routes/feed";
@@ -32,7 +31,7 @@ app.use(
 
 // signed in and verified
 app.use(currentUserMiddleware);
-app.use(isAuth)
+app.use(isAuth);
 
 // routes
 app.use(questionFeedRouter);
@@ -51,24 +50,31 @@ const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT Failed");
   if (!process.env.MONGO_URI) throw new Error("Mongodb URI must be defined");
   if (!process.env.NATS_URL) throw new Error("Nats url must be defined");
-  if (!process.env.ELASTIC_CLOUD_ID) throw new Error("Elastic ID must be defined")
-  if (!process.env.ELASTIC_USERNAME) throw new Error("Elastic Cloud username must be defined")
-  if (!process.env.ELASTIC_PASSWORD) throw new Error("Elastic passowrd must be defined")
+  if (!process.env.ELASTIC_CLOUD_ID)
+    throw new Error("Elastic ID must be defined");
+  if (!process.env.ELASTIC_USERNAME)
+    throw new Error("Elastic Cloud username must be defined");
+  if (!process.env.ELASTIC_PASSWORD)
+    throw new Error("Elastic passowrd must be defined");
   try {
     await natswrapper.connect(process.env.NATS_URL);
-    await elasticClient.connect(process.env.ELASTIC_CLOUD_ID,process.env.ELASTIC_USERNAME, process.env.ELASTIC_PASSWORD)
+    await elasticClient.connect(
+      process.env.ELASTIC_CLOUD_ID,
+      process.env.ELASTIC_USERNAME,
+      process.env.ELASTIC_PASSWORD
+    );
     await mongoose.connect(process.env.MONGO_URI);
 
     const jsm = await natswrapper.Client.jetstreamManager();
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
 
     // add index
-    await elasticClient.createIndex("Questions")
+    // await elasticClient.createIndex("questions")
 
     // event listeners
     new QuestionCreatedListener(natswrapper.Client).listen();
     new AnswerCreatedListener(natswrapper.Client).listen();
-    new UserCreatedListener(natswrapper.Client).listen()
+    new UserCreatedListener(natswrapper.Client).listen();
 
     process.on("SIGTERM", () =>
       natswrapper.Client.close().then(() => {

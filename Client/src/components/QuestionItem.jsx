@@ -13,6 +13,9 @@ import { setQuestion, askOpenai } from "../states/answerDetails";
 // router
 import { useNavigate } from "react-router-dom";
 
+//
+import { formatDate } from "../utils/date";
+
 const QuestionItem = ({ question }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,9 +24,10 @@ const QuestionItem = ({ question }) => {
 
     // sending a request to open ai
     let questionPrompt = question.title + " " + question.content;
-    await dispatch(askOpenai(questionPrompt));
-    navigate(`/questions/${question.id}`);
+    // await dispatch(askOpenai(questionPrompt));
+    navigate(`/questions/${question.id}`, { state: { id: question.id } });
   };
+  const tags = ["business", "coding", "BI"];
   return (
     <StyledQuestion className="flex">
       <div className="flex-col votes">
@@ -31,18 +35,19 @@ const QuestionItem = ({ question }) => {
         <h4>{question?.answers?.length} Answers</h4>
       </div>
       <div className="flex-col">
+      <div className="flex">
+            <ProfileComponent name={question.author?.uname} />
+            <h4>{formatDate(new Date(question.createdAt))}</h4>
+          </div>
         <h2 onClick={answerHandler}>{question.title}</h2>
         <p>{question.content}</p>
         <div className="flex info">
           <div className="flex">
-            {question.tags.map((tag) => (
+            {tags?.map((tag) => (
               <button className="tag-btn">{tag}</button>
             ))}
           </div>
-          <div className="flex">
-            <ProfileComponent name={question.author} />
-            <h4>{question.createdAt}</h4>
-          </div>
+          
         </div>
       </div>
     </StyledQuestion>
@@ -71,7 +76,7 @@ const StyledQuestion = styled.div`
     width: 100%;
     justify-content: space-between;
   }
-  .question{
+  .question {
     border-bottom: 2px solid var(--primary);
   }
 `;

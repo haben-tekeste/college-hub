@@ -13,11 +13,11 @@ spec:
         app: query
     spec:
       containers:
-      - name: query
-        image: us.gcr.io/student-hub-381513/query
-        env:
+        - name: query
+          image: us.gcr.io/student-hub-381513/query
+          env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.qgreox3.mongodb.net/?retryWrites=true&w=majority/query"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.qgreox3.mongodb.net/Query?retryWrites=true&w=majority"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -27,6 +27,14 @@ spec:
               value: "http://nats-srv:4222"
             - name: NATS_CLUSTER_ID
               value: booki
+            - name: CLOUDINARY_API_SECRET
+              value: M9ogGdjy3bXRVem3Luzj2hq6FLM
+            - name: CLOUDINARY_CLOUD_NAME
+              value: doo1ivw33
+            - name: CLOUDINARY_API_KEY
+              value: "468296274266559"
+            - name: DEFAULT_IMG
+              value: https://res.cloudinary.com/doo1ivw33/image/upload/v1682074429/Booki/avatar/6769264_60111_q9wai8.jpg
 ---
 apiVersion: v1
 kind: Service
@@ -36,7 +44,7 @@ spec:
   selector:
     app: query
   ports:
-  - name: query
-    protocol: TCP
-    port: 3003
-    targetPort: 3003
+    - name: query
+      protocol: TCP
+      port: 3003
+      targetPort: 3003

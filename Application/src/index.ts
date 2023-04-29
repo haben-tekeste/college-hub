@@ -4,10 +4,9 @@ import express from "express";
 
 import {
   currentUserMiddleware,
-  isVerified,
   errorHandler,
   NotFoundError,
-  isAuth
+  isAuth,
 } from "@hthub/common";
 import cookieSession from "cookie-session";
 import {
@@ -17,11 +16,12 @@ import {
   allApplicationsRouter,
   getApplicationRouter,
   getProjectApplicationsRouter,
+  getMyApplications,
 } from "./routes";
-
 
 import { natswrapper } from "./nats-wrapper";
 import { ProjectCreatedListener } from "./events/listeners/project-created-listener";
+import { UserCreatedListener } from "./events/listeners/user-created-listener";
 
 const app = express();
 
@@ -39,6 +39,7 @@ app.use(currentUserMiddleware);
 app.use(isAuth);
 
 // routes
+app.use(getMyApplications)
 app.use(newApplicationRouter);
 app.use(rejectApplicationRouter);
 app.use(getApplicationRouter);
@@ -66,6 +67,7 @@ const start = async () => {
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
 
     // event listeners
+    new UserCreatedListener(natswrapper.Client).listen();
     new ProjectCreatedListener(natswrapper.Client).listen();
 
     process.on("SIGTERM", () =>

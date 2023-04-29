@@ -1,21 +1,21 @@
 import {
   Subjects,
   Listener,
-  UserCreated,
+  QUserCreated,
   BadRequestError,
 } from "@hthub/common";
 import { Msg } from "nats";
 import { User } from "../../model/user";
 import { queueGroupName } from "./queue-group-name";
 
-export class UserCreatedListener extends Listener<UserCreated> {
-  subject: Subjects.UserCreated = Subjects.UserCreated;
+export class UserCreatedListener extends Listener<QUserCreated> {
+  subject: Subjects.QUserCreated = Subjects.QUserCreated;
   queueGroupName = queueGroupName;
-  filterSubject = Subjects.EventUserCreated;
-  durableName = "user-created-blog-feed-srv";
+  filterSubject = Subjects.EventQUserCreated;
+  durableName = "user-created-question-feed-srv";
   streamName = "mystream";
-  deliverSubject = Subjects.UserCreated;
-  async onMessage(data: UserCreated["data"], msg: Msg) {
+  deliverSubject = Subjects.QUserCreated;
+  async onMessage(data: QUserCreated["data"], msg: Msg) {
     const { email, uname, id } = data;
 
     const user = await User.findById(id);
@@ -24,6 +24,7 @@ export class UserCreatedListener extends Listener<UserCreated> {
     const newUser = User.build({
       uname,
       id,
+      email,
     });
     await newUser.save();
     msg.respond();

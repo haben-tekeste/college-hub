@@ -4,33 +4,34 @@ import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { setProjectDetails } from "../states/projectDetails";
-import { fetchProjectFeed } from "../Actions/projectActions";
+import { fetchMyProjects, fetchProjectFeed } from "../Actions/projectActions";
+import {setProjectDetails} from "../states/projectDetails"
 
 // components
 import SearchBar from "../components/SearchBar";
 import Projects from "../components/Projects";
+import Spinner from "../components/Spinner";
 // import ProjectDetails from "../components/pop-ups/ProjectDetails";
 
-//demo
-import { projectData } from "../data/projectData";
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const {loading, error, projects} = useSelector(state => state.project)
+  const { loading, error, projects, myProjects } = useSelector((state) => state.projects);
 
   const showProjectDetails = (project) => {
-    console.log("working");
-    dispatch(setProjectDetails(project));
-    navigate(`/projects/${project.projectId}`);
-  };
-  // const popup = useSelector((state) => state.project.popup)
+    console.log("working")
+    dispatch(setProjectDetails(project))
+    navigate(`/projects/${project.projectId}`)
+}
 
-  // useEffect(() => {
-  //     dispatch(fetchProjectFeed())
-  // },[dispatch])
+  useEffect(() => {
+    dispatch(fetchProjectFeed());
+    dispatch(fetchMyProjects())
+  }, [dispatch]);
+
+  if (loading) return <Spinner />;
 
   return (
     <StyledProjectPage>
@@ -55,31 +56,33 @@ const ProjectPage = () => {
         <div className="container container-md">
           <h3>My Projects</h3>
           <table>
-            <tr>
-              <th>Projects</th>
-              <th>Applicant</th>
-              <th>Action</th>
-            </tr>
-            {projectData.map((project, index) => (
-              <tr key={index}>
-                <td>{project.topic}</td>
-                <td>
-                  <h6>{project.applicants.length}</h6>
-                </td>
-                <td>
-                  <button
-                    className="purple-btn"
-                    onClick={() => showProjectDetails(project)}
-                  >
-                    View
-                  </button>
-                </td>
+            <tbody>
+              <tr>
+                <th>Projects</th>
+                <th>Applicant</th>
+                <th>Action</th>
               </tr>
-            ))}
+              {myProjects?.map((project, index) => (
+                <tr key={index}>
+                  <td>{project.topic}</td>
+                  <td>
+                    <h6>{project.applications.length}</h6>
+                  </td>
+                  <td>
+                    <button
+                      className="purple-btn"
+                      onClick={() => showProjectDetails(project)}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
         <div className="container container-md">
-          <Projects />
+          <Projects projects={projects} />
         </div>
       </div>
     </StyledProjectPage>

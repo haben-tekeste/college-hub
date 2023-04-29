@@ -15,12 +15,12 @@ const ProjectItem = ({ project }) => {
 
   const viewProject = () => {
     dispatch(setProjectDetails(project));
-    navigate(`/projects/apply/${project.projectId}`)
+    navigate(`/projects/apply/${project.id}`)
   };
   return (
     <StyledProjectItem>
       <div className="flex">
-        <ProfileComponent name={project.postedBy}></ProfileComponent>
+        <ProfileComponent name={project.postedBy.uname}></ProfileComponent>
         <h6 onClick={viewProject}>View Project</h6>
       </div>
       <h4>{project.topic}</h4>

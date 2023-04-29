@@ -5,6 +5,7 @@ import mongoose, { Schema } from "mongoose";
 interface IUser {
   id: string;
   uname: string;
+  email: string;
 }
 
 // an interface that describes
@@ -20,6 +21,7 @@ interface IModel extends mongoose.Model<IDocument> {
 interface IDocument extends mongoose.Document {
   uname: string;
   id: string;
+  email: string;
   interests: string[];
 }
 
@@ -31,6 +33,9 @@ const UserSchema = new mongoose.Schema(
     },
     interests: {
       type: [String],
+    },
+    email: {
+      type: String,
     },
   },
   {
@@ -49,6 +54,7 @@ UserSchema.statics.build = (user: IUser) => {
   return new User({
     _id: user.id,
     uname: user.uname,
+    email: user.email,
   });
 };
 

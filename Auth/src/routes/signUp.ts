@@ -6,6 +6,8 @@ import { User } from "../model/user";
 import { randomInt } from "node:crypto";
 import { UserCreatedPublisher } from "../events/publishers/user-created-publisher";
 import { natswrapper } from "../nats-wrapper";
+import { QUserCreatedPublisher } from "../events/publishers/q-user-created-publisher";
+import { BUserCreatedPublisher } from "../events/publishers/b-user-created-publisher";
 
 const router = express.Router();
 const WINDOW_MINUTES_INTERVAL = 15 * 60;
@@ -45,7 +47,7 @@ router.post(
   ) => {
     try {
       const { email, password, username } = req.body;
-      
+
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         throw new BadRequestError("Email already in use");
@@ -79,12 +81,25 @@ router.post(
         id: newUser.id,
       });
 
+      new QUserCreatedPublisher(natswrapper.Client).publish({
+        email: newUser.email,
+        uname: newUser.username,
+        id: newUser.id,
+      });
+
+      new BUserCreatedPublisher(natswrapper.Client).publish({
+        email: newUser.email,
+        uname: newUser.username,
+        id: newUser.id,
+      });
+
       // send email
 
       const jwtToken = jsonwebtoken.sign(
         {
           id: newUser._id,
           email: newUser.email,
+          username: newUser.username
         },
         process.env.JWT_KEY!
       );

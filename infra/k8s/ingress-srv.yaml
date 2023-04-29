@@ -5,6 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "700m"
+    nginx.org/proxy-connect-timeout: 3600s
+    nginx.org/proxy-read-timeout: 3600s
+    nginx.org/proxy-send-timeout: 3600s
 spec:
   rules:
     - host: studenthub.dev
@@ -79,41 +83,41 @@ spec:
               service:
                 name: question-feed-srv
                 port:
-                  number: 6000
+                  number: 4010
           - pathType: Prefix
             path: "/api/answers/?(.*)"
             backend:
               service:
                 name: answer-srv
                 port:
-                  number: 4008
+                  number: 4002
           - pathType: Prefix
             path: "/api/booki/?(.*)"
             backend:
               service:
                 name: book-srv
-                port: 
+                port:
                   number: 3001
           - pathType: Prefix
             path: "/api/book-comment/?(.*)"
             backend:
               service:
                 name: book-comment-srv
-                port: 
+                port:
                   number: 3002
           - pathType: Prefix
             path: "/api/query/?(.*)"
             backend:
               service:
                 name: query-srv
-                port: 
+                port:
                   number: 3003
           - pathType: Prefix
             path: "/api/bid/?(.*)"
             backend:
               service:
                 name: exchange-srv
-                port: 
+                port:
                   number: 3004
           - pathType: Prefix
             path: "/?(.*)"

@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
+// import "mdb-react-ui-kit/dist/css/mdb.min.css";
+
 // global styles
 import GlobalStyles from "./styles/GlobalStyles";
 
@@ -23,5 +25,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-

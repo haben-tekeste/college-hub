@@ -17,30 +17,35 @@ spec:
           image: us.gcr.io/student-hub-381513/question-feed
           # image: htekeste/question-feed
           env:
-          - name: MONGO_URI
-            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.rpv009t.mongodb.net/?retryWrites=true&w=majority/question-feed"
-          - name: JWT_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jwt-secret-key
-                key: JWT_KEY
-          - name: ELASTIC_CLOUD_ID
-            valueFrom:
+            - name: MONGO_URI
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.rpv009t.mongodb.net/QuestionFeed?retryWrites=true&w=majority"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret-key
+                  key: JWT_KEY
+            - name: ELASTIC_CLOUD_ID
+              valueFrom:
                 secretKeyRef:
                   name: elastic-key
                   key: ELASTIC_CLOUD_ID
-          - name: ELASTIC_USERNAME
-            valueFrom:
-               secretKeyRef:
-                 name: elastic-username
-                 key: ELASTIC_USERNAME
-          - name: ELASTIC_PASSWORD
-            valueFrom:
-               secretKeyRef:
-                 name: elastic-password
-                 key: ELASTIC_PASSWORD
-          - name: NATS_URL
-            value: 'http://nats-srv:4222'
+            - name: ELASTIC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-username
+                  key: ELASTIC_USERNAME
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-password
+                  key: ELASTIC_PASSWORD
+            - name: NLP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nlp-api-key
+                  key: NLP_KEY
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
 ---
 apiVersion: v1
 kind: Service
@@ -50,7 +55,7 @@ spec:
   selector:
     app: question-feed
   ports:
-    - port: 6000
-      targetPort: 6000
+    - port: 4010
+      targetPort: 4010
       name: question-feed-port
       protocol: TCP

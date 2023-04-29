@@ -17,7 +17,7 @@ spec:
         image: us.gcr.io/student-hub-381513/book
         env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.nby8wro.mongodb.net/?retryWrites=true&w=majority/book"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.nby8wro.mongodb.net/Book?retryWrites=true&w=majority"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -27,6 +27,12 @@ spec:
               value: "http://nats-srv:4222"
             - name: NATS_CLUSTER_ID
               value: booki
+            - name: CLOUDINARY_API_SECRET
+              value: M9ogGdjy3bXRVem3Luzj2hq6FLM
+            - name: CLOUDINARY_CLOUD_NAME
+              value: doo1ivw33
+            - name: CLOUDINARY_API_KEY
+              value: '468296274266559'
 ---
 apiVersion: v1
 kind: Service

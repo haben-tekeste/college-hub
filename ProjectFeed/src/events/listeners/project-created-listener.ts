@@ -29,7 +29,7 @@ export class ProjectCreatedListener extends Listener<ProjectCreated> {
     });
 
     await newProject.save();
-    await elasticClient.createPost("Projects", {
+    await elasticClient.createPost("projects", {
       topic: newProject.topic,
       id: newProject.id,
       description:newProject.description,

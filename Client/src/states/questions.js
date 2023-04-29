@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchQuestionFeed } from "../Actions/questionActions";
 
 const initialState = {
   questions: [],
   filter: "",
   filteredQuestions: [],
-  askQuestion: false
+  askQuestion: false,
+  loadin:false,
+  eror:null
 };
 
 const questionsSlice = createSlice({
@@ -26,6 +29,21 @@ const questionsSlice = createSlice({
     toggleAsk: (state) => {
       state.askQuestion = !state.askQuestion
     }
+  },
+  extraReducers: {
+    // Fetch Questions
+    [fetchQuestionFeed.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [fetchQuestionFeed.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.questions = payload;
+    },
+    [fetchQuestionFeed.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
   },
 });
 

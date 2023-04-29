@@ -37,7 +37,7 @@ router.post(
         userId: req.currentUser?.id,
       });
       console.log(existingApplication);
-      
+
       if (existingApplication)
         throw new Error("You have already applied to this project");
       const application = Application.build({
@@ -48,6 +48,9 @@ router.post(
       });
 
       await application.save();
+
+      project.applications.push(application.id);
+      await project.save();
 
       res.status(201).json(application);
     } catch (error) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 //styled components
 import { StyledProfile } from "../styles/profilePageStyles";
@@ -12,7 +12,23 @@ import Blogs from "../components/Blogs";
 import Projects from "../components/Projects";
 import SuggestedUsers from "../components/SuggestedUsers";
 
+//redux
+import { fetchBlogFeed } from "../Actions/blogActions";
+import { fetchProjectFeed } from "../Actions/projectActions";
+import { useDispatch, useSelector } from "react-redux";
+
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  const { loading, blogs } = useSelector((state) => state.blogs);
+  const { loading: projectLoading, projects } = useSelector(
+    (state) => state.projects
+  );
+
+  useEffect(() => {
+    dispatch(fetchBlogFeed());
+    dispatch(fetchProjectFeed());
+  }, [dispatch]);
   return (
     <StyledProfile>
       <div className="welcome-card">
@@ -20,15 +36,15 @@ const ProfilePage = () => {
         <WelcomeCard />
       </div>
       <Stats className="stats" />
-      <Badges className="badges"/>
+      <Badges className="badges" />
       <div className="blogs container">
-        <Blogs/>
+        <Blogs blogs={blogs.slice(0, 4)} />
       </div>
       <div className="projects container">
-        <Projects/>
+        <Projects projects={projects.slice(0, 4)} />
       </div>
       <div className="users container">
-        <SuggestedUsers/>
+        <SuggestedUsers />
       </div>
     </StyledProfile>
   );

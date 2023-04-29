@@ -10,6 +10,7 @@ import { multerUploads } from "../config/multerConfig";
 import path from "path";
 import dataUriParser from "datauri/parser";
 import cloudinary from "cloudinary";
+import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.post(
         ).content;
 
         const result = await cloudinary.v2.uploader.upload(content!, {
-          public_id: "random",
+          public_id:uuidv4(),
         });
         newBlog.set({ imgUrl: result.secure_url });
       }
@@ -64,7 +65,7 @@ router.post(
           text: title,
         }
       );
-      console.log(data);
+      newBlog.set({ tags: data[0] });
       // save
       await newBlog.save();
 

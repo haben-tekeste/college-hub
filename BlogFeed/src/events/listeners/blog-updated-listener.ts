@@ -23,7 +23,7 @@ export class BlogUpdatedListener extends Listener<BlogUpdated> {
 
     await blog.save();
     // add to elastic
-    await elasticClient.createPost("Blogs", {
+    await elasticClient.createPost("blogs", {
       id: blog.id,
       title: blog.title,
       summary: blog.summary,

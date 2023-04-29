@@ -7,6 +7,10 @@ import styled from "styled-components";
 //icons
 import { AiOutlineClose } from "react-icons/ai";
 
+//
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const CreateProject = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState("");
@@ -15,6 +19,19 @@ const CreateProject = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const [skillSet, setSkillSet] = useState("");
+
+  const notify = () => {
+    toast.success("Project created succesfully", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -27,6 +44,7 @@ const CreateProject = () => {
         tags: tags.split(","),
         skillSet: skillSet.split(","),
       });
+      notify();
     } catch (error) {
       console.log(error);
       setErrors(error.response.data.errors);
@@ -83,6 +101,18 @@ const CreateProject = () => {
             Create
           </button>
         </StyledForm>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         {errors && (
           <div className="alert alert-danger" style={{ marginTop: "1rem" }}>
             <h4>Ooops....</h4>

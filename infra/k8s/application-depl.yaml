@@ -18,7 +18,7 @@ spec:
           # image: htekeste/application
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.kcjzcmt.mongodb.net/?retryWrites=true&w=majority/Application"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.kcjzcmt.mongodb.net/Application?retryWrites=true&w=majority"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

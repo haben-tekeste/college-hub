@@ -4,6 +4,7 @@ import { body } from "express-validator";
 import { Project } from "../model/project";
 import { ProjectCreatedPublisher } from "../events/publisher/project-created-publisher";
 import { natswrapper } from "../nats-wrapper";
+import { ProjectACreatedPublisher } from "../events/publisher/project-acreated-publisher";
 
 const router = express.Router();
 
@@ -48,6 +49,16 @@ router.post(
 
       await newProject.save();
       new ProjectCreatedPublisher(natswrapper.Client).publish({
+        id: newProject.id,
+        tags: newProject.tags,
+        description: newProject.description,
+        postedBy: newProject.postedBy,
+        deadline: newProject.deadline.toISOString(),
+        skillSet: newProject.skillSet,
+        topic: newProject.topic,
+        createdAt: newProject.createdAt.toISOString(),
+      });
+      new ProjectACreatedPublisher(natswrapper.Client).publish({
         id: newProject.id,
         tags: newProject.tags,
         description: newProject.description,

@@ -12,7 +12,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const { term } = req.body;
     try {
-      const questions = await elasticClient.fetchPosts(term, "Questions");
+      const questions = await elasticClient.fetchPosts(term, "questions");
       res.status(200).json(questions);
     } catch (error) {
       next(error);

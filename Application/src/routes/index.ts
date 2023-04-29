@@ -4,3 +4,4 @@ export { getApplicationRouter } from "./show";
 export { getProjectApplicationsRouter } from "./projectApplicationFilter";
 export { approveApplicationRouter } from "./approve";
 export { rejectApplicationRouter } from "./reject";
+export {getMyApplications} from "./myApplications"

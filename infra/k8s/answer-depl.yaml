@@ -18,7 +18,7 @@ spec:
           # image: htekeste/answer
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.oqqqvzw.mongodb.net/?retryWrites=true&w=majority/Answer"
+              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.oqqqvzw.mongodb.net/Answer?retryWrites=true&w=majority"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -35,7 +35,7 @@ spec:
   selector:
     app: answer
   ports:
-    - port: 4008
-      targetPort: 4008
+    - port: 4002
+      targetPort: 4002
       name: answer-port
       protocol: TCP

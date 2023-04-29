@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/Spinner";
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
+// import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import {
   MDBContainer,
@@ -48,7 +48,7 @@ const AuthPage = () => {
     // redirect user to login page if registration was successful
     if (success) setJustifyActive("tab1");
     // redirect authenticated user to profile screen
-    if (userInfo) navigate("/user-profile");
+    if (userInfo) navigate("/");
   }, [navigate, userInfo, success]);
 
   const toggleShow = () => setBasicModal(!basicModal);

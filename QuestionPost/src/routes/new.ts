@@ -10,8 +10,8 @@ const router = express.Router();
 router.post(
   "/api/questions",
   [
-    body("title").not().isEmpty().trim().escape(),
-    body("content").not().isEmpty().trim().escape(),
+    body("title").not().isEmpty().trim(),
+    body("content").not().isEmpty().trim(),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {

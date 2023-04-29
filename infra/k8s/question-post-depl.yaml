@@ -18,12 +18,17 @@ spec:
         # image: htekeste/question-post
         env:
           - name: MONGO_URI
-            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.mre5bde.mongodb.net/?retryWrites=true&w=majority/question-post"
+            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.mre5bde.mongodb.net/QuestionPost?retryWrites=true&w=majority"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:
                 name: jwt-secret-key
                 key: JWT_KEY
+          - name: NLP_KEY
+            valueFrom:
+              secretKeyRef:
+                name: nlp-api-key
+                key: NLP_KEY
           - name: NATS_URL
             value: 'http://nats-srv:4222'
 ---

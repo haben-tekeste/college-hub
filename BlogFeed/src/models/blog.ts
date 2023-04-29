@@ -43,9 +43,10 @@ const blogSchema = new mongoose.Schema(
     author: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     createdAt: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Date,
       required: true,
     },
     content: {
@@ -94,6 +95,7 @@ blogSchema.statics.build = (blog: IBlog) => {
     tags: blog.tags,
     summary: blog.summary,
     imgUrl: blog.imgUrl,
+    comments: blog.comments,
   });
 };
 

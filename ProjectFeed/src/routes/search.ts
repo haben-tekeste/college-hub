@@ -20,7 +20,7 @@ router.post(
       //     score: { $meta: "textScore" },
       //   }
       // ).sort({ score: { $meta: "textScore" } });
-      const projects = await elasticClient.fetchPosts(term, "Projects")
+      const projects = await elasticClient.fetchPosts(term, "projects")
 
       res.status(200).json(projects);
     } catch (error) {}

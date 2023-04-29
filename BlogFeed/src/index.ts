@@ -5,7 +5,6 @@ import cookieSession from "cookie-session";
 import {
   currentUserMiddleware,
   errorHandler,
-  isVerified,
   NotFoundError,
   isAuth,
 } from "@hthub/common";
@@ -16,6 +15,12 @@ import { CommentApprovedListener } from "./events/listeners/comment-approved-lis
 import { BlogCreatedListener } from "./events/listeners/blog-created-listeners";
 import { BlogUpdatedListener } from "./events/listeners/blog-updated-listener";
 import { UserCreatedListener } from "./events/listeners/user-created-listener";
+import {
+  getBlogFeedRouter,
+  getBlogRouter,
+  myBlogsRouter,
+  searchBlogRouter,
+} from "./routes";
 
 const app = express();
 
@@ -34,6 +39,10 @@ app.use(currentUserMiddleware);
 app.use(isAuth);
 
 // routes
+app.use(myBlogsRouter);
+app.use(getBlogFeedRouter);
+app.use(getBlogRouter);
+app.use(searchBlogRouter);
 
 // 404 error
 app.use("*", (req, res) => {
@@ -66,7 +75,7 @@ const start = async () => {
     await jsm.streams.add({ name: "mystream", subjects: ["events.>"] });
 
     // add index
-    await elasticClient.createIndex("Blogs");
+    // await elasticClient.createIndex("blogsfeed");
 
     // listeners
     new CommentApprovedListener(natswrapper.Client).listen();

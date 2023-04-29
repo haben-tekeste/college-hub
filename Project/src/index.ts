@@ -5,7 +5,6 @@ import cookieSession from "cookie-session";
 import {
   currentUserMiddleware,
   errorHandler,
-  isVerified,
   NotFoundError,
   isAuth
 } from "@hthub/common";

@@ -1,9 +1,9 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, ObjectId } from "mongoose";
 
 // An interface that describes
 // properties required to create a project idea
 interface IProject {
-  id: string,
+  id: string;
   topic: string;
   description: string;
   postedBy: string;
@@ -11,6 +11,7 @@ interface IProject {
   deadline: Date;
   skillSet: string[];
   tags: string[];
+  applications: ObjectId[];
 }
 
 // an interface that describes
@@ -29,6 +30,7 @@ export interface IDocument extends mongoose.Document {
   deadline: Date;
   skillSet: string[];
   tags: string[];
+  applications: ObjectId[];
 }
 
 const projectSchema = new mongoose.Schema(
@@ -55,7 +57,11 @@ const projectSchema = new mongoose.Schema(
     },
     skillSet: [String],
     tags: [String],
+    applications: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Application" },
+    ],
   },
+
   {
     toJSON: {
       transform(doc, ret, options) {
@@ -76,7 +82,8 @@ projectSchema.statics.build = (project: IProject) => {
     tags: project.tags,
     postedBy: project.postedBy,
     createdAt: project.createdAt,
-    skillSet: project.skillSet
+    skillSet: project.skillSet,
+    applications: project.applications,
   });
 };
 

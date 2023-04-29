@@ -3,12 +3,12 @@ import ProjectItem from "./ProjectItem";
 import {projectData} from "../data/projectData"
 
 
-const Projects = () => {
+const Projects = ({projects}) => {
   
   return (
     <div>
       <h3>Projects</h3>
-      {projectData.map((project, index) => (
+      {projects?.map((project, index) => (
         <ProjectItem key={index} project={project} />
       ))}
     </div>

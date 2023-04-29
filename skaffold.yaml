@@ -25,7 +25,7 @@ build:
       sync:
         manual:
           - dest: .
-            src: "**/*.jsx"
+            src: "**/*"
     # - image: htekeste/application
     - image: us.gcr.io/student-hub-381513/application
       context: Application
@@ -167,3 +167,9 @@ build:
 manifests:
   rawYaml:
     - "./infra/k8s/*"
+    # - "./infra/k8s/auth-depl.yaml"
+    # - "./infra/k8s/query-depl.yaml"
+    # - "./infra/k8s/blog-feed-depl.yaml"
+    # - "./infra/k8s/project-depl.yaml"
+    # - "./infra/k8s/project-feed-depl.yaml"
+    # - "./infra/k8s/question-feed-depl.yaml"

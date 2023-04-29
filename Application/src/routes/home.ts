@@ -1,18 +1,21 @@
 import express from "express";
-import { body } from "express-validator";
-import { validateRequest } from "@hthub/common";
 import { Application } from "../models/application";
+import { Project } from "../models/project";
 
 const router = express.Router();
 
 router.get("/api/applications/", async (req, res, next) => {
   try {
-    const applications = await Application.findById(
-      req.currentUser?.id
-    ).populate("Project");
+    const projects = await Project.find(
+      { postedBy: req.currentUser?.id },
+      {},
+      { sort: { createdAt: -1 } }
+    ).populate({ path: "applications" });
 
-    res.status(200).json(applications);
+    res.status(200).json(projects);
   } catch (error) {
+    console.log(error);
+
     next(error);
   }
 });

@@ -18,7 +18,7 @@ spec:
         # image: htekeste/comment
         env:
           - name: MONGO_URI
-            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.ytjm6qu.mongodb.net/?retryWrites=true&w=majority/comment"
+            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.ytjm6qu.mongodb.net/Comment?retryWrites=true&w=majority"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

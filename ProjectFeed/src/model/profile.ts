@@ -16,7 +16,6 @@ interface IProfile {
 
 // an interface that describes
 // the properties of a profile model
-
 interface IModel extends mongoose.Model<IDocument> {
   build(profile: IProfile): IDocument;
 }

@@ -12,7 +12,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     const { term } = req.body;
     try {
-      const blogs = await elasticClient.fetchPosts(term, "Blogs");
+      const blogs = await elasticClient.fetchPosts(term, "blogsfeed");
       res.status(200).json(blogs);
     } catch (error) {
       next(error);

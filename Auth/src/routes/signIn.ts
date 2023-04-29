@@ -43,6 +43,7 @@ router.post(
         {
           id: existingUser._id,
           email: existingUser.email,
+          username: existingUser.username,
         },
         process.env.JWT_KEY!
       );
@@ -50,7 +51,7 @@ router.post(
       res.status(200).json({
         jwtToken,
         email: existingUser.email,
-        username: existingUser.email,
+        username: existingUser.username,
       });
     } catch (error) {
       return next(error);

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // redux
@@ -19,16 +19,21 @@ import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 
 // demo data
 import { applicationData } from "../../data/projectData";
+import Spinner from "../Spinner";
+import { fetchMyApplications } from "../../Actions/applicationActions";
+
+//
 
 const Applications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchMyApplications());
     dispatch(setApplications(applicationData));
   }, []);
 
-  const { filteredApplications} = useSelector(
+  const { filteredApplications, myApplications, loading } = useSelector(
     (state) => state.application
   );
 
@@ -36,6 +41,8 @@ const Applications = () => {
   const searchHandler = (value) => {
     dispatch(searchApplications(value));
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <StyledPopup>
@@ -46,7 +53,7 @@ const Applications = () => {
         >
           <AiOutlineClose />
         </button>
-        <h3>My Applications ({filteredApplications.length})</h3>
+        <h3>My Applications ({myApplications.length})</h3>
 
         <StyledApplications>
           <div className="flex">
@@ -62,7 +69,10 @@ const Applications = () => {
             </StyledSearch>
             <div className="sort">
               <label htmlFor="application-sort">Filter by:</label>
-              <select name="application-sort" onChange={(e) => dispatch(filterApplications(e.target.value))}>
+              <select
+                name="application-sort"
+                onChange={(e) => dispatch(filterApplications(e.target.value))}
+              >
                 <option value="all">All</option>
                 <option value="new">New</option>
                 <option value="selected">Selected</option>
@@ -78,8 +88,8 @@ const Applications = () => {
               <th>Applied Date</th>
               <th>Action</th>
             </tr>
-            {filteredApplications.map((application) => (
-              <tr>
+            {myApplications?.map((application, i) => (
+              <tr key={i}>
                 <td>{application.topic}</td>
                 <td>
                   <h6>{application.projectId}</h6>
@@ -135,8 +145,7 @@ const StyledApplications = styled.div`
       color: var(--primary);
     }
   }
-  .search-btn
-  {
+  .search-btn {
     margin-right: 3rem;
   }
 `;

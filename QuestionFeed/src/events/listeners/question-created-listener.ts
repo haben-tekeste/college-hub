@@ -27,7 +27,7 @@ export class QuestionCreatedListener extends Listener<QuestionCreated> {
     });
 
     await newQuestion.save();
-    await elasticClient.createPost("Questions", {
+    await elasticClient.createPost("questions", {
       id: newQuestion.id,
       title: newQuestion.title,
       content: newQuestion.content,
