@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // components
 import Blogs from "../components/Blogs";
-import SearchBar from "../components/SearchBar";
 import Spinner from "../components/Spinner";
 
 // popup
@@ -9,19 +8,39 @@ import CreatePost from "../components/pop-ups/CreatePost";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { toggleCreatePost } from "../states/blogs";
-import { fetchBlogFeed, fetchMyBlogs } from "../Actions/blogActions";
+import { toggleCreatePost, clearBlogSearch } from "../states/blogs";
+import {
+  fetchBlogFeed,
+  fetchMyBlogs,
+  searchBlog,
+} from "../Actions/blogActions";
 
 // styles
 import styled from "styled-components";
+import { StyledSearch } from "../components/SearchBar";
+import { StyledBlogItem } from "../components/BlogItem";
+
+// icons
+import { AiOutlineSearch } from "react-icons/ai";
 
 const BlogPage = () => {
   const dispatch = useDispatch();
   const { isCreatePost } = useSelector((state) => state.blogs);
 
-  const { loading, error, blogs, myBlogs } = useSelector(
+  const { loading, blogs, myBlogs, searchBlogs } = useSelector(
     (state) => state.blogs
   );
+
+  const [term, setTerm] = useState("");
+
+  const searchTerm = (e) => {
+    e.preventDefault();
+    try {
+      dispatch(searchBlog(term));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchBlogFeed());
@@ -29,11 +48,22 @@ const BlogPage = () => {
   }, [dispatch]);
 
   if (loading) return <Spinner />;
+
   return (
     <StyledBlogPage>
       {isCreatePost && <CreatePost />}
       <header>
-        <SearchBar></SearchBar>
+        <StyledSearch onSubmit={(e) => searchTerm(e)}>
+          <input
+            type="text"
+            placeholder="search..."
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
+          <button type="submit">
+            <AiOutlineSearch />
+          </button>
+        </StyledSearch>
         <button
           className="purple-btn"
           onClick={() => dispatch(toggleCreatePost())}
@@ -53,7 +83,24 @@ const BlogPage = () => {
         </div>
 
         <div className="container">
-          {blogs.length ? <Blogs blogs={blogs} /> : <h3>No blogs found</h3>}
+          {searchBlogs.length ? (
+            <div className="container">
+              <div className="flex" style={{ justifyContent: "space-between" }}>
+                <h2>Search Results</h2>
+                <button onClick={() => dispatch(clearBlogSearch())}>
+                  Clear Search
+                </button>
+              </div>
+              {searchBlogs.map((blog, i) => (
+                <StyledBlogItem key={i} style={{ marginTop: "2rem" }}>
+                  <h3>{blog._source.title}</h3>
+                  <p>{blog._source.summary}</p>
+                </StyledBlogItem>
+              ))}
+            </div>
+          ) : (
+            <Blogs blogs={blogs} />
+          )}
         </div>
       </div>
     </StyledBlogPage>

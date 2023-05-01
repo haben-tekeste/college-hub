@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { BiArrowBack } from "react-icons/bi";
-import Spinner from "../components/Spinner";
 import Loading from "../components/Loading";
 
 import axios from "axios";
@@ -26,7 +25,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Answer = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [questionData, setQuestionData] = useState("");
@@ -87,22 +85,22 @@ const Answer = () => {
   return (
     <StyledAnswer>
       <h1>
-        Question <span>#{question.id}</span>
+        Question <span>#{questionData.id}</span>
       </h1>
       <div className="container">
         <h2 className="flex back" onClick={() => navigate("/questions")}>
           <BiArrowBack /> Back
         </h2>
         <div className="flex row">
-          <AnsweredQuestion question={question} />
+          <AnsweredQuestion question={questionData} />
           <OpenaiResponse answer={aiAnswer} />
         </div>
 
         {/* Answers */}
         <div className="row flex">
           <div className="flex-col answers">
-            <h3>{question.answers.length} Answers</h3>
-            {question.answers.map((answer, index) => (
+            <h3>{questionData.answers.length} Answers</h3>
+            {questionData.answers.map((answer, index) => (
               <AnswerItem key={index} answer={answer} />
             ))}
           </div>

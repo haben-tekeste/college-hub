@@ -2,6 +2,6 @@ import express from "express";
 
 const router = express.Router();
 
-router.delete("/api/book-comment/:commentId");
+router.delete("/api/comments/:commentId");
 
 export { router as deleteCommentRouter };

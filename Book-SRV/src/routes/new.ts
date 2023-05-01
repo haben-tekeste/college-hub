@@ -52,7 +52,7 @@ router.post(
         publicId = data.public_id;
         result = data.secure_url;
       }
-      genre = JSON.parse(genre);
+      // genre = JSON.parse(genre);
 
       const book = new Book({
         title,

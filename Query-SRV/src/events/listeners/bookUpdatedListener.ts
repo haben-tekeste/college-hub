@@ -32,6 +32,7 @@ export class QBookUpdatedListener extends Listener<IQBookUpdatedListener> {
       comments: book.comments,
       likes: data.likes,
       cloudinaryPublicId: data.cloudinaryPublicId,
+      show: book.show,
     });
 
     await book.save();

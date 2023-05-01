@@ -4,4 +4,6 @@ export enum streamConfig {
   BCreatedDurableName = "ebookCreated",
   BUpdatedQueueName = "ebook-updated",
   BUpdatedDurableName = "ebookUpdated",
+  UCreatedDurableName = "euserCreated",
+  UCreatedQueueName = "euser-created",
 }

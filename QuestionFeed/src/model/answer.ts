@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // An interface that describes
 // properties required to create a answer
 interface IAnswer {
-  id: string,
+  id: string;
   author: string;
   content: string;
   questionId: string;
@@ -48,7 +48,7 @@ const answerSchema = new mongoose.Schema(
     questionId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref:'Question'
+      ref: "Question",
     },
     createdAt: {
       type: mongoose.Schema.Types.Date,
@@ -64,14 +64,14 @@ const answerSchema = new mongoose.Schema(
         type: Number,
         default: 0,
       },
-      voters: [String],
+      voters: [mongoose.Schema.Types.ObjectId],
     },
     downvotes: {
       quantity: {
         type: Number,
-        default: [],
+        default: 0,
       },
-      voters: [String],
+      voters: [mongoose.Schema.Types.ObjectId],
     },
   },
   {
@@ -88,7 +88,7 @@ const answerSchema = new mongoose.Schema(
 answerSchema.statics.build = (answer: IAnswer) => {
   return new Answer({
     _id: answer.id,
-    ...answer
+    ...answer,
   });
 };
 

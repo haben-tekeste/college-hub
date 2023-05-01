@@ -1,28 +1,32 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 // components
 import SearchBar from "../components/SearchBar";
 import Book from "../components/book";
+import Loading from "../components/Loading";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { setBooks } from "../states/books";
+// import { setBooks } from "../states/books";
 
 //styles
 import styled from "styled-components";
 
 // demo
-import { bookData } from "../data/BookData";
+// import { bookData } from "../data/BookData";
+import { fetchBooks } from "../Actions/bookActions";
 
 const BooksPage = () => {
-    const dispatch = useDispatch();
-    
-    useEffect(()=>{
-        dispatch(setBooks(bookData))
-    }, [dispatch])
+  const dispatch = useDispatch();
 
-    const {books} = useSelector(state => state.books)
+  useEffect(() => {
+    console.log("books");
+    dispatch(fetchBooks());
+  }, [dispatch]);
 
+  const { books, loading } = useSelector((state) => state.books);
+
+  if (loading) return <Loading />;
   return (
     <StyledBooksPage>
       <header>
@@ -31,7 +35,9 @@ const BooksPage = () => {
       <div className="container">
         <h2>Available Books</h2>
         <div className="books">
-            {books.map((book) => <Book key={book.id} book={book}/>)}
+          {books?.books?.map((book) => (
+            <Book key={book.id} book={book} />
+          ))}
         </div>
       </div>
     </StyledBooksPage>
@@ -46,7 +52,7 @@ export const StyledBooksPage = styled.div`
     height: 85vh;
     width: 100%;
   }
-  .books{
+  .books {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;

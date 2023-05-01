@@ -3,7 +3,9 @@ import styled from "styled-components";
 const ProfileComponent = ({ name }) => {
   return (
     <StyledProfile className="flex">
-      <div className="icon">{name?.charAt(0)}</div>
+      <div className={`icon color${Math.floor(Math.random() * 13)}`}>
+        {name?.charAt(0)}
+      </div>
       <h4>{name}</h4>
     </StyledProfile>
   );

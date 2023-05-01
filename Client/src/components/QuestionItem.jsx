@@ -21,34 +21,32 @@ const QuestionItem = ({ question }) => {
   const dispatch = useDispatch();
   const answerHandler = async () => {
     dispatch(setQuestion(question));
-
-    // sending a request to open ai
-    let questionPrompt = question.title + " " + question.content;
-    // await dispatch(askOpenai(questionPrompt));
     navigate(`/questions/${question.id}`, { state: { id: question.id } });
   };
   const tags = ["business", "coding", "BI"];
   return (
     <StyledQuestion className="flex">
       <div className="flex-col votes">
-        <h4>{question.votes} Votes</h4>
+        <h4>{question?.votes} Votes</h4>
         <h4>{question?.answers?.length} Answers</h4>
       </div>
       <div className="flex-col">
-      <div className="flex">
+        {question?.author?.uname && (
+          <div className="flex">
             <ProfileComponent name={question.author?.uname} />
-            <h4>{formatDate(new Date(question.createdAt))}</h4>
+            <h4>{formatDate(new Date(question?.createdAt))}</h4>
           </div>
-        <h2 onClick={answerHandler}>{question.title}</h2>
-        <p>{question.content}</p>
-        <div className="flex info">
+        )}
+        <h2 onClick={answerHandler}>{question?.title}</h2>
+        <p>{question?.content}</p>
+        {/* <div className="flex info">
           <div className="flex">
             {tags?.map((tag) => (
               <button className="tag-btn">{tag}</button>
             ))}
           </div>
           
-        </div>
+        </div> */}
       </div>
     </StyledQuestion>
   );

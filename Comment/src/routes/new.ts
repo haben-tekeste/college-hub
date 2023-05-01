@@ -9,7 +9,7 @@ import { natswrapper } from "../nats-wrapper";
 const router = express.Router();
 
 router.post(
-  "/api/book-comment",
+  "/api/comments",
   [
     body("content")
       .isLength({ min: 1, max: 1000 })

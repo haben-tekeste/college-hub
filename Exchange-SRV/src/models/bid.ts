@@ -32,6 +32,7 @@ const bidSchema = new mongoose.Schema(
     },
     bidder: {
       type: String,
+      ref: "User",
       required: true,
     },
     bidderBook: {

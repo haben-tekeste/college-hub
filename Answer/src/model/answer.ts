@@ -59,16 +59,16 @@ const answerSchema = new mongoose.Schema(
     upvotes: {
       quantity: {
         type: Number,
-        default: 0
+        default: 0,
       },
-      voters: [String],
+      voters: [mongoose.Schema.Types.ObjectId],
     },
     downvotes: {
       quantity: {
         type: Number,
-        default: []
+        default: 0,
       },
-      voters: [String],
+      voters: [mongoose.Schema.Types.ObjectId],
     },
   },
   {

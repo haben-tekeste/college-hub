@@ -10,17 +10,14 @@ import { multerUploads } from "../config/multerConfig";
 import path from "path";
 import dataUriParser from "datauri/parser";
 import cloudinary from "cloudinary";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
 router.post(
   "/api/blogs",
   multerUploads,
-  [
-    body("title").not().isEmpty().isString().escape(),
-    body("content").not().isEmpty().escape(),
-  ],
+  [body("title").not().isEmpty(), body("content").not().isEmpty()],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -43,7 +40,7 @@ router.post(
         ).content;
 
         const result = await cloudinary.v2.uploader.upload(content!, {
-          public_id:uuidv4(),
+          public_id: uuidv4(),
         });
         newBlog.set({ imgUrl: result.secure_url });
       }
@@ -77,7 +74,7 @@ router.post(
         createdAt: newBlog.createdAt.toISOString(),
         summary: newBlog.summary,
         likes: 0,
-        tags: [],
+        tags: data[0],
         content: newBlog.content,
         imgUrl: newBlog.imgUrl,
       });

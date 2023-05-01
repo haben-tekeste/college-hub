@@ -4,7 +4,7 @@ import { Comment } from "../model/comment";
 
 const router = express.Router();
 
-router.get("/api/book-comment/:commentId", async (req, res, next) => {
+router.get("/api/comments/:commentId", async (req, res, next) => {
   try {
     const { commentId } = req.params;
     const comment = await Comment.findById(commentId);

@@ -18,8 +18,6 @@ class NatsWrapper {
     await jsm.streams.add({
       name: "mystream",
       subjects: ["events.>"],
-      // max_consumers: -1,
-      // description: "booki jetStream",
     });
     return new Promise((res, rej) => {
       try {

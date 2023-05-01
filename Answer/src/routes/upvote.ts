@@ -1,40 +1,54 @@
-import express, {Request, Response, NextFunction} from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { Answer } from "../model/answer";
+import { AnswerUpvotedPublisher } from "../events/publishers/answer-upvoted-publisher";
+import { natswrapper } from "../nats-wrapper";
+import { BadRequestError } from "@hthub/common";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-router.post("/api/answers/upvote/:answerId", async (req:Request, res:Response, next:NextFunction) => {
-  try {
-    const { answerId } = req.params;
-    const answer = await Answer.findById(answerId);
-    if (!answer) throw new Error("Answer not found");
+router.post(
+  "/api/answers/upvote/:answerId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { answerId } = req.params;
+      const answer = await Answer.findById(answerId);
+      if (!answer) throw new Error("Answer not found");
 
-    if (req.currentUser?.id! in answer.upvotes.voters)
-      throw new Error("You have alread upvoted the answer");
-    if (req.currentUser?.id! in answer.downvotes.voters) {
-      // answer.downvotes.voters.
-      const ds = answer.downvotes.voters.filter(
-        (ans) => ans === req.currentUser?.id
+      if (answer.author.toString() === req.currentUser?.id)
+        throw new BadRequestError("You can not upvote your answer");
+
+      answer.upvotes.voters.forEach((voter) => {
+        if (voter.toString() === req.currentUser?.id!)
+          throw new BadRequestError("You have alread upvoted the answer");
+      });
+
+      //
+      const userDownvotedPrev = answer.downvotes.voters.findIndex(
+        (voter) => voter.toString() === req.currentUser?.id!
       );
 
-      answer.set({
-        downvotes: {
-          quantity: answer.downvotes.quantity - 1,
-          voters: ds,
-        },
-      });
+      if (userDownvotedPrev != -1) {
+        answer.downvotes.quantity--;
+        answer.downvotes.voters = answer.downvotes.voters.splice(
+          userDownvotedPrev,
+          1
+        );
+      }
+
+      answer.upvotes.quantity++;
+      answer.upvotes.voters.push(req.currentUser?.id!);
+
+      // await answer.save();
+      // new AnswerUpvotedPublisher(natswrapper.Client).publish({
+      //   id: answer.id,
+      //   Voter: req.currentUser?.id!,
+      // });
+      res.status(201).json(answer);
+    } catch (error) {
+      next(error);
     }
-    answer.set({
-      upvotes: {
-        quantity: answer.upvotes.quantity + 1,
-        voters: answer.upvotes.voters.push(req.currentUser?.id! ),
-      },
-    });
-    await answer.save();
-    res.status(201).json(answer);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 export { router as upvoteAnswerRouter };

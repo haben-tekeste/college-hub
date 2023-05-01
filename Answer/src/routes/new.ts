@@ -3,19 +3,22 @@ import { body } from "express-validator";
 import { NotAuthorizedError, validateRequest } from "@hthub/common";
 import mongoose from "mongoose";
 import { Answer } from "../model/answer";
+import { AnswerCreatedPublisher } from "../events/publishers/answer-created-publisher";
+import { natswrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
 router.post(
   "/api/answers",
   [
-    body("content").not().isEmpty().isAlphanumeric().escape(),
+    body("content").not().isEmpty().withMessage("Answer should not be empty"),
     body("questionId")
       .not()
       .isEmpty()
       .custom((value) => {
-        if (mongoose.isValidObjectId(value))
-          throw new Error("Invalid question");
+        if (!mongoose.isValidObjectId(value))
+          throw new Error("Invalid question id");
+        return true;
       }),
   ],
   validateRequest,
@@ -30,6 +33,13 @@ router.post(
         createdAt: new Date(),
       });
       await answer.save();
+      new AnswerCreatedPublisher(natswrapper.Client).publish({
+        id: answer.id,
+        author: answer.author,
+        content: answer.content,
+        questionId:answer.questionId,
+        createdAt: answer.createdAt.toISOString()
+      })
       res.status(201).json(answer);
     } catch (error) {
       next(error);

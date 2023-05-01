@@ -16,6 +16,9 @@ import { QuestionCreatedListener } from "./events/listeners/question-created-lis
 import { AnswerCreatedListener } from "./events/listeners/answer-created-listener";
 import { elasticClient } from "./elastic-search";
 import { UserCreatedListener } from "./events/listeners/user-created-listner";
+import { AnswerUpvotedListener } from "./events/listeners/answer-upvoted-listener";
+import { Answer } from "./model/answer";
+import { AnswerDownvotedListener } from "./events/listeners/answer-downvoted-listener";
 
 const app = express();
 
@@ -75,6 +78,8 @@ const start = async () => {
     new QuestionCreatedListener(natswrapper.Client).listen();
     new AnswerCreatedListener(natswrapper.Client).listen();
     new UserCreatedListener(natswrapper.Client).listen();
+    new AnswerUpvotedListener(natswrapper.Client).listen();
+    new AnswerDownvotedListener(natswrapper.Client).listen();
 
     process.on("SIGTERM", () =>
       natswrapper.Client.close().then(() => {

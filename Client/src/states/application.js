@@ -47,18 +47,20 @@ const applicationSlice = createSlice({
       });
     },
   },
-  // Fetch My Applications
-  [fetchMyApplications.pending]: (state) => {
-    state.loading = true;
-    state.error = null;
-  },
-  [fetchMyApplications.fulfilled]: (state, { payload }) => {
-    state.loading = false;
-    state.myApplications = payload;
-  },
-  [fetchMyApplications.rejected]: (state, { payload }) => {
-    state.loading = false;
-    state.error = payload.errors;
+  extraReducers: {
+    // Fetch My Applications
+    [fetchMyApplications.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [fetchMyApplications.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.myApplications = payload;
+    },
+    [fetchMyApplications.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
   },
 });
 

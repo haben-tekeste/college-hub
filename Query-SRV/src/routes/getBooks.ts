@@ -15,7 +15,10 @@ router.get(
 
       const intersts = user.interests.length ? user.interests : null;
 
-      const books = await Book.find({})
+      const books = await Book.find({
+        ownerId: { $ne: req.currentUser!.id },
+        show: true,
+      })
         .populate("ownerId")
         .populate("comments")
         .populate("comments.reply");

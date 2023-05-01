@@ -8,7 +8,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.put(
-  "/api/comments/likeComment",
+  "/api/book-comment/likeComment",
   [body("commentId").not().isEmpty().withMessage("No comment provided")],
   validateRequest,
   isAuth,

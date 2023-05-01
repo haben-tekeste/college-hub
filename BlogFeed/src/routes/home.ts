@@ -15,7 +15,7 @@ router.get("/api/blogFeed/myblogs", async (req, res, next) => {
       { author: req.currentUser?.id! },
       {},
       { sort: { likes: -1 } }
-    );
+    ).populate("author");
 
     res.status(201).json(blogs);
   } catch (err) {

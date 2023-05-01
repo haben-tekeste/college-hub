@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { NotFoundError, validateRequest } from "@hthub/common";
+import { BadRequestError, NotFoundError, validateRequest } from "@hthub/common";
 import mongoose, { mongo } from "mongoose";
 import { Project } from "../models/project";
 import { Application } from "../models/application";
@@ -36,10 +36,9 @@ router.post(
         projectId,
         userId: req.currentUser?.id,
       });
-      console.log(existingApplication);
 
       if (existingApplication)
-        throw new Error("You have already applied to this project");
+        throw new BadRequestError("You have already applied to this project");
       const application = Application.build({
         projectId,
         status: ApplicationStatus.Pending,

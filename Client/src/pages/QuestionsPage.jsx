@@ -1,34 +1,36 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 // components
 import QuestionItem from "../components/QuestionItem";
-import SearchBar from "../components/SearchBar";
 import AskQuestion from "../components/pop-ups/AskQuestion";
 //styles
 import styled from "styled-components";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { setQuestions, toggleAsk } from "../states/questions";
+import { toggleAsk } from "../states/questions";
+import { StyledSearch } from "../components/SearchBar";
+import { clearSearch } from "../states/questions";
 
-// demo data
-import { questionData } from "../data/questionData";
-import { fetchQuestionFeed } from "../Actions/questionActions";
-import Spinner from "../components/Spinner";
+//
+import { fetchQuestionFeed, searchQuestion } from "../Actions/questionActions";
 import Loading from "../components/Loading";
+// icons
+import { AiOutlineSearch } from "react-icons/ai";
 
 const QuestionsPage = () => {
   const dispatch = useDispatch();
+  const [term, setTerm] = useState("");
+  const { loading, questions, filter, askQuestion, searchQuestions } =
+    useSelector((state) => state.questions);
 
-  const { loading, error, questions } = useSelector((state) => state.questions);
+  const searchTerm = (e) => {
+    e.preventDefault();
+    dispatch(searchQuestion(term));
+  };
 
   useEffect(() => {
-    // dispatch(setQuestions(questionData));
     dispatch(fetchQuestionFeed());
   }, [dispatch]);
-
-  const { filteredQuestions, filter, askQuestion } = useSelector(
-    (state) => state.questions
-  );
 
   if (loading) return <Loading />;
   return (
@@ -37,7 +39,17 @@ const QuestionsPage = () => {
       <header className="flex">
         <h1>All Questions</h1>
         <div className="flex">
-          <SearchBar />
+          <StyledSearch onSubmit={(e) => searchTerm(e)}>
+            <input
+              type="text"
+              placeholder="search..."
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            />
+            <button type="submit">
+              <AiOutlineSearch />
+            </button>
+          </StyledSearch>
           <button onClick={() => dispatch(toggleAsk())} className="purple-btn">
             Ask Question
           </button>
@@ -49,6 +61,16 @@ const QuestionsPage = () => {
             <span>{questions?.length}</span> - Questions
           </h2>
           <nav className="flex">
+            {searchQuestions.length != 0 && (
+              <button
+                onClick={() => {
+                  dispatch(clearSearch());
+                  setTerm("");
+                }}
+              >
+                Clear Search
+              </button>
+            )}
             <button className={filter === "" ? "purple-btn" : ""}>New</button>
             <button className={filter === "highest" ? "purple-btn" : ""}>
               Highest vote
@@ -61,9 +83,14 @@ const QuestionsPage = () => {
             </button>
           </nav>
         </div>
-        {questions?.map((question, id) => (
-          <QuestionItem question={question} key={id} />
-        ))}
+        {searchQuestions.length &&
+          searchQuestions?.map((question, i) => {
+            return <QuestionItem question={question?._source} key={i} />;
+          })}
+        {!searchQuestions.length &&
+          questions?.map((question, id) => (
+            <QuestionItem question={question} key={id} />
+          ))}
       </div>
     </StyledQuestions>
   );

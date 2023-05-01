@@ -13,7 +13,7 @@ import { CommentUpdatedPublisher } from "../events/publishers/comment-updated-pu
 const router = express.Router();
 
 router.put(
-  "/api/book-comment/:commentId",
+  "/api/comments/:commentId",
   [
     body("content")
       .isLength({ min: 1, max: 1000 })

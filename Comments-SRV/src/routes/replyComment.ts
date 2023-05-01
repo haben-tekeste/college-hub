@@ -15,7 +15,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.put(
-  "/api/comment/replay",
+  "/api/book-comment/replay",
   [body("text").not().isEmpty(), body("commentId").not().isEmpty()],
   isAuth,
   validateRequest,

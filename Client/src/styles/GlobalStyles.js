@@ -90,6 +90,16 @@ export default createGlobalStyle`
             background: var(--secondary);
         }
     }
+    .alert {
+        color: white;
+        background-color: #f77c86;
+        border-color: #d6e9c6;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        width: 20rem;
+      }
     .App{
         align-items: flex-start;
     }

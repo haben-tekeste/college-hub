@@ -23,6 +23,7 @@ import Spinner from "../Spinner";
 import { fetchMyApplications } from "../../Actions/applicationActions";
 
 //
+import { formatDate } from "../../utils/date";
 
 const Applications = () => {
   const navigate = useNavigate();
@@ -81,26 +82,28 @@ const Applications = () => {
             </div>
           </div>
           <table>
-            <tr>
-              <th>Project</th>
-              <th>Project ID</th>
-              <th>Status</th>
-              <th>Applied Date</th>
-              <th>Action</th>
-            </tr>
-            {myApplications?.map((application, i) => (
-              <tr key={i}>
-                <td>{application.topic}</td>
-                <td>
-                  <h6>{application.projectId}</h6>
-                </td>
-                <td>{application.status}</td>
-                <td>{application.createdAt}</td>
-                <td>
-                  <button className="light-btn">View</button>
-                </td>
+            <tbody>
+              <tr>
+                <th>Project</th>
+                <th>Project ID</th>
+                <th>Status</th>
+                <th>Applied Date</th>
+                <th>Action</th>
               </tr>
-            ))}
+              {myApplications?.map((application, i) => (
+                <tr key={i}>
+                  <td>{application.projectId.topic}</td>
+                  <td>
+                    <h6>{application.projectId.id}</h6>
+                  </td>
+                  <td>{application.status}</td>
+                  <td>{formatDate(new Date(application.createdAt))}</td>
+                  <td>
+                    <button className="light-btn">View</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           {filteredApplications.length < 1 && (
             <div className="nothing">

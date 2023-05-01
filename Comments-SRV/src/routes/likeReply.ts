@@ -8,7 +8,7 @@ import { nats } from "../NatsWrapper";
 const router = express.Router();
 
 router.put(
-  "/api/comments/likeReply",
+  "/api/book-comment/likeReply",
   [
     body("replyId").not().isEmpty().withMessage("No reply given"),
     body("commentId").not().isEmpty().withMessage("No Comment given"),

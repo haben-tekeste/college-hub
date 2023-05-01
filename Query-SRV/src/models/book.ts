@@ -30,6 +30,7 @@ interface IBook {
   id: ObjectId;
   likes: string[];
   cloudinaryPublicId: string | undefined;
+  show: Boolean;
 }
 
 /**
@@ -50,6 +51,7 @@ export interface BookDoc extends mongoose.Document {
   id: ObjectId;
   likes: string[];
   cloudinaryPublicId: string | undefined;
+  show: boolean;
 }
 
 interface BookModel extends mongoose.Model<BookDoc> {
@@ -107,6 +109,10 @@ const BookSchema = new mongoose.Schema(
     cloudinaryPublicId: {
       type: String,
     },
+    show: {
+      type: Boolean,
+      default: true,
+    }
   },
   {
     timestamps: {

@@ -18,17 +18,10 @@ router.get(
           },
         });
       if (!book) throw new BadRequestError("Sorry but no books found");
-      const related = await Book.find({ author: book.author }, {}, { limit: 7 })
-        .populate("ownerId")
-        .populate({
-          path: "comments",
-          populate: {
-            path: "reply",
-          },
-        });
 
       const recommendedBooks = await Book.find({
-        genres: { $in: book.genre },
+        genre: { $in: [...book.genre] },
+        ownerId: { $ne: req.currentUser!.id },
         _id: { $ne: bookId },
       })
         .sort({ publishedDate: -1 })
@@ -43,8 +36,8 @@ router.get(
 
       const result = {
         book,
-        related,
         recommendedBooks,
+        x: "hi",
       };
       res.send(result);
     } catch (error) {

@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchQuestionFeed } from "../Actions/questionActions";
+import { fetchQuestionFeed, searchQuestion } from "../Actions/questionActions";
 
 const initialState = {
   questions: [],
   filter: "",
   filteredQuestions: [],
+  searchQuestions: [],
   askQuestion: false,
-  loadin:false,
-  eror:null
+  loading: false,
+  eror: null,
 };
 
 const questionsSlice = createSlice({
@@ -16,7 +17,7 @@ const questionsSlice = createSlice({
   reducers: {
     setQuestions: (state, action) => {
       state.questions = action.payload;
-      state.filteredQuestions = action.payload
+      state.filteredQuestions = action.payload;
     },
     filterQuestions: (state, action) => {
       state.filter = action.payload;
@@ -24,11 +25,13 @@ const questionsSlice = createSlice({
         state.filteredQuestions = state.questions;
         return;
       }
-      
     },
     toggleAsk: (state) => {
-      state.askQuestion = !state.askQuestion
-    }
+      state.askQuestion = !state.askQuestion;
+    },
+    clearSearch: (state) => {
+      state.searchQuestions = [];
+    },
   },
   extraReducers: {
     // Fetch Questions
@@ -44,8 +47,22 @@ const questionsSlice = createSlice({
       state.loading = false;
       state.error = payload.errors;
     },
+    // Search Questions
+    [searchQuestion.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [searchQuestion.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.searchQuestions = payload;
+    },
+    [searchQuestion.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
   },
 });
 
-export const {setQuestions, filterQuestions, toggleAsk} = questionsSlice.actions
-export default questionsSlice.reducer
+export const { setQuestions, filterQuestions, toggleAsk, clearSearch } =
+  questionsSlice.actions;
+export default questionsSlice.reducer;

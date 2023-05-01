@@ -11,7 +11,7 @@ export const fetchBlogFeed = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -20,12 +20,22 @@ export const fetchMyBlogs = createAsyncThunk(
   "blog/my",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("first");
       const { data } = await axios.get(`${backendURL}/myblogs`);
-      console.log(data);
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const searchBlog = createAsyncThunk(
+  "blog/search",
+  async ( term , { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${backendURL}/search`, { term });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );

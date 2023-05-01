@@ -12,6 +12,16 @@ const BlogItem = ({ blog }) => {
         <ProfileComponent name={blog.author.uname} />
         <h6>Posted {formatDate(new Date(blog.createdAt))}</h6>
       </div>
+      <h3>{blog.title}</h3>
+      <div className="flex info">
+        <div className="flex">
+          {blog.tags?.map((tag, i) => (
+            <button key={i} className="tag-btn">
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
       <p>{blog.content}</p>
       <img src={blog.imgUrl} alt={blog.author} />
       <p>{blog.summary}</p>
@@ -19,7 +29,7 @@ const BlogItem = ({ blog }) => {
   );
 };
 
-const StyledBlogItem = styled.div`
+export const StyledBlogItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -1,11 +1,10 @@
-import { upload } from "@testing-library/user-event/dist/upload";
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 //icons
 import { MdCloudUpload } from "react-icons/md";
 
-const Uploader = () => {
+const Uploader = ({ image, setImage }) => {
   const uploadHandler = () => {
     document.querySelector(".upload-input").click();
   };
@@ -14,8 +13,17 @@ const Uploader = () => {
       <span>
         <MdCloudUpload color="var(--primary)" />
       </span>
-      <h3>Drop a file here, or <span onClick={uploadHandler}>Browse</span></h3>
-      <input type="file" name="resume" hidden className="upload-input" />
+      <h3>
+        Drop a file here, or <span onClick={uploadHandler}>Browse</span>
+      </h3>
+      <input
+        type="file"
+        name="image"
+        hidden
+        className="upload-input"
+        onChange={(e) => setImage(e.target.files)}
+        accept="image/*"
+      />
     </StyledUploader>
   );
 };
@@ -30,18 +38,18 @@ const StyledUploader = styled.form`
   justify-content: center;
   cursor: pointer;
   transition: background 0.3s ease;
-  &:hover{
+  &:hover {
     background-color: var(--secondary);
   }
-  h3{
+  h3 {
     font-weight: normal;
-    span{
-        font-size: inherit;
-        font-weight: bold;
-        display: inline;
+    span {
+      font-size: inherit;
+      font-weight: bold;
+      display: inline;
     }
   }
-  span{
+  span {
     pointer-events: none;
     display: block;
     font-size: 5rem;

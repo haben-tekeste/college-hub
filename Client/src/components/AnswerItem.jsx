@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 
 //components
 import ProfileComponent from "./ProfileComponent";
 
-const AnswerItem = ({answer}) => {
+const AnswerItem = ({ answer }) => {
   return (
     <div className="flex-col">
-      <ProfileComponent name={answer.author} />
+      <ProfileComponent name={answer.author.uname} />
       <div className="flex">
         <h3 className="flex-col">
           <AiOutlineCaretUp fill="var(--primary)" />
@@ -19,6 +19,6 @@ const AnswerItem = ({answer}) => {
       </div>
     </div>
   );
-}
+};
 
-export default AnswerItem
+export default AnswerItem;

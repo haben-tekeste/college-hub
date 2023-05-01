@@ -19,7 +19,7 @@ import axios from "axios";
 //
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {formatDate} from "../../utils/date"
+import { formatDate } from "../../utils/date";
 
 const ApplyProject = () => {
   const navigate = useNavigate();
@@ -41,14 +41,15 @@ const ApplyProject = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       await axios.post("https://studenthub.dev/api/applications", {
-        projectId: details.porjectId,
+        projectId: details.id,
       });
       notify();
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.response.data.errors);
     }
   };
 
@@ -96,6 +97,16 @@ const ApplyProject = () => {
         <button className="purple-btn" onClick={submitHandler}>
           Apply
         </button>
+        {error && (
+          <div className="alert alert-danger" style={{ marginTop: "1rem" }}>
+            <h4>Ooops....</h4>
+            <ul className="my-0">
+              {error.map((err) => (
+                <li key={err.message}>{err.message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -117,6 +128,17 @@ const StyledApply = styled(StyledPopup)`
   .purple-btn {
     width: 100%;
     margin-top: 2rem;
+  }
+  .alert {
+    color: white;
+    background-color: #f77c86;
+    border-color: #d6e9c6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 20rem;
+    margin: 0 auto;
   }
   .project {
     align-items: flex-start;

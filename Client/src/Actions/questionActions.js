@@ -12,7 +12,19 @@ export const fetchQuestionFeed = createAsyncThunk(
       return data;
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const searchQuestion = createAsyncThunk(
+  "question/search",
+  async (term, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${backendURL}/search`, { term });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );

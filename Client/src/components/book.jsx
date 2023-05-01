@@ -18,8 +18,8 @@ const Book = ({ book }) => {
 
   const detailHandler = () => {
     dispatch(setDetails(book));
-    navigate(`/books/${book.id}`)
-  }
+    navigate(`/books/${book.id}`);
+  };
   return (
     <StyledBook className="flex-col">
       <div className="image" onClick={detailHandler}>
@@ -31,7 +31,7 @@ const Book = ({ book }) => {
         <BsFillPenFill /> by: {book.author}
       </h4>
       <h4 className="flex">
-        <BsHandThumbsUpFill /> {book.likes.length}
+        {/* <BsHandThumbsUpFill /> {book.likes.length} */}
       </h4>
     </StyledBook>
   );

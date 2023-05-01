@@ -19,7 +19,7 @@ router.put(
     try {
       let { interests } = req.body;
 
-      let result = process.env.DEFAULT_IMG;
+      let result;
       const user = await User.findById(req.currentUser?.id);
       const file = req.file;
 

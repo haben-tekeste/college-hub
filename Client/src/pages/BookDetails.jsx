@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toggleIsBid } from "../states/bookDetails";
 
 // components
@@ -13,13 +13,19 @@ import styled from "styled-components";
 // icons
 import { BiArrowBack } from "react-icons/bi";
 import { BsHandThumbsUpFill } from "react-icons/bs";
+import { useEffect } from "react";
+import { fetchBook } from "../Actions/bookActions";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const { details, isBid } = useSelector((state) => state.bookDetails);
-
+  const param = useParams();
+  const { details, isBid, loading } = useSelector((state) => state.bookDetails);
+  useEffect(() => {
+    console.log("parapm", param);
+    dispatch(fetchBook({ bookId: param.id }));
+  }, [dispatch]);
+  if (loading) return;
   return (
     <StyledDetails>
       {isBid && <BidingPanel />}
@@ -48,7 +54,7 @@ const BookDetails = () => {
               ))}
             </div>
             <h4 className="flex">
-              Likes: <BsHandThumbsUpFill /> {details.likes.length}
+              {/* Likes: <BsHandThumbsUpFill /> {details.likes.length} */}
             </h4>
             <button
               className="purple-btn"

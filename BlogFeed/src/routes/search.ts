@@ -5,14 +5,14 @@ import { elasticClient } from "../elastic-search";
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/api/blogFeed/search",
   body("term").not().isEmpty(),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const { term } = req.body;
     try {
-      const blogs = await elasticClient.fetchPosts(term, "blogsfeed");
+      const blogs = await elasticClient.fetchPosts(term, "blogs");
       res.status(200).json(blogs);
     } catch (error) {
       next(error);
