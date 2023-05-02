@@ -50,7 +50,7 @@ const MyBooks = ({ books }) => {
         <tbody>
           <tr>
             <th>Book</th>
-            <th style={{ textAlign: "center" }}>Number of Bids</th>
+            {/* <th style={{ textAlign: "center" }}>Number of Bids</th> */}
             <th>Action</th>
           </tr>
           {books?.map((book, i) => (
@@ -58,7 +58,7 @@ const MyBooks = ({ books }) => {
               <td>
                 <MyBookItem book={book} />
               </td>
-              <td className="biders">{i * 2}</td>
+              {/* <td className="biders">{i * 2}</td> */}
               <td>
                 <button
                   className="light-btn"

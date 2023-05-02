@@ -4,6 +4,9 @@ import { queueGroupName } from "./queue-group-name";
 import { Answer } from "../../model/answer";
 import { Question } from "../../model/question";
 import { NotFoundError } from "@hthub/common";
+import { EmailAnswerCreatedPublisher } from "../publishers/email-answer-created-publisher";
+import { natswrapper } from "../../nats-wrapper";
+import { User } from "../../model/user";
 
 export class AnswerCreatedListener extends Listener<AnswerCreated> {
   subject: Subjects.AnswerCreated = Subjects.AnswerCreated;
@@ -29,6 +32,11 @@ export class AnswerCreatedListener extends Listener<AnswerCreated> {
     await newAnswer.save();
     question.answers.push(newAnswer.id);
     await question.save();
+    const user = await User.findById(question.author);
+    new EmailAnswerCreatedPublisher(natswrapper.Client).publish({
+      userId: user?.email!,
+      message: "Someone replied to your question " + question.content + "",
+    });
     msg.respond();
   }
 }

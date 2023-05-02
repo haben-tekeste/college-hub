@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hthub/common": "^1.0.2",
+    "@hthub/common": "^1.0.21",
     "@sendgrid/mail": "^7.7.0",
     "@types/nodemailer": "^6.4.7",
     "nats": "^2.12.1",

@@ -33,13 +33,13 @@ router.post(
         createdAt: new Date(),
       });
       await answer.save();
-      new AnswerCreatedPublisher(natswrapper.Client).publish({
-        id: answer.id,
-        author: answer.author,
-        content: answer.content,
-        questionId:answer.questionId,
-        createdAt: answer.createdAt.toISOString()
-      })
+      // new AnswerCreatedPublisher(natswrapper.Client).publish({
+      //   id: answer.id,
+      //   author: answer.author,
+      //   content: answer.content,
+      //   questionId:answer.questionId,
+      //   createdAt: answer.createdAt.toISOString()
+      // })
       res.status(201).json(answer);
     } catch (error) {
       next(error);
