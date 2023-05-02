@@ -105,6 +105,7 @@ router.put(
         likes: book.likes,
         comments: [],
         cloudinaryPublicId: book.cloudinaryPublicId,
+        show: true,
       });
       res.send(book);
     } catch (err) {

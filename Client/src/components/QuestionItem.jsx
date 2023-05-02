@@ -33,7 +33,10 @@ const QuestionItem = ({ question }) => {
       <div className="flex-col">
         {question?.author?.uname && (
           <div className="flex">
-            <ProfileComponent name={question.author?.uname} />
+            <ProfileComponent
+              name={question.author?.uname}
+              id={question?.author.id}
+            />
             <h4>{formatDate(new Date(question?.createdAt))}</h4>
           </div>
         )}

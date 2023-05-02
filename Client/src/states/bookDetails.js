@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBook } from "../Actions/bookActions";
+import { approveBid, fetchBook } from "../Actions/bookActions";
+import { showBids } from "../Actions/bookActions";
+
 const bookDetailsSlice = createSlice({
   name: "book-details",
   initialState: {
@@ -7,14 +9,15 @@ const bookDetailsSlice = createSlice({
     relatedBooks: [],
     isBid: false,
     loading: false,
+    bidingDetails: [],
   },
   reducers: {
     setDetails: (state, action) => {
       state.details = action.payload;
     },
-    setRelatedBooks: (state, action) => {
-      state.relatedBooks = action.payload;
-    },
+    // setRelatedBooks: (state, action) => {
+    //   state.relatedBooks = action.payload;
+    // },
     toggleIsBid: (state) => {
       state.isBid = !state.isBid;
     },
@@ -29,9 +32,31 @@ const bookDetailsSlice = createSlice({
       console.log(payload);
       state.loading = false;
       state.relatedBooks = payload.recommendedBooks;
+      state.details = payload.book;
       state.error = null;
     },
     [fetchBook.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
+    [showBids.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [showBids.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.bidingDetails = payload;
+      state.error = null;
+    },
+    [showBids.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
+    [approveBid.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [approveBid.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload.errors;
     },

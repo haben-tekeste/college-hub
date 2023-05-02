@@ -10,17 +10,20 @@ import { setProjectDetails } from "../states/projectDetails";
 import ProfileComponent from "./ProfileComponent";
 
 const ProjectItem = ({ project }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const viewProject = () => {
     dispatch(setProjectDetails(project));
-    navigate(`/projects/apply/${project.id}`)
+    navigate(`/projects/apply/${project.id}`);
   };
   return (
     <StyledProjectItem>
       <div className="flex">
-        <ProfileComponent name={project.postedBy.uname}></ProfileComponent>
+        <ProfileComponent
+          name={project.postedBy.uname}
+          id={project.postedBy.id}
+        ></ProfileComponent>
         <h6 onClick={viewProject}>View Project</h6>
       </div>
       <h4>{project.topic}</h4>
@@ -47,8 +50,8 @@ const StyledProjectItem = styled.div`
     font-size: 1rem;
     cursor: pointer;
     transition: color 0.5s ease;
-    &:hover{
-        color: var(--darkgrey);
+    &:hover {
+      color: var(--darkgrey);
     }
   }
   h4 {

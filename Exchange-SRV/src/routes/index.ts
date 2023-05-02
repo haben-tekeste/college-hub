@@ -10,11 +10,16 @@ const router = express.Router();
 router.post(
   "/api/bid/",
   isAuth,
-  [body("bookId"), body("bidderBook")],
+  [
+    body("bookId").not().isEmpty().withMessage("No book found"),
+    body("bidderBook").not().isEmpty().withMessage("Please select a book"),
+  ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { bookId, bidderBook, comment } = req.body;
+      console.log(bookId, bidderBook);
+
       const book = await Book.findById(bookId);
       if (!book) throw new BadRequestError("Sorry book not found");
       book.ownerId;
@@ -26,6 +31,7 @@ router.post(
       if (!bidderBookExist) throw new BadRequestError("Sorry book not found");
 
       const bidExist = await Bid.find({
+        bookId,
         bidderBook,
         bidder: req.currentUser!.id,
       });

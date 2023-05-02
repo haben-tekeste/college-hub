@@ -7,15 +7,13 @@ const router = express.Router();
 router.get("/api/applications/myapplications", async (req, res, next) => {
   try {
     const applications = await Application.find(
-      { userId: req.currentUser?.id },
+      { userId: req.currentUser?.id! },
       {},
       { sort: { createdAt: -1 } }
     ).populate({ path: "projectId" });
 
     res.status(200).json(applications);
   } catch (error) {
-    console.log(error);
-
     next(error);
   }
 });

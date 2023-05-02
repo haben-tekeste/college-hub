@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMyApplications } from "../Actions/applicationActions";
+import {
+  fetchApplicationByProject,
+  fetchMyApplications,
+} from "../Actions/applicationActions";
 
 const initialState = {
   applications: [],
@@ -9,6 +12,7 @@ const initialState = {
   loading: false,
   error: false,
   myApplications: [],
+  projectApplications: [],
 };
 
 const applicationSlice = createSlice({
@@ -58,6 +62,19 @@ const applicationSlice = createSlice({
       state.myApplications = payload;
     },
     [fetchMyApplications.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload.errors;
+    },
+    // Fetch My Applications
+    [fetchApplicationByProject.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [fetchApplicationByProject.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.projectApplications = payload;
+    },
+    [fetchApplicationByProject.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload.errors;
     },

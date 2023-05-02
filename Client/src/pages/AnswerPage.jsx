@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 // styles
 import { StyledQuestions } from "./QuestionsPage";
 import styled from "styled-components";

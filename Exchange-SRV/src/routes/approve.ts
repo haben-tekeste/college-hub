@@ -3,6 +3,8 @@ import express, { NextFunction, Request, Response } from "express";
 import { ExchangeStatus } from "../../Subjects/subjects";
 import { Bid } from "../models/bid";
 import { Book } from "../models/book";
+import { QBookUpdatedPublisher } from "../events/publisher/bookUpdatedPublisher";
+import { nats } from "../NatsWrapper";
 
 const router = express.Router();
 
@@ -35,6 +37,38 @@ router.put(
         }
         await bid.save();
         return bid;
+      });
+
+      await new QBookUpdatedPublisher(nats.client).publish({
+        id: book.id,
+        ownerId: book.ownerId,
+        title: book.title,
+        author: book.author,
+        description: book.description,
+        publishedDate: book.publishedDate,
+        comments: [],
+        cloudinaryPublicId: book.cloudinaryPublicId,
+        genre: book.genre,
+        coverImage: book.coverImageUrl,
+        likes: [],
+        condition: book.condition,
+        show: false,
+      });
+
+      await new QBookUpdatedPublisher(nats.client).publish({
+        id: bid.bidderBook._id,
+        ownerId: book.ownerId,
+        title: book.title,
+        author: book.author,
+        description: book.description,
+        publishedDate: book.publishedDate,
+        comments: [],
+        cloudinaryPublicId: book.cloudinaryPublicId,
+        genre: book.genre,
+        coverImage: book.coverImageUrl,
+        likes: [],
+        condition: book.condition,
+        show: false,
       });
 
       res.send({ bid, bids });

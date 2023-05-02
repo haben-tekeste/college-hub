@@ -1,28 +1,32 @@
 //styles
 import styled from "styled-components";
 
+import { Navigate } from "react-router-dom";
+
 //icons
 import { BsFillPenFill, BsHandThumbsUpFill } from "react-icons/bs";
-
-// redux
 import { useDispatch } from "react-redux";
-import { setDetails } from "../states/bookDetails";
+import { fetchBook } from "../Actions/bookActions";
+// redux
 
 //router
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { setDetails } from "../states/bookDetails";
 
 // eslint-disable-next-line react/prop-types
 const Book = ({ book }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const detailHandler = () => {
-    dispatch(setDetails(book));
+    setDetails(book);
+
+    // dispatch(fetchBook({ bookId: param.id }));
     navigate(`/books/${book.id}`);
   };
   return (
-    <StyledBook className="flex-col">
-      <div className="image" onClick={detailHandler}>
+    <StyledBook className="flex-col" onClick={detailHandler}>
+      <div className="image">
         <img src={book.coverImageUrl} alt={book.title} />
       </div>
       <h3 className="flex">{book.title}</h3>

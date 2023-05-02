@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,8 @@ import BidingPopup from "../components/pop-ups/BidingPopup";
 // redux
 import { useDispatch } from "react-redux";
 import { setBidingDetails } from "../states/books";
-
+import { fetchMyBooks, showBids } from "../Actions/bookActions";
+import { fetchBook } from "../Actions/bookActions";
 const MyBooks = ({ books }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,14 +28,20 @@ const MyBooks = ({ books }) => {
             {" "}
             condition <span className="tag-btn">{book.condition}</span>
           </h4>
-          <h4 className="flex">{book.likes.length} Likes</h4>
+          {/* <h4 className="flex">{book.likes.length} Likes</h4> */}
         </div>
       </StyledBook>
     );
   };
   return (
     <StyledMyBooks className="container flex-col">
-      {isPopup && <BidingPopup setIsPopup={setIsPopup} />}
+      {isPopup && (
+        <BidingPopup
+          setIsPopup={setIsPopup}
+          // bookId={bookId}
+          // isPopup={isPopup}
+        />
+      )}
       <h2 className="flex back" onClick={() => navigate("/books")}>
         <BiArrowBack /> Available Books
       </h2>
@@ -51,12 +58,13 @@ const MyBooks = ({ books }) => {
               <td>
                 <MyBookItem book={book} />
               </td>
-              <td className="biders">{book?.biders?.length}</td>
+              <td className="biders">{i * 2}</td>
               <td>
                 <button
                   className="light-btn"
                   onClick={() => {
-                    dispatch(setBidingDetails(book));
+                    dispatch(showBids({ bookId: book.id }));
+                    dispatch(fetchBook({ bookId: book.id }));
                     setIsPopup(true);
                   }}
                 >
@@ -88,6 +96,20 @@ const StyledMyBooks = styled.div`
     td,
     th {
       padding: 1rem;
+    }
+  }
+  .container {
+    margin-top: 2rem;
+    height: 85vh;
+    width: 100%;
+  }
+  .back {
+    cursor: pointer;
+    color: var(--primary);
+    transition: color 0.5s ease;
+    margin-bottom: 3rem;
+    &:hover {
+      color: var(--secondary);
     }
   }
 `;

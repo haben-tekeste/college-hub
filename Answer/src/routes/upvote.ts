@@ -30,20 +30,17 @@ router.post(
 
       if (userDownvotedPrev != -1) {
         answer.downvotes.quantity--;
-        answer.downvotes.voters = answer.downvotes.voters.splice(
-          userDownvotedPrev,
-          1
-        );
+        answer.downvotes.voters.splice(userDownvotedPrev, 1);
       }
 
       answer.upvotes.quantity++;
       answer.upvotes.voters.push(req.currentUser?.id!);
 
-      // await answer.save();
-      // new AnswerUpvotedPublisher(natswrapper.Client).publish({
-      //   id: answer.id,
-      //   Voter: req.currentUser?.id!,
-      // });
+      await answer.save();
+      new AnswerUpvotedPublisher(natswrapper.Client).publish({
+        id: answer.id,
+        Voter: req.currentUser?.id!,
+      });
       res.status(201).json(answer);
     } catch (error) {
       next(error);

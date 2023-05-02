@@ -76,7 +76,7 @@ const Nav = () => {
               className={location === "/profile" ? "link active" : "link"}
               to={"/profile"}
             >
-              <ProfileComponent name={userInfo.username} />
+              <ProfileComponent name={userInfo.username} id={userInfo.id} />
             </Link>
             <button
               className="flex tag-btn"

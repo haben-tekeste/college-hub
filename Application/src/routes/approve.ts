@@ -16,7 +16,7 @@ router.put(
       );
       if (!application) throw new Error("Application not found");
 
-      if (application.projectId.postedBy !== req.currentUser?.id)
+      if (application.projectId.postedBy.toString() !== req.currentUser?.id)
         throw new NotAuthorizedError();
 
       if (new Date() > application.projectId.deadline)

@@ -7,7 +7,7 @@
     "start": "ts-node-dev src/index.ts --poll"
   },
   "dependencies": {
-    "@booki/common": "^1.1.10",
+    "@booki/common": "^1.1.12",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",

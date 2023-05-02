@@ -6,7 +6,9 @@ import { ApplicationStatus } from "../types/applicationStatus";
 
 const router = express.Router();
 
-router.put("/api/applications/reject/:applicationId", async (req, res, next) => {
+router.put(
+  "/api/applications/reject/:applicationId",
+  async (req, res, next) => {
     try {
       const { applicationId } = req.params;
       const application = await Application.findById(applicationId).populate(
@@ -14,7 +16,7 @@ router.put("/api/applications/reject/:applicationId", async (req, res, next) => 
       );
       if (!application) throw new Error("Application not found");
 
-      if (application.projectId.postedBy !== req.currentUser?.id)
+      if (application.projectId.postedBy.toString() !== req.currentUser?.id)
         throw new NotAuthorizedError();
 
       if (new Date() > application.projectId.deadline)
@@ -28,6 +30,7 @@ router.put("/api/applications/reject/:applicationId", async (req, res, next) => 
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
 export { router as rejectApplicationRouter };

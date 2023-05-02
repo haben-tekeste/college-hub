@@ -5,33 +5,34 @@ import { useNavigate } from "react-router-dom";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyProjects, fetchProjectFeed } from "../Actions/projectActions";
-import {setProjectDetails} from "../states/projectDetails"
+import { setProjectDetails } from "../states/projectDetails";
 
 // components
 import SearchBar from "../components/SearchBar";
 import Projects from "../components/Projects";
 import Spinner from "../components/Spinner";
+import Loading from "../components/Loading";
 // import ProjectDetails from "../components/pop-ups/ProjectDetails";
-
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, projects, myProjects } = useSelector((state) => state.projects);
+  const { loading, error, projects, myProjects } = useSelector(
+    (state) => state.projects
+  );
 
   const showProjectDetails = (project) => {
-    console.log("working")
-    dispatch(setProjectDetails(project))
-    navigate(`/projects/${project.projectId}`)
-}
+    dispatch(setProjectDetails(project));
+    navigate(`/projects/${project.id}`);
+  };
 
   useEffect(() => {
     dispatch(fetchProjectFeed());
-    dispatch(fetchMyProjects())
+    dispatch(fetchMyProjects());
   }, [dispatch]);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Loading />;
 
   return (
     <StyledProjectPage>

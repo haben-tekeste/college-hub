@@ -14,39 +14,64 @@ import styled from "styled-components";
 
 // demo
 // import { bookData } from "../data/BookData";
-import { fetchBooks } from "../Actions/bookActions";
-
+import { fetchBooks, fetchMyBooks } from "../Actions/bookActions";
+import { toggleIsShareBook } from "../states/books";
+import { useNavigate, useLocation } from "react-router-dom";
+import ShareBook from "../components/pop-ups/shareBook";
+import MyBooks from "./MyBooks";
 const BooksPage = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation().pathname;
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log("books");
     dispatch(fetchBooks());
+    dispatch(fetchMyBooks());
   }, [dispatch]);
 
-  const { books, loading } = useSelector((state) => state.books);
+  const { books, loading, isShareBook, userBooks } = useSelector(
+    (state) => state.books
+  );
 
   if (loading) return <Loading />;
   return (
     <StyledBooksPage>
-      <header>
+      {isShareBook && <ShareBook />}
+      <header className="flex">
         <SearchBar />
+        <button
+          className="light-btn"
+          onClick={() => dispatch(toggleIsShareBook())}
+        >
+          Share a Book
+        </button>
+        <button
+          onClick={() => navigate("/books/my-books")}
+          className="purple-btn"
+        >
+          My Books
+        </button>
       </header>
-      <div className="container">
-        <h2>Available Books</h2>
-        <div className="books">
-          {books?.books?.map((book) => (
-            <Book key={book.id} book={book} />
-          ))}
+      {location === "/books/my-books" && <MyBooks books={userBooks} />}
+      {location === "/books" && (
+        <div className="container">
+          <h2>Available Books</h2>
+          <div className="books">
+            {books?.books?.map((book) => (
+              <Book key={book.id} book={book} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </StyledBooksPage>
   );
 };
 
 export const StyledBooksPage = styled.div`
   padding: 2rem;
-  width: 100%;
+  width: 100% !important;
+  header {
+    gap: 3rem;
+  }
   .container {
     margin-top: 2rem;
     height: 85vh;
@@ -57,6 +82,15 @@ export const StyledBooksPage = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-top: 2rem;
+  }
+  .back {
+    cursor: pointer;
+    color: var(--primary);
+    transition: color 0.5s ease;
+    margin-bottom: 3rem;
+    &:hover {
+      color: var(--secondary);
+    }
   }
 `;
 export default BooksPage;

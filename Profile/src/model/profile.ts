@@ -108,4 +108,7 @@ profileSchema.statics.build = (profile: IProfile) => {
   return new Profile(profile);
 };
 
-export const Profile = mongoose.model<IDocument, IModel>("Profile", profileSchema);
+export const Profile = mongoose.model<IDocument, IModel>(
+  "Profile",
+  profileSchema
+);

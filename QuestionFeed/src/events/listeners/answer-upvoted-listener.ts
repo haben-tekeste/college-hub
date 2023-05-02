@@ -20,14 +20,15 @@ export class AnswerUpvotedListener extends Listener<AnswerUpvoted> {
 
     const answer = await Answer.findById(id);
     if (!answer) throw new NotFoundError();
-    if (Voter in answer.upvotes.voters) {
-      return msg.respond();
-    }
-    if (Voter in answer.downvotes.voters) {
-      // answer.downvotes.voters.
-      const ds = answer.downvotes.voters.filter((ans) => ans === Voter);
+
+    //
+    const userDownvotedPrev = answer.downvotes.voters.findIndex(
+      (voter) => voter.toString() === Voter
+    );
+
+    if (userDownvotedPrev != -1) {
       answer.downvotes.quantity--;
-      answer.downvotes.voters = ds;
+      answer.downvotes.voters.splice(userDownvotedPrev, 1);
     }
 
     answer.upvotes.quantity++;

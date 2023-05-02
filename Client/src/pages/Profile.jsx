@@ -1,48 +1,68 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import styled from "styled-components";
-
-//redux
-import { useDispatch, useSelector } from "react-redux";
-import { setProfileData } from "../states/profile";
-
-//data
-import { profile } from "../data/profileData";
+import Loading from "../components/Loading";
 
 // components
 import Stats from "../components/Stats";
 import Experience from "../components/Experience";
 import Skill from "../components/Skill";
+import { useSelector } from "react-redux";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
-const Profile = () => {
-  const dispatch = useDispatch();
+const Profile = ({ name, id }) => {
+  const [profile, setProfile] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(setProfileData(profile));
-  }, [dispatch]);
+    const userId = !name ? userInfo.id : id;
+    const fetchProfile = async () => {
+      setError("");
+      try {
+        const { data } = await axios.get(
+          `https://studenthub.dev/api/profiles/${userId}`
+        );
+        setProfile(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.response.data);
+      }
+    };
+    fetchProfile();
+  }, []);
 
-  const { profileData } = useSelector((state) => state.profile);
+  if (loading) return <Loading />;
+
+  if (!profile)
+    return (
+      <h3 style={{ textAlign: "center" }}>
+        {name || "User"} does not have profile yet
+      </h3>
+    );
 
   return (
     <StyledProfile>
       <div className="banner">
         <div className="profile-pic">
-          <h6>{profileData?.name?.charAt(0)}</h6>
+          <h6>{profile?.name?.charAt(0)}</h6>
         </div>
         <div className="banner-pic"></div>
       </div>
       <div className="info flex">
         <div className="flex-col">
-          <h1>{profileData?.name}</h1>
+          <h1>{name}</h1>
           <h3>
-            Major: <span>{profileData?.major}</span>
+            Major: <span>{profile?.major}</span>
           </h3>
           <h3>
-            Concentration: <span>{profileData?.concentration}</span>
+            Concentration: <span>{profile?.concentration}</span>
           </h3>
           <div className="flex">
-            <h3 className="tag-btn">cGPA: {profileData?.cGPA}</h3>
-            <h3 className="tag-btn">Year: {profileData?.yearOfStudy}</h3>
+            <h3 className="tag-btn">cGPA: {profile?.cGPA}</h3>
+            <h3 className="tag-btn">Year: {profile?.yearOfStudy}</h3>
           </div>
         </div>
         <Stats />
@@ -50,20 +70,24 @@ const Profile = () => {
       <div className="about flex">
         <div className="flex-col">
           <h2>About</h2>
-          <p>{profileData?.summary}</p>
+          <p>{profile?.summary}</p>
         </div>
         <div className="flex-col">
           <h2>Resume</h2>
-          <p>{profileData?.resume}</p>
+          <p>{profile?.resume}</p>
         </div>
       </div>
       <div className="experience flex-col">
         <h2>Experiences</h2>
-        {profileData?.experience?.map((experience, index) => <Experience key={index} experience={experience}/>)}
+        {profile?.experiences?.map((experience, index) => (
+          <Experience key={index} experience={experience} />
+        ))}
       </div>
       <div className="info flex-col">
         <h2>Skills</h2>
-        {profileData?.skills?.map((skill, index) => <Skill key={index} skill={skill}/>)}
+        {profile?.skills?.map((skill, index) => (
+          <Skill key={index} skill={skill} />
+        ))}
       </div>
     </StyledProfile>
   );
@@ -103,18 +127,18 @@ const StyledProfile = styled.div`
       z-index: -1;
     }
   }
-  .info, .experience {
+  .info,
+  .experience {
     background-color: white;
     border-radius: 10px;
     padding: 2rem;
     justify-content: space-between;
   }
   .about {
-      .flex-col {
-          background-color: white;
-          padding: 2rem;
+    .flex-col {
+      background-color: white;
+      padding: 2rem;
     }
   }
-  
 `;
 export default Profile;

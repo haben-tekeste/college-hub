@@ -10,9 +10,13 @@ router.get("/api/blogFeed/", async (req, res, next) => {
     // const user = await User.findById(req.currentUser?.id!);
     // if (!user?.interests.length)
     //   throw new BadRequestError("Please pick interests");
-    const blogs = await Blog.find({}, {}, { sort: { likes: -1 } }).populate(
-      "author"
-    );
+    const blogs = await Blog.find(
+      {
+        author: { $ne: req.currentUser?.id },
+      },
+      {},
+      { sort: { likes: -1 } }
+    ).populate("author");
     res.status(201).json(blogs);
   } catch (err) {
     next(err);

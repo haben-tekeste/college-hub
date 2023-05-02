@@ -14,7 +14,8 @@ import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 import { BsHandThumbsUpFill } from "react-icons/bs";
 import { useEffect } from "react";
-import { fetchBook } from "../Actions/bookActions";
+import { fetchBook, fetchMyBooks } from "../Actions/bookActions";
+import Loading from "../components/Loading";
 
 const BookDetails = () => {
   const navigate = useNavigate();
@@ -22,10 +23,10 @@ const BookDetails = () => {
   const param = useParams();
   const { details, isBid, loading } = useSelector((state) => state.bookDetails);
   useEffect(() => {
-    console.log("parapm", param);
+    // console.log("parapm", param);
     dispatch(fetchBook({ bookId: param.id }));
   }, [dispatch]);
-  if (loading) return;
+  if (loading) return <Loading />;
   return (
     <StyledDetails>
       {isBid && <BidingPanel />}
@@ -38,16 +39,16 @@ const BookDetails = () => {
         </h2>
         <div className=" details flex">
           <div className="image">
-            <img src={details.coverImageUrl} alt="" />
+            <img src={details?.coverImageUrl} alt="" />
           </div>
           <div className="info flex-col">
-            <h1>{details.title}</h1>
-            <p>{details.description}</p>
-            <h4>Author: {details.author}</h4>
-            <h4>Condition: {details.condition}</h4>
+            <h1>{details?.title}</h1>
+            <p>{details?.description}</p>
+            <h4>Author: {details?.author}</h4>
+            <h4>Condition: {details?.condition}</h4>
             <div className="genere flex">
               <h4>Genere:</h4>
-              {details.genre.map((genre, index) => (
+              {details?.genre?.map((genre, index) => (
                 <button key={index} className="tag-btn">
                   {genre}
                 </button>

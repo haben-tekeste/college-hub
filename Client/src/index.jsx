@@ -16,12 +16,10 @@ import { store } from "./states/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyles />
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <GlobalStyles />
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
 );

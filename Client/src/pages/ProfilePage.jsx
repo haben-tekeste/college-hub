@@ -21,9 +21,11 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const { loading, blogs } = useSelector((state) => state.blogs);
-  const { loading: projectLoading, projects } = useSelector(
-    (state) => state.projects
-  );
+  const {
+    loading: projectLoading,
+    projects,
+    myProjects,
+  } = useSelector((state) => state.projects);
 
   useEffect(() => {
     dispatch(fetchBlogFeed());
@@ -35,7 +37,7 @@ const ProfilePage = () => {
         <SearchBar />
         <WelcomeCard />
       </div>
-      <Stats className="stats" />
+      <Stats className="stats" myProjects={myProjects} />
       <Badges className="badges" />
       <div className="blogs container">
         <Blogs blogs={blogs.slice(0, 4)} />

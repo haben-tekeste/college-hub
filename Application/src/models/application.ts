@@ -34,7 +34,7 @@ interface IDocument extends mongoose.Document {
 const applicationSchema = new mongoose.Schema(
   {
     projectId: { type: Schema.Types.ObjectId, ref: "Project", required: true },
-    userId: { type: Schema.Types.ObjectId, required: true },
+    userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

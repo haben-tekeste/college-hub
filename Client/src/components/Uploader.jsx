@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 //icons
 import { MdCloudUpload } from "react-icons/md";
 
-const Uploader = ({ image, setImage }) => {
+const Uploader = ({ setFile, file }) => {
   const uploadHandler = () => {
     document.querySelector(".upload-input").click();
   };
@@ -18,11 +18,10 @@ const Uploader = ({ image, setImage }) => {
       </h3>
       <input
         type="file"
-        name="image"
+        name="resume"
         hidden
         className="upload-input"
-        onChange={(e) => setImage(e.target.files)}
-        accept="image/*"
+        onChange={(e) => setFile(e.target.files[0])}
       />
     </StyledUploader>
   );
@@ -43,6 +42,7 @@ const StyledUploader = styled.form`
   }
   h3 {
     font-weight: normal;
+    text-align: center;
     span {
       font-size: inherit;
       font-weight: bold;

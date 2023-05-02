@@ -5,12 +5,12 @@ import { Profile } from "../model/profile";
 
 const router = express.Router();
 
-router.get("/api/profiles/:profileId", async (req, res, next) => {
+router.get("/api/profiles/:user", async (req, res, next) => {
   try {
-    const { profileId } = req.params;
-    if (!profileId) throw new NotFoundError();
-    const profile = await Profile.findById(profileId);
-    if (!profile) throw new NotFoundError();
+    const { user } = req.params;
+    if (!user) throw new NotFoundError();
+    const profile = await Profile.findOne({ userId: user });
+    // if (!profile) throw new NotFoundError();
 
     res.status(200).json(profile);
   } catch (error) {

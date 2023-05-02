@@ -5,15 +5,18 @@ import styled from "styled-components";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { setRelatedBooks } from "../states/bookDetails";
-
 //components
 import Book from "./book";
+
+//router
+import { Link, useNavigate } from "react-router-dom";
 
 // data
 import { bookData } from "../data/BookData";
 
 const RelatedBooks = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { relatedBooks } = useSelector((state) => state.bookDetails);
 
@@ -22,7 +25,15 @@ const RelatedBooks = () => {
       <h3>Related Books</h3>
       <div className="flex-col">
         {relatedBooks.map((book) => (
-          <Book key={book.id} book={book} />
+          <Link
+            to={`/books/${book.id}`}
+            key={book.id}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Book key={book.id} book={book} />
+          </Link>
         ))}
       </div>
     </StyledRelatedBooks>

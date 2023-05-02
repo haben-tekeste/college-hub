@@ -4,24 +4,40 @@ import styled from "styled-components";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { toggleIsBid } from "../../states/bookDetails";
-import { setUserBooks } from "../../states/books";
+import { clearError, setUserBooks } from "../../states/books";
 
 //icons
 import { AiOutlineClose } from "react-icons/ai";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 //data
 import { bookData } from "../../data/BookData";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { bidBook } from "../../Actions/bookActions";
+import CustomError from "../CustomError";
+import Loading from "../Loading";
 const BidingPanel = () => {
   const dispatch = useDispatch();
-
+  const [bidderBook, setBidderBook] = useState();
+  const param = useParams();
+  // useEffect(() => {
+  //   // dispatch(setUserBooks(bookData));
+  // }, [dispatch]);
+  const navigate = useNavigate();
+  const { userBooks, error, loading, biddSuccess } = useSelector(
+    (state) => state.books
+  );
   useEffect(() => {
-    dispatch(setUserBooks(bookData));
+    dispatch(clearError());
   }, [dispatch]);
-
-  const { userBooks } = useSelector((state) => state.books);
-
+  const submitBid = async (e) => {
+    e.preventDefault();
+    console.log("book", param.id);
+    console.log("bidderBook", bidderBook);
+    dispatch(bidBook({ bookId: param.id, bidderBook }));
+    if (biddSuccess) navigate("/books");
+  };
+  if (loading) return <Loading />;
   return (
     <StyledAsk>
       <div className="container">
@@ -32,7 +48,7 @@ const BidingPanel = () => {
           <AiOutlineClose />
         </button>
         <h3>Select one of your books to start biding</h3>
-        <form className="flex-col">
+        <form className="flex-col" onSubmit={submitBid}>
           <div className="book-options">
             {userBooks.map((book, i) => (
               <div key={i}>
@@ -44,6 +60,7 @@ const BidingPanel = () => {
                     name="biding-option"
                     type="radio"
                     value={book.id}
+                    onChange={(e) => setBidderBook(e.target.value)}
                   />
                 </div>
               </div>
@@ -51,6 +68,7 @@ const BidingPanel = () => {
           </div>
           <button className="purple-btn">Bid</button>
         </form>
+        {error && <CustomError err={error} />}
       </div>
     </StyledAsk>
   );
@@ -68,7 +86,7 @@ const StyledAsk = styled(StyledPopup)`
   form {
     margin-top: 2rem;
   }
-  .book-options{
+  .book-options {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;

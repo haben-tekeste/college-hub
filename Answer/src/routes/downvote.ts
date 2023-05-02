@@ -9,7 +9,6 @@ const router = express.Router();
 router.post("/api/answers/downvote/:answerId", async (req, res, next) => {
   try {
     const { answerId } = req.params;
-    console.log(answerId);
 
     const answer = await Answer.findById(answerId);
     if (!answer) throw new Error("Answer not found");
@@ -17,26 +16,24 @@ router.post("/api/answers/downvote/:answerId", async (req, res, next) => {
     if (answer.author.toString() === req.currentUser?.id)
       throw new BadRequestError("You can not vote on your answer");
 
-    if (req.currentUser?.id! in answer.downvotes.voters)
-      throw new Error("You have alread downvoted the answer");
-    if (req.currentUser?.id! in answer.upvotes.voters) {
-      const ds = answer.upvotes.voters.filter(
-        (ans) => ans === req.currentUser?.id
-      );
-
-      answer.set({
-        upvotes: {
-          quantity: answer.upvotes.quantity - 1,
-          voters: ds,
-        },
-      });
-    }
-    answer.set({
-      downvotes: {
-        quantity: answer.downvotes.quantity + 1,
-        voters: answer.downvotes.voters.push(req.currentUser?.id!),
-      },
+    answer.downvotes.voters.forEach((voter) => {
+      if (voter.toString() === req.currentUser?.id!)
+        throw new BadRequestError("You have already downvoted the answer");
     });
+
+    //
+    const userUpvotedPrev = answer.upvotes.voters.findIndex(
+      (voter) => voter.toString() === req.currentUser?.id!
+    );
+
+    if (userUpvotedPrev != -1) {
+      answer.upvotes.quantity--;
+      answer.upvotes.voters.splice(userUpvotedPrev, 1);
+    }
+
+    answer.downvotes.quantity++;
+    answer.downvotes.voters.push(req.currentUser?.id!);
+
     await answer.save();
     new AnswerDownvotedPublisher(natswrapper.Client).publish({
       id: answer.id,

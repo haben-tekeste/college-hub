@@ -1,8 +1,13 @@
 //styled
 import styled from "styled-components";
 import ProfileComponent from "./ProfileComponent";
+import { useDispatch } from "react-redux";
+import { approveBid } from "../Actions/bookActions";
+import { useNavigate } from "react-router-dom";
 
 const Biders = ({ biders }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <StyledBiders>
       <h3>Biders</h3>
@@ -16,11 +21,19 @@ const Biders = ({ biders }) => {
           {biders.map((bid, i) => (
             <tr key={i}>
               <td>
-                <ProfileComponent name={bid.username} />
+                <ProfileComponent name={bid.name} />
               </td>
-              <td>{bid.book.title}</td>
+              <td>{bid.bidderBook.title}</td>
               <td>
-                <button className="purple-btn">Accept</button>
+                <button
+                  className="purple-btn"
+                  onClick={() => {
+                    dispatch(approveBid({ bidId: bid.id }));
+                    navigate("/books");
+                  }}
+                >
+                  Accept
+                </button>
               </td>
             </tr>
           ))}

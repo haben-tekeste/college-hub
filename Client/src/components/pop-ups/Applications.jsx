@@ -88,7 +88,7 @@ const Applications = () => {
                 <th>Project ID</th>
                 <th>Status</th>
                 <th>Applied Date</th>
-                <th>Action</th>
+                {/* <th>Action</th> */}
               </tr>
               {myApplications?.map((application, i) => (
                 <tr key={i}>
@@ -98,9 +98,9 @@ const Applications = () => {
                   </td>
                   <td>{application.status}</td>
                   <td>{formatDate(new Date(application.createdAt))}</td>
-                  <td>
+                  {/* <td>
                     <button className="light-btn">View</button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

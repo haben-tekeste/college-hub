@@ -15,3 +15,18 @@ export const fetchMyApplications = createAsyncThunk(
     }
   }
 );
+
+export const fetchApplicationByProject = createAsyncThunk(
+  "application/project",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `https://studenthub.dev/api/applications/projects/${id}`
+      );
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

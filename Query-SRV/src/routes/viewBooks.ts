@@ -9,6 +9,7 @@ router.get(
   async (req: Request, res: Response) => {
     const books = await Book.find({
       ownerId: req.currentUser?.id,
+      show: true,
     })
       .populate("ownerId")
       .populate("comments")

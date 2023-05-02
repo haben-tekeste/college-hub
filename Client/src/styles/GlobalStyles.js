@@ -7,7 +7,6 @@ export default createGlobalStyle`
     --darkgrey: #d9d9d9;
     --lightgrey: #f6f6f6;
     --red: 	tomato
-
 }
     *{
         padding: 0;
@@ -34,7 +33,7 @@ export default createGlobalStyle`
     p{
         color: grey;
     }
-    button, input, textarea{
+    button, input, textarea, select{
         cursor: pointer;
         font-family: inherit;
         background-color: var(--lightgrey);
@@ -52,15 +51,13 @@ export default createGlobalStyle`
         gap: 1rem;
         align-items: center;
     }
+    .justified{
+        justify-content: space-between;
+        gap: 2rem;
+    }
     .flex-col{
         flex-direction: column;
         align-items: flex-start;
-    }
-    .centered{
-        height: 100vh;
-        width: 100%;
-        display: grid;
-        place-content: center;
     }
     .container{
           background-color: white;
@@ -72,23 +69,26 @@ export default createGlobalStyle`
         ::-webkit-scrollbar {
             width: 7px;
         }
-
         /* Track */
         ::-webkit-scrollbar-track {
             border-radius: 5px;
             background-color: var(--secondary);
         }
-
         /* Handle */
         ::-webkit-scrollbar-thumb {
             background: var(--primary);
             border-radius: 10px;
         }
-
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: var(--secondary);
         }
+    }
+    .centered{
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        place-content: center;
     }
     .alert {
         color: white;

@@ -1,7 +1,10 @@
 import { BadRequestError, isAuth } from "@booki/common";
 import express, { Response, Request, NextFunction } from "express";
 import mongoose, { ObjectId } from "mongoose";
-import { BookUpdatedPublisher, QBookUpdatedPublisher } from "../events/publisher/bookUpdatedPublisher";
+import {
+  BookUpdatedPublisher,
+  QBookUpdatedPublisher,
+} from "../events/publisher/bookUpdatedPublisher";
 import { Book } from "../models/book";
 import { nats } from "../NatsWrapper";
 
@@ -26,7 +29,6 @@ router.put(
       } else {
         book.likes = book.likes.filter((id) => id !== req.currentUser!.id);
       }
-
 
       new BookUpdatedPublisher(nats.client).publish({
         id: book.id,
@@ -55,6 +57,7 @@ router.put(
         likes: book.likes,
         comments: [],
         cloudinaryPublicId: book.cloudinaryPublicId,
+        show: true,
       });
 
       await book.save();

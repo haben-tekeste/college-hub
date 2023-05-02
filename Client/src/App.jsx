@@ -12,6 +12,8 @@ import BlogPage from "./pages/BlogPage";
 import BooksPage from "./pages/BooksPage";
 import Profile from "./pages/Profile";
 import BookDetails from "./pages/BookDetails";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 //popups
 import ProjectDetails from "./components/pop-ups/ProjectDetails";
@@ -24,13 +26,16 @@ import Error from "./components/Error";
 
 // react router
 import { Routes, Route } from "react-router-dom";
+import MyBooks from "./pages/MyBooks";
 
 function App() {
   return (
     <div className="App flex">
       <Nav />
       <Routes>
-        <Route path="/auth" element={<SignInPage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        {/* <Route path="/auth" element={<SignInPage />} /> */}
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<ProfilePage />} />
           <Route path="/projects" element={<ProjectPage />} />
@@ -43,6 +48,7 @@ function App() {
           <Route path="/questions/:id" element={<Answer />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/books" element={<BooksPage />} />
+          <Route path="/books/my-books" element={<BooksPage />} />
           <Route path="/books/:id" element={<BookDetails />} />
         </Route>
         <Route path="/notfound" element={<Error />} />
