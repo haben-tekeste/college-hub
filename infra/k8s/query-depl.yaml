@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: query
-          image: us.gcr.io/student-hub-381513/query
+          image: htekeste/query
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.qgreox3.mongodb.net/Query?retryWrites=true&w=majority"
+              value: "mongodb://query-mongo-srv:27017/Query"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

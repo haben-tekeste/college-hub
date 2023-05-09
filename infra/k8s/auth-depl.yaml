@@ -14,13 +14,10 @@ spec:
     spec:
       containers:
         - name: auth
-          image: us.gcr.io/student-hub-381513/auth
-          # image: htekeste/auth
-          # ports:
-          #   - containerPort: 4000
+          image: htekeste/auth
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:3WT3rwy2uWeJYDk5@cluster0.8fy82rs.mongodb.net/Auth?retryWrites=true&w=majority"
+              value: "mongodb://auth-mongo-srv:27017/auth"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

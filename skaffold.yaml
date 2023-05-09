@@ -3,13 +3,10 @@ kind: Config
 deploy:
   kubectl: {}
 build:
-  googleCloudBuild:
-    projectId: student-hub-381513
-  # local:
-  #   push: false
+  local:
+    push: false
   artifacts:
-    # - image: htekeste/auth
-    - image: us.gcr.io/student-hub-381513/auth
+    - image: htekeste/auth
       context: Auth
       docker:
         dockerfile: Dockerfile
@@ -17,8 +14,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/client
-    - image: us.gcr.io/student-hub-381513/client
+    - image: htekeste/client
       context: Client
       docker:
         dockerfile: Dockerfile
@@ -26,8 +22,7 @@ build:
         manual:
           - dest: .
             src: "**/*"
-    # - image: htekeste/application
-    - image: us.gcr.io/student-hub-381513/application
+    - image: htekeste/application
       context: Application
       docker:
         dockerfile: Dockerfile
@@ -35,8 +30,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/blog-feed
-    - image: us.gcr.io/student-hub-381513/blog-feed
+    - image: htekeste/blog-feed
       context: BlogFeed
       docker:
         dockerfile: Dockerfile
@@ -44,8 +38,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/blog-post
-    - image: us.gcr.io/student-hub-381513/blog-post
+    - image: htekeste/blog-post
       context: BlogPost
       docker:
         dockerfile: Dockerfile
@@ -53,8 +46,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/question-post
-    - image: us.gcr.io/student-hub-381513/question-post
+    - image: htekeste/question-post
       context: QuestionPost
       docker:
         dockerfile: Dockerfile
@@ -62,8 +54,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/answer
-    - image: us.gcr.io/student-hub-381513/answer
+    - image: htekeste/answer
       context: Answer
       docker:
         dockerfile: Dockerfile
@@ -71,8 +62,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/comment
-    - image: us.gcr.io/student-hub-381513/comment
+    - image: htekeste/comment
       context: Comment
       docker:
         dockerfile: Dockerfile
@@ -80,8 +70,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/comment-moderation
-    - image: us.gcr.io/student-hub-381513/comment-moderation
+    - image: htekeste/comment-moderation
       context: CommentModeration
       docker:
         dockerfile: Dockerfile
@@ -89,8 +78,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/profile
-    - image: us.gcr.io/student-hub-381513/profile
+    - image: htekeste/profile
       context: Profile
       docker:
         dockerfile: Dockerfile
@@ -98,8 +86,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/project
-    - image: us.gcr.io/student-hub-381513/project
+    - image: htekeste/project
       context: Project
       docker:
         dockerfile: Dockerfile
@@ -107,8 +94,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    # - image: htekeste/project-feed
-    - image: us.gcr.io/student-hub-381513/project-feed
+    - image: htekeste/project-feed
       context: ProjectFeed
       docker:
         dockerfile: Dockerfile
@@ -116,7 +102,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    - image: us.gcr.io/student-hub-381513/question-feed
+    - image: htekeste/question-feed
       context: QuestionFeed
       docker:
         dockerfile: Dockerfile
@@ -124,7 +110,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    - image: us.gcr.io/student-hub-381513/classification
+    - image: htekeste/classification
       context: Classification-SRV
       docker:
         dockerfile: Dockerfile
@@ -132,7 +118,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.py"
-    - image: us.gcr.io/student-hub-381513/book
+    - image: htekeste/book
       context: Book-SRV
       docker:
         dockerfile: Dockerfile
@@ -140,7 +126,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    - image: us.gcr.io/student-hub-381513/book-comment
+    - image: htekeste/book-comment
       context: Comments-SRV
       docker:
         dockerfile: Dockerfile
@@ -148,7 +134,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    - image: us.gcr.io/student-hub-381513/query
+    - image: htekeste/query
       context: Query-SRV
       docker:
         dockerfile: Dockerfile
@@ -156,7 +142,7 @@ build:
         manual:
           - dest: .
             src: "src/**/*.ts"
-    - image: us.gcr.io/student-hub-381513/exchange
+    - image: htekeste/exchange
       context: Exchange-SRV
       docker:
         dockerfile: Dockerfile
@@ -167,9 +153,3 @@ build:
 manifests:
   rawYaml:
     - "./infra/k8s/*"
-    # - "./infra/k8s/auth-depl.yaml"
-    # - "./infra/k8s/query-depl.yaml"
-    # - "./infra/k8s/blog-feed-depl.yaml"
-    # - "./infra/k8s/project-depl.yaml"
-    # - "./infra/k8s/project-feed-depl.yaml"
-    # - "./infra/k8s/question-feed-depl.yaml"

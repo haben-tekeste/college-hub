@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: comment-moderation
-          image: us.gcr.io/student-hub-381513/comment-moderation
-          # image: htekeste/comment-moderation
+          image: htekeste/comment-moderation
           env:
             - name: NATS_URL
               value: "http://nats-srv:4222"

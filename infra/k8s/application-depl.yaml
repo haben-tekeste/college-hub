@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: application
-          image: us.gcr.io/student-hub-381513/application
-          # image: htekeste/application
+          image: htekeste/application
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.kcjzcmt.mongodb.net/Application?retryWrites=true&w=majority"
+              value: "mongodb://application-mongo-srv:27017/Application"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

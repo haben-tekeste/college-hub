@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
       - name: comment
-        image: us.gcr.io/student-hub-381513/comment
-        # image: htekeste/comment
+        image: htekeste/comment
         env:
           - name: MONGO_URI
-            value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.ytjm6qu.mongodb.net/Comment?retryWrites=true&w=majority"
+            value: "mongodb://comment-mongo-srv:27017/Comment"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:

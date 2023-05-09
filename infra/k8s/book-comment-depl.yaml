@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: book-comment
-          image: us.gcr.io/student-hub-381513/book-comment
+          image: htekeste/book-comment
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.qyn0nl0.mongodb.net/BookComment?retryWrites=true&w=majority"
+              value: "mongodb://book-comment-mongo-srv:27017/BookComment"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

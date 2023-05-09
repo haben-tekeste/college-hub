@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: question-feed
-          image: us.gcr.io/student-hub-381513/question-feed
-          # image: htekeste/question-feed
+          image: htekeste/question-feed
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.rpv009t.mongodb.net/QuestionFeed?retryWrites=true&w=majority"
+              value: "mongodb://question-feed-mongo-srv:27017/QuestionFeed"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

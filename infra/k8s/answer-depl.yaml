@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: answer
-          image: us.gcr.io/student-hub-381513/answer
-          # image: htekeste/answer
+          image: htekeste/answer
           env:
             - name: MONGO_URI
-              value: "mongodb+srv://meksonbravo903:meksonbravo903@cluster0.oqqqvzw.mongodb.net/Answer?retryWrites=true&w=majority"
+              value: "mongodb://answer-mongo-srv:27017/Answer"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

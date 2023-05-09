@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: project
-          image: us.gcr.io/student-hub-381513/project
-          # image: htekeste/project
+          image: htekeste/project
           env:
           - name: MONGO_URI
-            value: "mongodb+srv://meksonbravo903:mi6x5xTab4aOQedE@cluster0.5wstuwp.mongodb.net/Project?retryWrites=true&w=majority"
+            value: "mongodb://project-mongo-srv:27017/Project"
           - name: JWT_KEY
             valueFrom:
               secretKeyRef:
